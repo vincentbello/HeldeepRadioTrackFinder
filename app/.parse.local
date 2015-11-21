@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "Heldeep Radio Track Finder": {
+      "applicationId": "IAwGLdS47JrPuxII2gR9BEpJDXF25FEY6jiVCN0s"
+    },
+    "_default": {
+      "link": "Heldeep Radio Track Finder"
+    }
+  }
+}

@@ -10,7 +10,7 @@ import UIKit
 
 class CustomSearchController: UISearchController {
 
-    override init(searchResultsController: UIViewController!) {
+    override init(searchResultsController: UIViewController?) {
         super.init(searchResultsController: searchResultsController)
         
         // Set basic searchbar properties
@@ -21,7 +21,7 @@ class CustomSearchController: UISearchController {
         self.searchBar.textField?.textColor = UIColor.whiteColor()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

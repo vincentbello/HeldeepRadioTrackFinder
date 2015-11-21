@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A894B23A493111D3319FEC14612AC36E40B6D6B8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "302EE357E524391094B78A944EDA8EA41B9FC4FA" : 0,
+    "A894B23A493111D3319FEC14612AC36E40B6D6B8" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AB52B305-DAE6-4AED-8C31-C596B51E1ACE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "302EE357E524391094B78A944EDA8EA41B9FC4FA" : "HeldeepBangerFinder",
+    "A894B23A493111D3319FEC14612AC36E40B6D6B8" : "HeldeepRadioTrackFinder"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HeldeepRadioTrackFinder",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HeldeepRadioTrackFinder.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/vincentbello\/HeldeepBangerFinder.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "302EE357E524391094B78A944EDA8EA41B9FC4FA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:vincentbello\/HeldeepRadioTrackFinder.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A894B23A493111D3319FEC14612AC36E40B6D6B8"
+    }
+  ]
+}

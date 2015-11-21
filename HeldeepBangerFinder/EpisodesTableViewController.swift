@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+import Parse
+
 class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
     // MARK: - Properties
@@ -70,6 +72,13 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         self.setUpLoadingIndicator()
         
         self.getEpisodes()
+        
+        // PARSE TEST
+        let testObject = PFObject(className: "TestObject")
+        testObject["foo"] = "bar"
+        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            print("Object has been saved.")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,7 +103,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
                 if data != nil {
                     // Data obtained: parse JSON string
-                    if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSArray {
+                    if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as? NSArray {
                         
                         let episodesArray = jsonResult
                         var episodesArr = [Episode]()
@@ -175,7 +184,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         alertView.addSubview(alertLabel)
         
         let buttonX = self.tableView.bounds.width - GlobalConstants.DefaultRowHeight
-        let dismissButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let dismissButton = UIButton(type: UIButtonType.System)
             dismissButton.frame = CGRectMake(buttonX, 0, GlobalConstants.DefaultRowHeight, GlobalConstants.DefaultRowHeight)
         
         let dismissButtonImage = UIImageView(frame: CGRectMake(GlobalConstants.DefaultRowHeight/4, GlobalConstants.DefaultRowHeight/4, GlobalConstants.DefaultRowHeight/2, GlobalConstants.DefaultRowHeight/2))
@@ -316,7 +325,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         while (originX + imageWidth) <= spriteWidth {
             let imageArea = CGRectMake(originX, 0, imageWidth, imageHeight)
             let subImage = CGImageCreateWithImageInRect(spriteCG, imageArea)
-            self.animationArray.append(UIImage(CGImage: subImage)!)
+            self.animationArray.append(UIImage(CGImage: subImage!))
             originX += imageWidth
         }
     }
@@ -328,7 +337,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         let loadingLabel = UILabel()
             loadingLabel.text = "Loading episodes..."
             loadingLabel.textColor = UIColor.lightTextColor()
-            loadingLabel.font = UIFont(name: GlobalConstants.Fonts.Main.Bold, size: 15.0)
+            loadingLabel.font = UIFont.boldSystemFontOfSize(15)
         
         tblViewFooter.addSubview(loadingLabel)
         
@@ -414,7 +423,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         return 60
     }
     
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> ([String]!) {
         // Section index titles
         
         var arr = [String]()
@@ -467,7 +476,7 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        if count(searchController.searchBar.text) > 0 {
+        if searchController.searchBar.text!.characters.count > 0 {
             self.filterContentForSearchText(searchController.searchBar.text!)
             self.resultsTableController.tableView.reloadData()
         }

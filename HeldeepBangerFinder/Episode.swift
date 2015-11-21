@@ -35,9 +35,9 @@ class Episode: NSObject {
             var keyName = key as! String
             keyName = keyName == "description" ? "descr" : keyName
             if self.properties.contains(keyName) {
-                if let keyValue = value as? String {
+                if let _ = value as? String {
                     self.setValue(String(value as! NSString), forKey: keyName)
-                } else if let keyValue = value as? Int {
+                } else if let _ = value as? Int {
                     self.setValue(Int(value as! Int), forKey: keyName)
                 }
             }
@@ -63,23 +63,21 @@ class Episode: NSObject {
     
     // Gets duration of episode in format "H h M min"
     func durationInMinutes() -> String {
-        var x = self.duration / 1000
-        var seconds = x % 60
+        var x = self.duration / 60000
+        let minutes = x % 60
         x /= 60
-        var minutes = x % 60
-        x /= 60
-        var hours = x % 24
+        let hours = x % 24
         return hours == 0 ? "\(minutes) min" : "\(hours) hr \(minutes) min"
     }
     
     // Gets duration of episode in format "H:M:S"
     func durationInSeconds() -> String {
         var x = self.duration / 1000
-        var seconds = x % 60
+        let seconds = x % 60
         x /= 60
-        var minutes = x % 60
+        let minutes = x % 60
         x /= 60
-        var hours = x % 24
+        let hours = x % 24
         let minutesStr = minutes < 10 ? "0\(minutes)" : "\(minutes)"
         let secondsStr = seconds < 10 ? "0\(seconds)" : "\(seconds)"
         return (hours == 0 ? "" : "\(hours):") + "\(minutesStr):\(secondsStr)"

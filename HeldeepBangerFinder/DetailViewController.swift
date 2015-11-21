@@ -38,7 +38,7 @@ class DetailViewController: UIViewController {
         let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 50, 44))
             label.backgroundColor = UIColor.clearColor()
             label.numberOfLines = 2
-            label.font = UIFont(name: GlobalConstants.Fonts.Main.Bold, size: 17.0)
+            label.font = UIFont.boldSystemFontOfSize(17)
             label.textAlignment = NSTextAlignment.Center
             label.text = currentEpisode.formattedTitle()
             label.textColor = UIColor.whiteColor()

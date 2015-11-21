@@ -25,7 +25,7 @@ class CustomTableViewCell: UITableViewCell {
         super.init(style: UITableViewCellStyle.Subtitle, reuseIdentifier: reuseIdentifier)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -44,7 +44,7 @@ class CustomTableViewCell: UITableViewCell {
         
         self.backgroundColor = GlobalConstants.Colors.Background
         
-        self.textLabel?.font = UIFont(name: GlobalConstants.Fonts.Main.Bold, size: 16.0)
+        self.textLabel?.font = UIFont.boldSystemFontOfSize(16)
         self.textLabel?.textColor = UIColor.whiteColor()
         self.textLabel?.frame.origin.x = 60
         self.detailTextLabel?.frame.origin.x = 65
@@ -60,7 +60,7 @@ class CustomTableViewCell: UITableViewCell {
             label.text = "NEW"
             label.textColor = UIColor.blackColor()
             label.backgroundColor = UIColor.whiteColor()
-            label.font = UIFont(name: GlobalConstants.Fonts.Main.Bold, size: 12)
+            label.font = UIFont.boldSystemFontOfSize(12)
             label.layer.cornerRadius = 3
             label.clipsToBounds = true
             label.textAlignment = NSTextAlignment.Center

@@ -14,18 +14,15 @@ struct GlobalConstants {
     
     static let StoryboardName = "Main"
     
-    static let APIKey = "09e83e9d105e24932aabefa1092f1123"
-    
     static let DefaultRowHeight = CGFloat(44)
     
     static let EpisodeHeaders = ["Heldeep Radio Cooldown", "Heldeep Cooldown", "Heldeep Radio Classic", "Heldeep Classic", "Heldeep Radio Halfbeat", "Heldeep Halfbeat", "Guestmix by Sander van Doorn"]
 
     static let ItunesLink = "itms://itunes.apple.com/us/podcast/heldeep-radio-051/id887878735?i=342917449&mt=2"
-    static let FeedURL = "http://heldeepradio.spinninpodcasts.com/rss"
     
     struct SoundCloud {
         static let ClientID = "20c0a4e42940721a64391ac4814cc8c7"
-        static let FetchTracksURL = "http://api.soundcloud.com/users/heldeepradio/tracks.json?limit=200&client_id=\(ClientID)"
+        static let FetchTracksURL = "https://api.soundcloud.com/users/heldeepradio/tracks.json?limit=200&client_id=\(ClientID)"
     }
     
     struct Date {
@@ -40,13 +37,6 @@ struct GlobalConstants {
     }
     
     struct Fonts {
-        struct Main {
-            static let Regular = "AppleSDGothicNeo-Regular"
-            static let Bold = "AppleSDGothicNeo-Bold"
-        }
-        
-        
-        
         static let SubtitleSize = CGFloat(12.0)
     }
     

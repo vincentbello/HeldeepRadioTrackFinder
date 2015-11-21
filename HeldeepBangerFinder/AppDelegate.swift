@@ -8,12 +8,22 @@
 
 import UIKit
 
+import Parse
+import Bolts
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        // Initialize Parse
+        Parse.setApplicationId("IAwGLdS47JrPuxII2gR9BEpJDXF25FEY6jiVCN0s", clientKey: "SvKu7a8mkh6rFycmLJBMWGV3HuTG5VNYYvNfCtSX")
+        
+        // Track statistics around application opens
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
         // Override point for customization after application launch.
         self.window?.tintColor = UIColor.whiteColor()
         
@@ -24,14 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 contr.favorites = favoritesArray
             }
         }
-        
-        // Change fonts
-        UILabel.appearance().substituteFontName = GlobalConstants.Fonts.Main.Regular
-        UILabel.appearance().substituteFontNameBold = GlobalConstants.Fonts.Main.Bold
-        
-        UITextField.appearance().substituteFontName = GlobalConstants.Fonts.Main.Regular
-        UITextField.appearance().substituteFontNameBold = GlobalConstants.Fonts.Main.Bold
-        
+                
         return true
     }
 
