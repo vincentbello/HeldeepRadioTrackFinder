@@ -54,7 +54,6 @@
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F9647A711B29F5E400012D9B /* ResultsTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableController.swift; sourceTree = "<group>"; };
 		F9647A731B2A233A00012D9B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		F964C5ED1B785D82002AE0B4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../TestProd/TestProd/Info.plist; sourceTree = "<group>"; };
 		F969064A1C00481000FB5C73 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		F969064B1C00481000FB5C73 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		F969064E1C00486600FB5C73 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -204,7 +203,6 @@
 				F9D53D5B1B30A9310031B333 /* Reachability.swift */,
 				F98217B81B27C06B0013E15C /* GlobalConstants.swift */,
 				F9B3A9A81B27B31C0010D5AE /* Images.xcassets */,
-				F964C5ED1B785D82002AE0B4 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -473,7 +471,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/../TestProd/TestProd/Info.plist";
+				INFOPLIST_FILE = HeldeepBangerFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
@@ -488,7 +486,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/../TestProd/TestProd/Info.plist";
+				INFOPLIST_FILE = HeldeepBangerFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
