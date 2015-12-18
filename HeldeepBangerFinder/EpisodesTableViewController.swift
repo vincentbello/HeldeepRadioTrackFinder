@@ -97,63 +97,84 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         if Reachability.isConnectedToNetwork() {
             // Connected to a network
             
-            let dataSourceURL = NSURL(string: GlobalConstants.SoundCloud.FetchTracksURL)
-            let request = NSURLRequest(URL: dataSourceURL!)
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
-                if data != nil {
-                    // Data obtained: parse JSON string
-                    if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as? NSArray {
-                        
-                        let episodesArray = jsonResult
-                        var episodesArr = [Episode]()
-                        var counter : Int = episodesArray.count
-                        for ep in episodesArray {
-                            let epDictionary = ep as! NSDictionary
-                            let episode = Episode(JSONDictionary: epDictionary)
-                            episode.ep_id = counter
-                            episodesArr.append(episode)
-                            counter--
+//            let dataSourceURL = NSURL(string: GlobalConstants.SoundCloud.FetchTracksURL)
+//            let request = NSURLRequest(URL: dataSourceURL!)
+//            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
+//                if data != nil {
+//                    // Data obtained: parse JSON string
+//                    if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as? NSArray {
+//                        
+//                        let episodesArray = jsonResult
+//                        var episodesArr = [Episode]()
+//                        var counter : Int = episodesArray.count
+//                        for ep in episodesArray {
+//                            let epDictionary = ep as! NSDictionary
+//                            let episode = Episode(JSONDictionary: epDictionary)
+//                            episode.ep_id = counter
+//                            episodesArr.append(episode)
+//                            counter--
+//                        }
+//                        
+//                        // Add the favorites if this is the first time using the app
+//                        if self.favorites.count == 0 {
+//                            self.favorites = [Bool](count: episodesArr.count, repeatedValue: false)
+//                        }
+//                        
+//                        let loopCount = episodesArr.count - 1
+//                        if (self.favorites.count < episodesArr.count) {
+//                            // New episode(s)
+//                            let epDifference = episodesArr.count - self.favorites.count
+//                            let missingFavorites = [Bool](count: epDifference, repeatedValue: false)
+//                            self.favorites = missingFavorites + self.favorites
+//                        }
+//                        
+//                        for index in 1...loopCount {
+//                            episodesArr[index].favorite = self.favorites[index]
+//                        }
+//                        
+//                        self.episodes = episodesArr
+//                        
+//                        self.tableView.reloadAllSections()
+//                    } else {
+//                        // Could not fetch from the SoundCloud API.
+//                        let message = "Could not fetch data from SoundCloud."
+//                        self.showError(message)
+//                        self.tableView.tableFooterView = nil
+//                    }
+//                    
+//                }
+//                
+//                if error != nil {
+//                    // Likely an invalid URL.
+//                    let message = "\(error!.localizedDescription.capitalizedString)"
+//                    self.showError(message)
+//                }
+//                
+//                self.tableView.userInteractionEnabled = true
+//                
+//            }
+
+            let query = PFQuery(className: "Episode")
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    // Found episodes
+                    print("Found \(objects!.count) episodes")
+                    if let objects = objects {
+                        for object in objects {
+                            print(object.objectId)
+                            
+                            
                         }
-                        
-                        // Add the favorites if this is the first time using the app
-                        if self.favorites.count == 0 {
-                            self.favorites = [Bool](count: episodesArr.count, repeatedValue: false)
-                        }
-                        
-                        let loopCount = episodesArr.count - 1
-                        if (self.favorites.count < episodesArr.count) {
-                            // New episode(s)
-                            let epDifference = episodesArr.count - self.favorites.count
-                            let missingFavorites = [Bool](count: epDifference, repeatedValue: false)
-                            self.favorites = missingFavorites + self.favorites
-                        }
-                        
-                        for index in 1...loopCount {
-                            episodesArr[index].favorite = self.favorites[index]
-                        }
-                        
-                        self.episodes = episodesArr
-                        
-                        self.tableView.reloadAllSections()
-                    } else {
-                        // Could not fetch from the SoundCloud API.
-                        let message = "Could not fetch data from SoundCloud."
-                        self.showError(message)
-                        self.tableView.tableFooterView = nil
                     }
-                    
+                } else {
+                    print("Error!")
                 }
-                
-                if error != nil {
-                    // Likely an invalid URL.
-                    let message = "\(error!.localizedDescription.capitalizedString)"
-                    self.showError(message)
-                }
-                
-                self.tableView.userInteractionEnabled = true
-                
             }
+        
+        
         } else {
             // Not connected to the network
             self.showError("No Internet connection.")
