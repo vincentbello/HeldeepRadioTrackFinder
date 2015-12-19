@@ -49,21 +49,21 @@ class ResultsTableController: CustomTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let episode = searchedEpisodes[indexPath.row]
+//        let episode = searchedEpisodes[indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier(GlobalConstants.TableViewCell.Identifier) as! CustomTableViewCell
         
-        let matchingTrack = matchingTracks[indexPath.row]
-
-        // Configure the cell
-        cell.textLabel?.text = episode.formattedTitle()
-        cell.detailTextLabel?.attributedText = matchingTrack.findAndBold(searchText!)
-        cell.imageView!.image = episode.favorite ? UIImage(named: "star_filled.png") : UIImage(named: "star.png")
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-
-        if indexPath.row == searchedEpisodes.count - 1 {
-            cell.zeroInsets = true
-        }
+//        let matchingTrack = matchingTracks[indexPath.row]
+//
+//        // Configure the cell
+//        cell.textLabel?.text = episode.formattedTitle()
+//        cell.detailTextLabel?.attributedText = matchingTrack.findAndBold(searchText!)
+//        cell.imageView!.image = episode.favorite ? UIImage(named: "star_filled.png") : UIImage(named: "star.png")
+//        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//
+//        if indexPath.row == searchedEpisodes.count - 1 {
+//            cell.zeroInsets = true
+//        }
         
         
         return cell

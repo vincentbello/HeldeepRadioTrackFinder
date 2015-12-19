@@ -18,23 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Initialize Parse
+        // MARK: - Parse Setup
         Parse.setApplicationId("IAwGLdS47JrPuxII2gR9BEpJDXF25FEY6jiVCN0s", clientKey: "SvKu7a8mkh6rFycmLJBMWGV3HuTG5VNYYvNfCtSX")
+        
+        // MARK: - Parse Register Subclasses
+        Episode.registerSubclass()
+        Track.registerSubclass()
         
         // Track statistics around application opens
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         // Override point for customization after application launch.
         self.window?.tintColor = UIColor.whiteColor()
-        
-        // Load in favorites data
-        if let favoritesData = NSUserDefaults.standardUserDefaults().objectForKey("favorites") as? NSData {
-            if let favoritesArray = NSKeyedUnarchiver.unarchiveObjectWithData(favoritesData) as? [Bool] {
-                let contr = self.window?.rootViewController?.childViewControllers[0] as! EpisodesTableViewController
-                contr.favorites = favoritesArray
-            }
-        }
-                
+                        
         return true
     }
 

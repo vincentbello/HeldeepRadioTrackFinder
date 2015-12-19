@@ -53,6 +53,21 @@ class CustomTableViewCell: UITableViewCell {
         self.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
     }
     
+    func configureFor(episode: Episode, isNew: Bool = false) {
+        
+        self.textLabel?.text = episode.formattedTitle()
+        self.detailTextLabel?.textColor = UIColor.groupTableViewBackgroundColor()
+        self.detailTextLabel?.text = "\(episode.formattedDate()) · \(episode.durationInMinutes())"
+        
+        // If a new episode just came out, give it a [NEW] badge
+        if isNew {
+            self.addNewBadge()
+        } else {
+            self.accessoryView = nil
+            self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        }
+    }
+    
     // Adds "NEW" badge for new Heldeep Radio episodes
     func addNewBadge() {
         

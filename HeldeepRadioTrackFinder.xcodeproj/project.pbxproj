@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */; };
+		0C6EF66F1C24E5B2004F8ECA /* EpisodeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */; };
+		0C6EF6721C24F330004F8ECA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6701C24F330004F8ECA /* DetailViewController.swift */; };
+		0C6EF6731C24F330004F8ECA /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF6711C24F330004F8ECA /* DetailViewController.xib */; };
+		0C6EF6831C252547004F8ECA /* TracksHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */; };
+		0C6EF6851C252E76004F8ECA /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6841C252E76004F8ECA /* Track.swift */; };
+		0C6EF6871C253105004F8ECA /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */; };
+		0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */; };
+		0C6EF68B1C25337C004F8ECA /* TrackViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */; };
 		F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F95376331B34D19C00A49A0D /* Default-568h@2x.png */; };
 		F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */; };
 		F9647A701B29F35E00012D9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6F1B29F35E00012D9B /* Extensions.swift */; };
@@ -26,7 +35,6 @@
 		F96906611C0048BD00FB5C73 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F96906601C0048BD00FB5C73 /* libsqlite3.tbd */; };
 		F98217B91B27C06B0013E15C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98217B81B27C06B0013E15C /* GlobalConstants.swift */; };
 		F98217BC1B27C1530013E15C /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98217BB1B27C1530013E15C /* Episode.swift */; };
-		F98217BE1B27FCDE0013E15C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98217BD1B27FCDE0013E15C /* DetailViewController.swift */; };
 		F9B3A9A21B27B31C0010D5AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3A9A11B27B31C0010D5AE /* AppDelegate.swift */; };
 		F9B3A9A71B27B31C0010D5AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9B3A9A51B27B31C0010D5AE /* Main.storyboard */; };
 		F9B3A9A91B27B31C0010D5AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9B3A9A81B27B31C0010D5AE /* Images.xcassets */; };
@@ -49,6 +57,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C6EF6691C2403A2004F8ECA /* Parse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Parse-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewCell.swift; sourceTree = "<group>"; };
+		0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeViewCell.xib; sourceTree = "<group>"; };
+		0C6EF6701C24F330004F8ECA /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0C6EF6711C24F330004F8ECA /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksHeaderView.swift; sourceTree = "<group>"; };
+		0C6EF6841C252E76004F8ECA /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
+		0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
+		0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackViewCell.xib; sourceTree = "<group>"; };
 		F95376331B34D19C00A49A0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -68,7 +86,6 @@
 		F96906601C0048BD00FB5C73 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F98217B81B27C06B0013E15C /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalConstants.swift; path = ../GlobalConstants.swift; sourceTree = "<group>"; };
 		F98217BB1B27C1530013E15C /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
-		F98217BD1B27FCDE0013E15C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F9B3A99C1B27B31C0010D5AE /* HeldeepRadioTrackFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeldeepRadioTrackFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9B3A9A11B27B31C0010D5AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9B3A9A61B27B31C0010D5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -113,6 +130,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C6EF67F1C252215004F8ECA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		BBAA08C12FC859255B945AFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +160,10 @@
 		F9647A6E1B29DBD800012D9B /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */,
+				0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */,
+				0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */,
+				0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */,
 				F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */,
 				F9647A731B2A233A00012D9B /* CustomTableViewCell.swift */,
 				F9D53D591B307B4B0031B333 /* CustomSearchController.swift */,
@@ -148,7 +177,9 @@
 				F9B3A9C51B27BFBF0010D5AE /* EpisodesTableViewController.swift */,
 				F9647A711B29F5E400012D9B /* ResultsTableController.swift */,
 				F9F269461B28B5B500113F9F /* AboutTableViewController.swift */,
-				F98217BD1B27FCDE0013E15C /* DetailViewController.swift */,
+				0C6EF6701C24F330004F8ECA /* DetailViewController.swift */,
+				0C6EF6711C24F330004F8ECA /* DetailViewController.xib */,
+				0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -156,6 +187,7 @@
 		F98217BA1B27C12B0013E15C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0C6EF6841C252E76004F8ECA /* Track.swift */,
 				F98217BB1B27C1530013E15C /* Episode.swift */,
 				F9647A6F1B29F35E00012D9B /* Extensions.swift */,
 			);
@@ -165,6 +197,7 @@
 		F9B3A9931B27B31C0010D5AE = {
 			isa = PBXGroup;
 			children = (
+				0C6EF6691C2403A2004F8ECA /* Parse-Bridging-Header.h */,
 				F95376331B34D19C00A49A0D /* Default-568h@2x.png */,
 				F9B3A99E1B27B31C0010D5AE /* HeldeepRadioTrackFinder */,
 				F9B3A9B41B27B31C0010D5AE /* HeldeepRadioTrackFinderTests */,
@@ -188,6 +221,7 @@
 				F9B3A9A11B27B31C0010D5AE /* AppDelegate.swift */,
 				F9B3A9A51B27B31C0010D5AE /* Main.storyboard */,
 				F9B3A9AA1B27B31C0010D5AE /* LaunchScreen.xib */,
+				0C6EF67F1C252215004F8ECA /* Components */,
 				F9647A6E1B29DBD800012D9B /* Custom */,
 				F98217BA1B27C12B0013E15C /* Models */,
 				F98217B61B27C0390013E15C /* View Controllers */,
@@ -308,7 +342,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9B3A9A71B27B31C0010D5AE /* Main.storyboard in Resources */,
+				0C6EF6731C24F330004F8ECA /* DetailViewController.xib in Resources */,
+				0C6EF68B1C25337C004F8ECA /* TrackViewCell.xib in Resources */,
 				F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */,
+				0C6EF66F1C24E5B2004F8ECA /* EpisodeViewCell.xib in Resources */,
 				F9B3A9AC1B27B31C0010D5AE /* LaunchScreen.xib in Resources */,
 				F9B3A9A91B27B31C0010D5AE /* Images.xcassets in Resources */,
 			);
@@ -328,18 +365,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C6EF6721C24F330004F8ECA /* DetailViewController.swift in Sources */,
 				F9B3A9A21B27B31C0010D5AE /* AppDelegate.swift in Sources */,
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
-				F98217BE1B27FCDE0013E15C /* DetailViewController.swift in Sources */,
 				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
 				F9647A701B29F35E00012D9B /* Extensions.swift in Sources */,
 				F98217B91B27C06B0013E15C /* GlobalConstants.swift in Sources */,
 				F9647A741B2A233A00012D9B /* CustomTableViewCell.swift in Sources */,
 				F9B3A9C61B27BFBF0010D5AE /* EpisodesTableViewController.swift in Sources */,
+				0C6EF6871C253105004F8ECA /* TracksTableViewController.swift in Sources */,
 				F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */,
 				F9D53D5A1B307B4B0031B333 /* CustomSearchController.swift in Sources */,
+				0C6EF6851C252E76004F8ECA /* Track.swift in Sources */,
+				0C6EF6831C252547004F8ECA /* TracksHeaderView.swift in Sources */,
 				F9F269471B28B5B500113F9F /* AboutTableViewController.swift in Sources */,
+				0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */,
+				0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +517,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vbello/Documents/XCode/HeldeepRadioTrackFinder/Parse-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -490,6 +533,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vbello/Documents/XCode/HeldeepRadioTrackFinder/Parse-Bridging-Header.h";
 			};
 			name = Release;
 		};

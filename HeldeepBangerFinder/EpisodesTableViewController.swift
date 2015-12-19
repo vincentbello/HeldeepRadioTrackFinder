@@ -17,8 +17,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     
     var episodes = [Episode]()
     
-    var favorites = [Bool]()
-    
     // Search-related controller properties
     var searchController: CustomSearchController!
     var resultsTableController: ResultsTableController!
@@ -46,6 +44,12 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Load the NIB file
+        let nib = UINib(nibName: "EpisodeViewCell", bundle: nil)
+        // Register this NIB, which contains the cell
+        tableView.registerNib(nib,
+            forCellReuseIdentifier: "EpisodeViewCell")
+        
         resultsTableController = ResultsTableController()
         
         // We want to be the delegate for our filtered table so didSelectRowAtIndexPath(_:) is called for both tables.
@@ -68,27 +72,14 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         definesPresentationContext = true
         
         self.setUpRefreshControl()
-        self.setUpAnimationArray()
         self.setUpLoadingIndicator()
         
         self.getEpisodes()
-        
-        // PARSE TEST
-        let testObject = PFObject(className: "TestObject")
-        testObject["foo"] = "bar"
-        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            print("Object has been saved.")
-        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // Save favorites into NSData before quitting
-    override func viewDidDisappear(animated: Bool) {
-        saveFavorites()
     }
     
     // Fetches episode data asynchronously from SoundCloud API. Populates episode data and reloads tableView
@@ -155,23 +146,22 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
 //                
 //            }
 
-            let query = PFQuery(className: "Episode")
+            let query = PFQuery(className: Episode.parseClassName())
+            query.orderByDescending("epId")
             query.findObjectsInBackgroundWithBlock {
                 (objects: [PFObject]?, error: NSError?) -> Void in
                 
                 if error == nil {
+                    
                     // Found episodes
-                    print("Found \(objects!.count) episodes")
-                    if let objects = objects {
-                        for object in objects {
-                            print(object.objectId)
-                            
-                            
-                        }
-                    }
+                    self.episodes = objects! as! [Episode]
+                    self.tableView.reloadData()
+                    
                 } else {
                     print("Error!")
                 }
+                
+                self.tableView.userInteractionEnabled = true
             }
         
         
@@ -282,10 +272,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         } else if self.isRefreshHeadRotated {
             self.isRefreshHeadRotated = false
         }
-        
-//        if self.isRefreshHeadRotated && pullRatio < 1.0 {
-//            self.isRefreshHeadRotated = false
-//        }
 
         if !self.isRefreshHeadRotated {
             // Rotate head
@@ -333,24 +319,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         self.isRefreshHeadRotated = false
     }
     
-    // Divide star animation sprite into UIImages and store them in property array
-    func setUpAnimationArray() {
-        let sprite = UIImage(named: "sprite.png")
-        let spriteCG = sprite?.CGImage
-        let spriteWidth = sprite?.size.width
-        
-        var originX = CGFloat(0)
-        let imageWidth = CGFloat(100)
-        let imageHeight = CGFloat(100)
-        
-        while (originX + imageWidth) <= spriteWidth {
-            let imageArea = CGRectMake(originX, 0, imageWidth, imageHeight)
-            let subImage = CGImageCreateWithImageInRect(spriteCG, imageArea)
-            self.animationArray.append(UIImage(CGImage: subImage!))
-            originX += imageWidth
-        }
-    }
-    
     func setUpLoadingIndicator() {
         
         let tblViewFooter = UIView(frame: CGRectZero)
@@ -379,119 +347,61 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         
-        return episodes.count
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         
-        return 1
+        return episodes.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let index = indexPath.section
+        let index = indexPath.row
         let episode = episodes[index]
-        let favorite = favorites[index]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(GlobalConstants.TableViewCell.Identifier, forIndexPath: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("EpisodeViewCell", forIndexPath: indexPath) as! EpisodeViewCell
         
-        let singleTap = UITapGestureRecognizer(target: self, action: "favoriteOrUnfavorite:")
-        singleTap.numberOfTapsRequired = 1
-        
-        // Configure the cell
-        cell.textLabel?.text = episode.formattedTitle()
-        cell.detailTextLabel?.textColor = UIColor.groupTableViewBackgroundColor()
-        cell.detailTextLabel?.text = "\(episode.formattedDate()) · \(episode.durationInMinutes())"
-        cell.imageView!.image = favorite ? self.animationArray[self.animationArray.count - 1] : self.animationArray[0]
-        cell.imageView?.userInteractionEnabled = true
-        cell.imageView?.tag = index
-        cell.imageView?.addGestureRecognizer(singleTap)
-        
-        // If a new episode just came out, give it a [NEW] badge
-        if index == 0 {
-            cell.addNewBadge()
-        } else {
-            cell.accessoryView = nil
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        }
+        cell.configureFor(episode, isNew: index == 0)
 
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let index = indexPath.section
-        var selectedEpisode: Episode
-        
-        // check to see which table view cell was selected
-        if tableView == self.tableView {
-            selectedEpisode = episodes[index]
-        } else {
-            selectedEpisode = resultsTableController.searchedEpisodes[index]
-        }
+        let selectedEpisode = episodes[indexPath.row]
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        // set up the detail view controller to show
-        let detailViewController = DetailViewController.forEpisode(selectedEpisode)
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        let dvc = DetailViewController(episode: selectedEpisode)
+        showViewController(dvc, sender: self)
+        
+        
+//        let index = indexPath.section
+//        var selectedEpisode: PFObject
+//        
+//        // check to see which table view cell was selected
+//        if tableView == self.tableView {
+//            selectedEpisode = episodes[index]
+//        } else {
+//            selectedEpisode = resultsTableController.searchedEpisodes[index]
+//        }
+//        
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        
+//        // set up the detail view controller to show
+//        let detailViewController = DetailViewController.forEpisode(selectedEpisode)
+//        self.navigationController?.pushViewController(detailViewController, animated: true)
     
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
-    }
-    
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> ([String]!) {
-        // Section index titles
-        
-        var arr = [String]()
-        if episodes.count > 0 {
-            for ind in 0...episodes.count - 1 {
-                arr.append(String(episodes.count - ind))
-            }
-        }
-        return arr
-    }
-    
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return index
+        return 66
     }
     
     //  MARK: - Other functions
-    
-    // Favorite or un-favorite an episode.
-    func favoriteOrUnfavorite(sender: AnyObject?) {
-        let section = sender?.view!!.tag
-        // let episode = episodes[section!] as Episode
-        favorites[section!] = !favorites[section!]
-        
-        if favorites[section!] {
-            self.favoritedRow = section!
-            NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "changeImage:", userInfo: nil, repeats: true)
-        } else {
-            // we have just unfavorited the row
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: section!)) as! CustomTableViewCell
-            cell.imageView!.image = self.animationArray[0]
-        }
-        
-    }
-    
-    // Star animation when favoriting/unfavoriting
-    func changeImage(timer: NSTimer!) {
-        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: self.favoritedRow)) as! CustomTableViewCell
-        
-        if (self.imageIndex < self.animationArray.count) {
-            cell.imageView!.image = self.animationArray[self.imageIndex]
-            self.imageIndex++
-        } else {
-            timer.invalidate()
-            self.imageIndex = 0
-        }
-    }
-
     
     // MARK: UISearchResultsUpdating
     
@@ -505,39 +415,26 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     
     func filterContentForSearchText(searchBarText: String) {
 
-        let searchText = searchBarText.lowercaseString        
-        self.resultsTableController.matchingTracks = [String]()
+//        let searchText = searchBarText.lowercaseString        
+//        self.resultsTableController.matchingTracks = [String]()
+//        
+//        // Filter: if an episode has a track that contains searchText, display it
+//        self.resultsTableController.searchedEpisodes = self.episodes.filter({( episode: Episode) -> Bool in
+//            var match = false
+//            for track in episode.trackArray {
+//                if track.lowercaseString.rangeOfString(searchText) != nil {
+//                    match = true
+//                    self.resultsTableController.matchingTracks.append(track)
+//                    break
+//                }
+//            }
+//            
+//            self.resultsTableController.searchText = searchText
+//            
+//            return match
+//        })
         
-        // Filter: if an episode has a track that contains searchText, display it
-        self.resultsTableController.searchedEpisodes = self.episodes.filter({( episode: Episode) -> Bool in
-            var match = false
-            for track in episode.trackArray {
-                if track.lowercaseString.rangeOfString(searchText) != nil {
-                    match = true
-                    self.resultsTableController.matchingTracks.append(track)
-                    break
-                }
-            }
-            
-            self.resultsTableController.searchText = searchText
-            
-            return match
-        })
         
-        
-    }
-    
-//    // Tells if today is a saturday (when new episodes come out) or not
-//    func todayIsASaturday() -> Bool {
-//        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-//        let components = calendar.components(.CalendarUnitWeekday, fromDate: NSDate())
-//        return components.weekday == 7 ? true : false
-//    }
-
-    // Saves favorites into NSData at the end of the app life cycle
-    func saveFavorites() {
-        let favoritesData = NSKeyedArchiver.archivedDataWithRootObject(favorites)
-        NSUserDefaults.standardUserDefaults().setObject(favoritesData, forKey: "favorites")
     }
     
 }

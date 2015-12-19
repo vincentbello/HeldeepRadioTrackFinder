@@ -7,57 +7,98 @@
 //
 //  This class defines a Heldeep Radio episode.
 
-import UIKit
+//import UIKit
+//
+//class Episode: NSObject {
+//    
+//    let properties = ["id", "ep_id", "title", "descr", "created_at", "duration", "purchase_url", "stream_url", "permalink_url"]
+//    
+//    var id : Int = 0
+//    var ep_id : Int = 0
+//    var title : String = ""
+//    var descr : String = ""
+//    var created_at : String = ""
+//    var duration : Int = 0
+//    var purchase_url : String = ""
+//    var stream_url : String = ""
+//    var permalink_url : String = ""
+//    var trackArray = [String]()
+//    var favorite = false
+//    
+//    // Initialize Episode object from JSON information
+//    init(JSONDictionary: NSDictionary) {
+//        super.init()
+//        
+//        for (key, value) in JSONDictionary {
+//            
+//            var keyName = key as! String
+//            keyName = keyName == "description" ? "descr" : keyName
+//            if self.properties.contains(keyName) {
+//                if let _ = value as? String {
+//                    self.setValue(String(value as! NSString), forKey: keyName)
+//                } else if let _ = value as? Int {
+//                    self.setValue(Int(value as! Int), forKey: keyName)
+//                }
+//            }
+//        }
+//        
+//        self.parseTracks()
+//    }
+//
+//    func formattedId() -> String {
+//        return "#" + String(format: "%03d", self.ep_id)
+//    }
+//    
+//    // Parse episode description into track array. Parses out the episode headers, like "Heldeep Classic."
+//    func parseTracks() {
+//        self.trackArray = self.descr.split("(\\n)+[0-9]{1,2}[.)] ")
+//        self.trackArray.removeAtIndex(0)
+//        if self.trackArray.count > 0 {
+//            for index in 0...self.trackArray.count - 1 {
+//                for header in GlobalConstants.EpisodeHeaders {
+//                    self.trackArray[index] = self.trackArray[index].replace(header, withString: "")
+//                }
+//                
+//            }
+//        }
+//        
+//    }
+//}
 
-class Episode: NSObject {
+import Parse
+
+
+class Episode : PFObject, PFSubclassing {
     
-    let properties = ["id", "ep_id", "title", "descr", "created_at", "duration", "purchase_url", "stream_url", "permalink_url"]
+    // MARK: - PFSubclassing
     
-    var id : Int = 0
-    var ep_id : Int = 0
-    var title : String = ""
-    var descr : String = ""
-    var created_at : String = ""
-    var duration : Int = 0
-    var purchase_url : String = ""
-    var stream_url : String = ""
-    var permalink_url : String = ""
-    var trackArray = [String]()
-    var favorite = false
-    
-    // Initialize Episode object from JSON information
-    init(JSONDictionary: NSDictionary) {
-        super.init()
-        
-        for (key, value) in JSONDictionary {
-            
-            var keyName = key as! String
-            keyName = keyName == "description" ? "descr" : keyName
-            if self.properties.contains(keyName) {
-                if let _ = value as? String {
-                    self.setValue(String(value as! NSString), forKey: keyName)
-                } else if let _ = value as? Int {
-                    self.setValue(Int(value as! Int), forKey: keyName)
-                }
-            }
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
         }
-        
-        self.parseTracks()
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
     }
+    
+    static func parseClassName() -> String {
+        return "Episode"
+    }
+    
+    // MARK: - Parse Core Properties
+    
+    @NSManaged var displayName: String?
+    
+    @NSManaged var id: String
+    @NSManaged var epId: Int
+    @NSManaged var title: String
+    @NSManaged var duration: Int
+    @NSManaged var scCreatedAt: String
+    @NSManaged var permalinkUrl: String
     
     // Formats episode title
     func formattedTitle() -> String {
         return self.title.stringByReplacingOccurrencesOfString("Oliver Heldens - ", withString: "")
-    }
-    
-    // Formats date string into a defined format
-    func formattedDate() -> String {
-        let inputFormatter = GlobalConstants.Date.Formatter
-        inputFormatter.dateFormat = GlobalConstants.Date.InputFormat
-        let date = inputFormatter.dateFromString(self.created_at)
-        let outputFormatter = GlobalConstants.Date.Formatter
-        outputFormatter.dateFormat = GlobalConstants.Date.OutputFormat
-        return outputFormatter.stringFromDate(date!)
     }
     
     // Gets duration of episode in format "H h M min"
@@ -82,22 +123,37 @@ class Episode: NSObject {
         return (hours == 0 ? "" : "\(hours):") + "\(minutesStr):\(secondsStr)"
     }
     
-    func formattedId() -> String {
-        return "#" + String(format: "%03d", self.ep_id)
+    // Formats date string into a defined format
+    func formattedDate() -> String {
+        let inputFormatter = GlobalConstants.Date.Formatter
+        inputFormatter.dateFormat = GlobalConstants.Date.InputFormat
+        let date = inputFormatter.dateFromString(self.scCreatedAt)
+        let outputFormatter = GlobalConstants.Date.Formatter
+        outputFormatter.dateFormat = GlobalConstants.Date.OutputFormat
+        return outputFormatter.stringFromDate(date!)
     }
+
+
     
-    // Parse episode description into track array. Parses out the episode headers, like "Heldeep Classic."
-    func parseTracks() {
-        self.trackArray = self.descr.split("(\\n)+[0-9]{1,2}[.)] ")
-        self.trackArray.removeAtIndex(0)
-        if self.trackArray.count > 0 {
-            for index in 0...self.trackArray.count - 1 {
-                for header in GlobalConstants.EpisodeHeaders {
-                    self.trackArray[index] = self.trackArray[index].replace(header, withString: "")
-                }
-                
-            }
-        }
-        
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
