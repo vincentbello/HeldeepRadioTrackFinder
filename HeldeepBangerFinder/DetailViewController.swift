@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AVFoundation
 
 class DetailViewController: UIViewController {
 
@@ -17,7 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var tracksHeaderLabel: UILabel!
     
     @IBOutlet weak var trackTableView: UITableView!
-    
+        
     let episode: Episode
     
     let tracksTableViewController = TracksTableViewController()
@@ -25,6 +26,13 @@ class DetailViewController: UIViewController {
     @IBAction func onListenTapped(sender: AnyObject) {
         // Listen: go to SoundCloud app
         UIApplication.tryURL(["soundcloud://tracks:\(episode.id)", episode.permalinkUrl, "http://www.soundcloud.com"])
+    }
+    
+    @IBAction func onDownloadTapped(sender: AnyObject) {
+        let nativeUrl = "itms://itunes.apple.com/us/podcast/heldeep-radio/id887878735?mt=2"
+        let browserUrl = "https://itunes.apple.com/us/podcast/heldeep-radio/id887878735?mt=2"
+        
+        UIApplication.tryURL([nativeUrl, browserUrl])
     }
     
     init(episode: Episode) {
@@ -48,7 +56,7 @@ class DetailViewController: UIViewController {
         trackTableView.delegate = tracksTableViewController
         trackTableView.dataSource = tracksTableViewController
         
-        // Load the NIB file
+        // Load the NIB files
         let nib = UINib(nibName: "TrackViewCell", bundle: nil)
         // Register this NIB, which contains the cell
         trackTableView.registerNib(nib, forCellReuseIdentifier: "TrackViewCell")
@@ -60,6 +68,16 @@ class DetailViewController: UIViewController {
         }
         
         fetchTracks()
+        
+        // Play episode
+//        let playerUrl = NSURL(string: episode.audioUrl())
+        let playerUrl = NSURL(string: "http://www.stephaniequinn.com/Music/Allegro%20from%20Duet%20in%20C%20Major.mp3")
+        let playerItem = AVPlayerItem(URL: playerUrl!)
+        let player = AVPlayer(playerItem: playerItem)
+        player.play()
+        
+        print("playing")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,15 +91,16 @@ class DetailViewController: UIViewController {
         if Reachability.isConnectedToNetwork() {
             let query = PFQuery(className: Track.parseClassName())
             query.whereKey("episode", equalTo: self.episode)
-//            query.orderByAscending("order")
+            query.orderByAscending("order")
             query.findObjectsInBackgroundWithBlock {
                 (objects: [PFObject]?, error: NSError?) -> Void in
                 
                 if error == nil {
-                    print("found tracks!")
                     // Found tracks
                     self.tracksTableViewController.tracks = objects! as! [Track]
+                    self.updateTracksHeader()
                     self.trackTableView.reloadData()
+                    
                     
                 } else {
                     print("Error!")
@@ -93,17 +112,9 @@ class DetailViewController: UIViewController {
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func updateTracksHeader() {
+        tracksHeaderLabel.text = "Tracks (\(tracksTableViewController.tracks.count))"
     }
-    */
-
 }
 
 

@@ -48,7 +48,8 @@ function getTracks(description, parentEpId) {
   for (i = 0; i < tlen; i++) {
     trackObj = {
       type: isSpecial ? specialMatch : null,
-      episode: parentEpId
+      episode: parentEpId,
+      order: i + 1
     };
     specialMatch = arr[i].match(SpecialTrackTypesRegex);
     if (specialMatch) {
@@ -120,6 +121,7 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
 
           trackParseObj.set('title',   trackObj.title);
           trackParseObj.set('type',    trackObj.type);
+          trackParseObj.set('order',   trackObj.order);
           trackParseObj.set('episode', episodeParseObj);
 
           toSave.push(trackParseObj);

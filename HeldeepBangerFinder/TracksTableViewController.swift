@@ -11,6 +11,7 @@ import UIKit
 class TracksTableViewController: UITableViewController {
     
     var tracks = [Track]()
+    var selectedIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,53 +31,55 @@ class TracksTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let selected = indexPath.row == selectedIndex
+        if (selected) {
+            let track = tracks[indexPath.row]
+            let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.systemFontOfSize(15))
+            return titleHeight + 55
+        } else {
+            return 44
+        }
+    }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> TrackViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TrackViewCell", forIndexPath: indexPath) as! TrackViewCell
         
         let track = tracks[indexPath.row]
         // Configure the cell...
-        print(indexPath.row)
-        cell.configureFor(track, index: indexPath.row + 1)
-
+        let selected = indexPath.row == selectedIndex
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("TrackViewCell", forIndexPath: indexPath) as! TrackViewCell
+        
+        cell.configureFor(track, isSelected: selected)
+        
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var rowsToUpdate = [indexPath]
+        
+        if (selectedIndex == indexPath.row) {
+            // deselect
+            selectedIndex = nil
+        } else {
+            if (selectedIndex != nil) {
+                rowsToUpdate.append(NSIndexPath(forRow: selectedIndex!, inSection: 0))
+            }
+            selectedIndex = indexPath.row
+        }
+        
+        tableView.reloadRowsAtIndexPaths(rowsToUpdate, withRowAnimation: UITableViewRowAnimation.Fade)
+        
+        if (indexPath.row == tracks.count - 1) {
+            // Last row
+            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+        }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
+    
     /*
     // MARK: - Navigation
 

@@ -55,6 +55,29 @@ extension String {
         }
         return mutableString
     }
+    
+    func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: CGFloat.max)
+        
+        let boundingBox = self.boundingRectWithSize(constraintRect, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        
+        return boundingBox.height
+    }
+    
+    func urlEncode() -> String {
+        
+        let characters = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+        
+        characters.removeCharactersInString("&")
+        
+        guard let encodedString = self.stringByAddingPercentEncodingWithAllowedCharacters(characters) else {
+            return self
+        }
+        
+        return encodedString
+        
+    }
+
 }
 
 extension Array {

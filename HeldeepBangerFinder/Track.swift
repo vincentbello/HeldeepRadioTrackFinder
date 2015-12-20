@@ -33,6 +33,7 @@ class Track : PFObject, PFSubclassing {
     @NSManaged var episode: Episode
     @NSManaged var title: String
     @NSManaged var type: String
+    @NSManaged var order: Int
     
     
     func typeIcon() -> UIImage? {
@@ -46,6 +47,16 @@ class Track : PFObject, PFSubclassing {
         default:
             return nil
         }
+    }
+    
+    func attributedType() -> NSMutableAttributedString {
+        let attachment = NSTextAttachment()
+        attachment.bounds = CGRectMake(0, -2, 12, 12)
+        attachment.image = self.typeIcon()
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let str = NSMutableAttributedString(attributedString: attachmentString)
+        str.appendAttributedString(NSAttributedString(string: " \(self.type)"))
+        return str
     }
     
 }

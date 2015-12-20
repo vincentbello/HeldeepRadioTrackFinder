@@ -95,6 +95,7 @@ class Episode : PFObject, PFSubclassing {
     @NSManaged var duration: Int
     @NSManaged var scCreatedAt: String
     @NSManaged var permalinkUrl: String
+    @NSManaged var streamUrl: String
     
     // Formats episode title
     func formattedTitle() -> String {
@@ -132,9 +133,11 @@ class Episode : PFObject, PFSubclassing {
         outputFormatter.dateFormat = GlobalConstants.Date.OutputFormat
         return outputFormatter.stringFromDate(date!)
     }
-
-
     
+    // Gives you the formatted URL
+    func audioUrl() -> String {
+        return "\(self.streamUrl)?client_id=\(GlobalConstants.SoundCloud.ClientID)"
+    }
 }
 
 

@@ -16,6 +16,7 @@
 		0C6EF6871C253105004F8ECA /* TracksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */; };
 		0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */; };
 		0C6EF68B1C25337C004F8ECA /* TrackViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */; };
+		0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6901C26836A004F8ECA /* ActionButton.swift */; };
 		F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F95376331B34D19C00A49A0D /* Default-568h@2x.png */; };
 		F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */; };
 		F9647A701B29F35E00012D9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6F1B29F35E00012D9B /* Extensions.swift */; };
@@ -67,6 +68,8 @@
 		0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksTableViewController.swift; sourceTree = "<group>"; };
 		0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
 		0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackViewCell.xib; sourceTree = "<group>"; };
+		0C6EF6901C26836A004F8ECA /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		0C6EF6921C268445004F8ECA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F95376331B34D19C00A49A0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		0C6EF67F1C252215004F8ECA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0C6EF6901C26836A004F8ECA /* ActionButton.swift */,
 				0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */,
 			);
 			name = Components;
@@ -236,6 +240,7 @@
 			children = (
 				F9D53D5B1B30A9310031B333 /* Reachability.swift */,
 				F98217B81B27C06B0013E15C /* GlobalConstants.swift */,
+				0C6EF6921C268445004F8ECA /* Info.plist */,
 				F9B3A9A81B27B31C0010D5AE /* Images.xcassets */,
 			);
 			name = "Supporting Files";
@@ -370,6 +375,7 @@
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
 				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
+				0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */,
 				F9647A701B29F35E00012D9B /* Extensions.swift in Sources */,
 				F98217B91B27C06B0013E15C /* GlobalConstants.swift in Sources */,
 				F9647A741B2A233A00012D9B /* CustomTableViewCell.swift in Sources */,

@@ -11,7 +11,7 @@
                 <outlet property="durationLabel" destination="dkr-Zf-hVI" id="qEw-nt-CcG"/>
                 <outlet property="titleLabel" destination="v7Y-7H-oV3" id="HJc-0J-Mmf"/>
                 <outlet property="trackTableView" destination="hWt-UT-mrd" id="XnH-Qo-HYv"/>
-                <outlet property="tracksHeaderLabel" destination="EGX-iQ-GUF" id="hLE-mB-X3m"/>
+                <outlet property="tracksHeaderLabel" destination="EGX-iQ-GUF" id="bhr-HH-EAb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -64,13 +64,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft1-lg-5Vt">
                     <rect key="frame" x="8" y="163" width="584" height="28"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJX-aJ-y61">
-                            <rect key="frame" x="0.0" y="0.0" width="74" height="28"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJX-aJ-y61" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="84" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="74" id="2lv-4X-Vhd"/>
                                 <constraint firstAttribute="height" constant="28" id="dOQ-hf-6xc"/>
                             </constraints>
-                            <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                            <inset key="contentEdgeInsets" minX="8" minY="3" maxX="8" maxY="3"/>
                             <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
                             <state key="normal" image="soundcloud">
                                 <attributedString key="attributedTitle">
@@ -87,15 +87,13 @@
                             <state key="selected">
                                 <attributedString key="attributedTitle"/>
                             </state>
+                            <state key="highlighted" image="soundcloud"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.corderRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                     <integer key="value" value="2"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                     <integer key="value" value="1"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <variation key="default">
@@ -108,11 +106,40 @@
                                 <action selector="onListenTapped:" destination="-1" eventType="touchUpInside" id="Zg4-P1-Fzi"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a4a-do-7Ds" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
+                            <rect key="frame" x="470" y="0.0" width="114" height="28"/>
+                            <inset key="contentEdgeInsets" minX="8" minY="3" maxX="8" maxY="3"/>
+                            <state key="normal" image="download">
+                                <attributedString key="attributedTitle">
+                                    <fragment content=" DOWNLOAD">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="highlighted" image="download"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onDownloadTapped:" destination="-1" eventType="touchUpInside" id="lTu-l7-1g8"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="aJX-aJ-y61" firstAttribute="top" secondItem="ft1-lg-5Vt" secondAttribute="top" id="09T-b7-33b"/>
                         <constraint firstItem="aJX-aJ-y61" firstAttribute="leading" secondItem="ft1-lg-5Vt" secondAttribute="leading" id="80b-Zp-Xsf"/>
+                        <constraint firstAttribute="trailing" secondItem="a4a-do-7Ds" secondAttribute="trailing" id="Ys6-hk-ak2"/>
                         <constraint firstAttribute="height" constant="28" id="ZNA-O2-jSr"/>
+                        <constraint firstItem="a4a-do-7Ds" firstAttribute="top" secondItem="ft1-lg-5Vt" secondAttribute="top" id="wS4-2q-42N"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56o-M8-Jla" customClass="TracksHeaderView" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
@@ -168,6 +195,7 @@
         </view>
     </objects>
     <resources>
+        <image name="download" width="22" height="22"/>
         <image name="heldeep" width="150" height="150"/>
         <image name="soundcloud" width="22" height="22"/>
     </resources>
