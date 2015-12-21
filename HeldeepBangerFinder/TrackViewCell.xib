@@ -73,7 +73,7 @@
                         <rect key="frame" x="46" y="8" width="265" height="70"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojH-2m-i0O">
-                                <rect key="frame" x="0.0" y="5" width="246" height="18"/>
+                                <rect key="frame" x="0.0" y="5" width="242" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -87,7 +87,7 @@
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="NIA-rO-3mC" firstAttribute="leading" secondItem="ojH-2m-i0O" secondAttribute="trailing" constant="-1" id="8WX-sN-x56"/>
+                            <constraint firstItem="NIA-rO-3mC" firstAttribute="leading" secondItem="ojH-2m-i0O" secondAttribute="trailing" constant="3" id="8WX-sN-x56"/>
                             <constraint firstItem="NIA-rO-3mC" firstAttribute="top" secondItem="ojH-2m-i0O" secondAttribute="top" id="8h2-VI-mPe"/>
                             <constraint firstItem="ojH-2m-i0O" firstAttribute="top" secondItem="qPn-Cx-RZN" secondAttribute="top" constant="5" id="BFP-oc-viN"/>
                             <constraint firstItem="ojH-2m-i0O" firstAttribute="leading" secondItem="qPn-Cx-RZN" secondAttribute="leading" id="bOh-eq-eOe"/>

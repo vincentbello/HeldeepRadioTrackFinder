@@ -58,7 +58,12 @@ class TrackViewCell: UITableViewCell {
         } else {
             titleLabel.text = track.title
             let icon = track.typeIcon()
-            trackIcon.image = icon
+            if (icon != nil) {
+                trackIcon.image = icon
+            } else {
+                titleLabel.frame.size.width = UIScreen.mainScreen().bounds.width - 55
+            }
+            
             detailView.hidden = false
             expandedDetailView.hidden = true
             

@@ -70,7 +70,7 @@ var message = "";
 
 Parse.Cloud.job('fetchLatest', function(request, status) {
   var today = new Date(),
-      weekDay = today.getDay();
+      weekday = today.getDay();
   // If today is Friday or Saturday
   if (weekday === 5 || weekday === 6) {
 
@@ -136,5 +136,7 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
     }, function(err) {
       status.error(err);
     });
+  } else {
+    status.error('Invalid weekday.');
   }
 });

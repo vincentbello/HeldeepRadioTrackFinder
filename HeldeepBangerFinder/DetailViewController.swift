@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import AVFoundation
 
 class DetailViewController: UIViewController {
 
@@ -18,7 +17,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var tracksHeaderLabel: UILabel!
     
     @IBOutlet weak var trackTableView: UITableView!
-        
+
+    @IBOutlet weak var playerView: PlayerView!
+    
+    
     let episode: Episode
     
     let tracksTableViewController = TracksTableViewController()
@@ -53,31 +55,23 @@ class DetailViewController: UIViewController {
         dateLabel.text = episode.formattedDate()
         durationLabel.text = episode.durationInMinutes()
         
+        playerView.configureFor(episode)
+        
         trackTableView.delegate = tracksTableViewController
         trackTableView.dataSource = tracksTableViewController
-        
         // Load the NIB files
         let nib = UINib(nibName: "TrackViewCell", bundle: nil)
         // Register this NIB, which contains the cell
         trackTableView.registerNib(nib, forCellReuseIdentifier: "TrackViewCell")
-        
         trackTableView.layoutMargins = UIEdgeInsetsZero
-        if #available(iOS 9.0, *) {
-            print("available!")
-            trackTableView.cellLayoutMarginsFollowReadableWidth = false
-        }
         
         fetchTracks()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        // Play episode
-//        let playerUrl = NSURL(string: episode.audioUrl())
-        let playerUrl = NSURL(string: "http://www.stephaniequinn.com/Music/Allegro%20from%20Duet%20in%20C%20Major.mp3")
-        let playerItem = AVPlayerItem(URL: playerUrl!)
-        let player = AVPlayer(playerItem: playerItem)
-        player.play()
-        
-        print("playing")
-        
+        playerView.reset()
     }
 
     override func didReceiveMemoryWarning() {

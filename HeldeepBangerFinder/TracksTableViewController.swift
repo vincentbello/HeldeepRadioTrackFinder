@@ -35,8 +35,9 @@ class TracksTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let selected = indexPath.row == selectedIndex
         if (selected) {
+            // Dynamically compute the height of the row based on its contents
             let track = tracks[indexPath.row]
-            let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.systemFontOfSize(15))
+            let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.boldSystemFontOfSize(15))
             return titleHeight + 55
         } else {
             return 44

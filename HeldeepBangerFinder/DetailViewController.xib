@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="dateLabel" destination="uj5-7H-Sz3" id="KHE-GC-ksA"/>
                 <outlet property="durationLabel" destination="dkr-Zf-hVI" id="qEw-nt-CcG"/>
+                <outlet property="playerView" destination="doX-hO-O7Z" id="YfS-Zc-Y4N"/>
                 <outlet property="titleLabel" destination="v7Y-7H-oV3" id="HJc-0J-Mmf"/>
                 <outlet property="trackTableView" destination="hWt-UT-mrd" id="XnH-Qo-HYv"/>
                 <outlet property="tracksHeaderLabel" destination="EGX-iQ-GUF" id="bhr-HH-EAb"/>
@@ -21,14 +22,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heldeep" translatesAutoresizingMaskIntoConstraints="NO" id="Gfz-Ah-Bok">
-                    <rect key="frame" x="8" y="75" width="80" height="80"/>
+                    <rect key="frame" x="8" y="100" width="80" height="80"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="M2b-N4-l1W"/>
                         <constraint firstAttribute="height" constant="80" id="nFT-lu-Xnn"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UWQ-sX-XAr">
-                    <rect key="frame" x="96" y="75" width="496" height="80"/>
+                    <rect key="frame" x="96" y="100" width="496" height="80"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7Y-7H-oV3">
                             <rect key="frame" x="0.0" y="0.0" width="496" height="21.5"/>
@@ -62,7 +63,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft1-lg-5Vt">
-                    <rect key="frame" x="8" y="163" width="584" height="28"/>
+                    <rect key="frame" x="8" y="188" width="584" height="28"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJX-aJ-y61" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="84" height="28"/>
@@ -143,7 +144,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56o-M8-Jla" customClass="TracksHeaderView" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="199" width="600" height="40"/>
+                    <rect key="frame" x="0.0" y="224" width="600" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGX-iQ-GUF">
                             <rect key="frame" x="274" y="10" width="51" height="20.5"/>
@@ -160,16 +161,22 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hWt-UT-mrd">
-                    <rect key="frame" x="0.0" y="239" width="600" height="361"/>
+                    <rect key="frame" x="0.0" y="264" width="600" height="336"/>
                     <color key="backgroundColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="separatorColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="doX-hO-O7Z" userLabel="Player View" customClass="PlayerView" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="65" width="600" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="NYL-XS-Fbv"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="56o-M8-Jla" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="27b-kB-QzZ"/>
-                <constraint firstItem="Gfz-Ah-Bok" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="2nn-Tk-QA4"/>
+                <constraint firstItem="Gfz-Ah-Bok" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="2nn-Tk-QA4"/>
                 <constraint firstItem="ft1-lg-5Vt" firstAttribute="top" secondItem="UWQ-sX-XAr" secondAttribute="bottom" constant="8" id="2xv-3M-31A"/>
                 <constraint firstAttribute="bottom" secondItem="hWt-UT-mrd" secondAttribute="bottom" id="4qV-xO-q8e"/>
                 <constraint firstItem="hWt-UT-mrd" firstAttribute="top" secondItem="56o-M8-Jla" secondAttribute="bottom" id="8fM-kX-5e7"/>
@@ -178,17 +185,22 @@
                 <constraint firstItem="hWt-UT-mrd" firstAttribute="top" secondItem="56o-M8-Jla" secondAttribute="bottom" constant="1" id="DGa-4L-cu3"/>
                 <constraint firstItem="UWQ-sX-XAr" firstAttribute="centerY" secondItem="Gfz-Ah-Bok" secondAttribute="centerY" id="HVn-VK-0MF"/>
                 <constraint firstItem="UWQ-sX-XAr" firstAttribute="leading" secondItem="Gfz-Ah-Bok" secondAttribute="trailing" constant="8" id="Hlz-Md-bbP"/>
+                <constraint firstItem="doX-hO-O7Z" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="II5-8h-x6S"/>
                 <constraint firstItem="hWt-UT-mrd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QWJ-mc-HYw"/>
+                <constraint firstItem="Gfz-Ah-Bok" firstAttribute="top" secondItem="doX-hO-O7Z" secondAttribute="bottom" constant="5" id="Tkd-xD-2Ak"/>
                 <constraint firstAttribute="trailing" secondItem="hWt-UT-mrd" secondAttribute="trailing" id="Xpf-g1-3KR"/>
                 <constraint firstAttribute="trailing" secondItem="ft1-lg-5Vt" secondAttribute="trailing" constant="8" id="YzT-Eu-2QZ"/>
                 <constraint firstItem="UWQ-sX-XAr" firstAttribute="bottom" secondItem="Gfz-Ah-Bok" secondAttribute="bottom" id="a4Q-cS-t6b"/>
                 <constraint firstItem="56o-M8-Jla" firstAttribute="top" secondItem="ft1-lg-5Vt" secondAttribute="bottom" constant="8" id="jaw-Zw-bCI"/>
                 <constraint firstAttribute="trailing" secondItem="UWQ-sX-XAr" secondAttribute="trailing" constant="8" id="qT0-O0-JSd"/>
+                <constraint firstItem="doX-hO-O7Z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vZx-pD-k03"/>
                 <constraint firstItem="Gfz-Ah-Bok" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="we0-cw-4mX"/>
+                <constraint firstAttribute="trailing" secondItem="doX-hO-O7Z" secondAttribute="trailing" id="wpl-qM-iRS"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="2nn-Tk-QA4"/>
                     <exclude reference="DGa-4L-cu3"/>
                 </mask>
             </variation>

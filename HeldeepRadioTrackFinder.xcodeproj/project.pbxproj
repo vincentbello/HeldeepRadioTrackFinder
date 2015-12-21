@@ -17,6 +17,11 @@
 		0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6881C25337C004F8ECA /* TrackViewCell.swift */; };
 		0C6EF68B1C25337C004F8ECA /* TrackViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */; };
 		0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6901C26836A004F8ECA /* ActionButton.swift */; };
+		0CB62D9D1C275AF600FA798C /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62D9C1C275AF600FA798C /* PlayerView.swift */; };
+		0CB62DC51C27721D00FA798C /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62DC41C27721D00FA798C /* CustomView.swift */; };
+		0CB62DC71C27722700FA798C /* CustomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB62DC61C27722700FA798C /* CustomView.xib */; };
+		0CB62DC91C277E5E00FA798C /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB62DC81C277E5E00FA798C /* PlayerView.xib */; };
+		0CB62DCB1C27852000FA798C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62DCA1C27852000FA798C /* Helpers.swift */; };
 		F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F95376331B34D19C00A49A0D /* Default-568h@2x.png */; };
 		F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */; };
 		F9647A701B29F35E00012D9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6F1B29F35E00012D9B /* Extensions.swift */; };
@@ -70,6 +75,11 @@
 		0C6EF6891C25337C004F8ECA /* TrackViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackViewCell.xib; sourceTree = "<group>"; };
 		0C6EF6901C26836A004F8ECA /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		0C6EF6921C268445004F8ECA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CB62D9C1C275AF600FA798C /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		0CB62DC41C27721D00FA798C /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		0CB62DC61C27722700FA798C /* CustomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomView.xib; path = ../CustomView.xib; sourceTree = "<group>"; };
+		0CB62DC81C277E5E00FA798C /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = ../PlayerView.xib; sourceTree = "<group>"; };
+		0CB62DCA1C27852000FA798C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		F95376331B34D19C00A49A0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -138,6 +148,10 @@
 			children = (
 				0C6EF6901C26836A004F8ECA /* ActionButton.swift */,
 				0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */,
+				0CB62D9C1C275AF600FA798C /* PlayerView.swift */,
+				0CB62DC81C277E5E00FA798C /* PlayerView.xib */,
+				0CB62DC41C27721D00FA798C /* CustomView.swift */,
+				0CB62DC61C27722700FA798C /* CustomView.xib */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -238,6 +252,7 @@
 		F9B3A99F1B27B31C0010D5AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0CB62DCA1C27852000FA798C /* Helpers.swift */,
 				F9D53D5B1B30A9310031B333 /* Reachability.swift */,
 				F98217B81B27C06B0013E15C /* GlobalConstants.swift */,
 				0C6EF6921C268445004F8ECA /* Info.plist */,
@@ -348,8 +363,10 @@
 			files = (
 				F9B3A9A71B27B31C0010D5AE /* Main.storyboard in Resources */,
 				0C6EF6731C24F330004F8ECA /* DetailViewController.xib in Resources */,
+				0CB62DC91C277E5E00FA798C /* PlayerView.xib in Resources */,
 				0C6EF68B1C25337C004F8ECA /* TrackViewCell.xib in Resources */,
 				F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */,
+				0CB62DC71C27722700FA798C /* CustomView.xib in Resources */,
 				0C6EF66F1C24E5B2004F8ECA /* EpisodeViewCell.xib in Resources */,
 				F9B3A9AC1B27B31C0010D5AE /* LaunchScreen.xib in Resources */,
 				F9B3A9A91B27B31C0010D5AE /* Images.xcassets in Resources */,
@@ -371,10 +388,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C6EF6721C24F330004F8ECA /* DetailViewController.swift in Sources */,
+				0CB62DCB1C27852000FA798C /* Helpers.swift in Sources */,
 				F9B3A9A21B27B31C0010D5AE /* AppDelegate.swift in Sources */,
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
 				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
+				0CB62DC51C27721D00FA798C /* CustomView.swift in Sources */,
 				0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */,
 				F9647A701B29F35E00012D9B /* Extensions.swift in Sources */,
 				F98217B91B27C06B0013E15C /* GlobalConstants.swift in Sources */,
@@ -387,6 +406,7 @@
 				0C6EF6831C252547004F8ECA /* TracksHeaderView.swift in Sources */,
 				F9F269471B28B5B500113F9F /* AboutTableViewController.swift in Sources */,
 				0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */,
+				0CB62D9D1C275AF600FA798C /* PlayerView.swift in Sources */,
 				0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
