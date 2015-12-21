@@ -35,7 +35,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-h9-adq">
-                            <rect key="frame" x="78" y="19" width="476.5" height="2"/>
+                            <rect key="frame" x="78" y="19" width="476" height="2"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="2" id="PHf-U4-x8K"/>
@@ -47,7 +47,7 @@
                                 <constraint firstAttribute="width" constant="33.5" id="JCJ-MS-zn4"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X63-P0-C9x">
@@ -56,7 +56,7 @@
                                 <constraint firstAttribute="width" constant="33.5" id="mey-7G-JpU"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YPg-tN-q8g" userLabel="Progress Bar View">
@@ -82,6 +82,7 @@
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="YPg-tN-q8g" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="5kN-OP-SeQ"/>
+                        <constraint firstItem="zjV-h9-adq" firstAttribute="leading" secondItem="hnF-XB-GeK" secondAttribute="trailing" constant="4" id="8Dv-GN-0e6"/>
                         <constraint firstItem="hnF-XB-GeK" firstAttribute="leading" secondItem="8Vi-LF-qcP" secondAttribute="trailing" constant="8" id="Br7-hN-gmB"/>
                         <constraint firstItem="hnF-XB-GeK" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="JSD-8M-UUa"/>
                         <constraint firstAttribute="trailing" secondItem="X63-P0-C9x" secondAttribute="trailing" constant="8.5" id="SCt-k4-XGD"/>
@@ -97,12 +98,15 @@
                         <constraint firstItem="YPg-tN-q8g" firstAttribute="leading" secondItem="hnF-XB-GeK" secondAttribute="trailing" constant="-1.5" id="uSr-gh-F6l"/>
                         <constraint firstItem="zjV-h9-adq" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="wBs-yx-zTR"/>
                         <constraint firstItem="8Vi-LF-qcP" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="xu6-TF-w3n"/>
+                        <constraint firstItem="zjV-h9-adq" firstAttribute="leading" secondItem="YPg-tN-q8g" secondAttribute="trailing" constant="-8" id="ywq-eb-kLm"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="ecG-Ao-F2A"/>
                             <exclude reference="h5j-Cl-uX7"/>
                             <exclude reference="eXA-7T-VxU"/>
+                            <exclude reference="uSr-gh-F6l"/>
+                            <exclude reference="WJa-Hb-F4y"/>
                             <exclude reference="el3-sd-qGV"/>
                         </mask>
                     </variation>

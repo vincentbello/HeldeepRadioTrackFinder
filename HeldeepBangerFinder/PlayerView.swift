@@ -18,7 +18,7 @@ class PlayerView: UIView {
     var shouldRestart: Bool = false
     
     var audioTimer: NSTimer?
-    var secondsPlayed: Int = 0
+//    var secondsPlayed: Int = 0
     
     var progressBarX: CGFloat?
 
@@ -89,10 +89,11 @@ class PlayerView: UIView {
     }
     
     func updateTimer() {
-        updateSecondsPlayed(secondsPlayed + 1)
+        let seconds = player.currentTime().seconds
+        updateSecondsPlayed(seconds)
         
         // Update timeBarView position
-        let fraction = CGFloat(secondsPlayed) / CGFloat(episode!.duration / 1000)
+        let fraction = CGFloat(seconds) / CGFloat(episode!.duration / 1000)
         if (fraction < 1) {
             updateCursorPosition(fraction)
         }
@@ -110,18 +111,17 @@ class PlayerView: UIView {
         if (isPlaying) {
             player.pause()
         }
-        let seconds = Int(fraction * CGFloat(episode!.duration / 1000))
+        let seconds = Double(fraction * CGFloat(episode!.duration / 1000))
         updateSecondsPlayed(seconds)
-        player.seekToTime(CMTimeMakeWithSeconds(Double(seconds), 10)) {_ in
+        player.seekToTime(CMTimeMakeWithSeconds(seconds, 1000)) {_ in
             if (self.isPlaying) {
                 self.player.play()
             }
         }
     }
     
-    func updateSecondsPlayed(seconds: Int) {
-        secondsPlayed = seconds
-        let (h, m, s) = secondsToHoursMinutesSeconds(seconds)
+    func updateSecondsPlayed(seconds: Double) {
+        let (h, m, s) = secondsToHoursMinutesSeconds(Int(seconds))
         progressTimeLabel.text = "\(h > 0 ? "\(h):" : "")\(m > 0 ? String(format: "%02d", m) : "0"):\(String(format: "%02d", s))"
     }
     
@@ -144,10 +144,10 @@ class PlayerView: UIView {
         }
         
         let fraction = (progressBarView.center.x - timeBarView.frame.origin.x) / CGFloat(timeBarView.frame.width)
-        let seconds = Int(fraction * CGFloat(episode!.duration / 1000))
+        let seconds = Double(fraction * CGFloat(episode!.duration / 1000))
         updateSecondsPlayed(seconds)
         
-        if (recognizer.state == UIGestureRecognizerState.Ended) {
+        if (recognizer.state == UIGestureRecognizerState.Ended || recognizer.state == UIGestureRecognizerState.Cancelled) {
             if (shouldRestart) {
                 actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
                 shouldRestart = false
@@ -171,12 +171,16 @@ class PlayerView: UIView {
         isPlaying = false
     }
     
-    func restart() {
+    func reset() {
         updateCursorPosition(0)
         updateSecondsPlayed(0)
         shouldRestart = false
         isPlaying = false
-        player.seekToTime(CMTimeMakeWithSeconds(0, 10)) {_ in 
+    }
+    
+    func restart() {
+        reset()
+        player.seekToTime(CMTimeMakeWithSeconds(0, 1000)) {_ in
             self.play()
         }
     }
