@@ -69,11 +69,14 @@ class PlayerView: UIView {
         let (h, m, s) = secondsToHoursMinutesSeconds(episode.duration / 1000)
         totalTimeLabel.text = "\(h > 0 ? "\(h):" : "")\(String(format: "%02d", m)):\(String(format: "%02d", s))"
         progressBarX = progressBarView.center.x
+        if #available(iOS 9.0, *) {
+            progressTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(11, weight: UIFontWeightRegular)
+        }
         
         // Configure audio player
         
-//        let playerUrl = NSURL(string: episode.audioUrl())
-        let playerUrl = NSURL(string: "https://api.soundcloud.com/tracks/86569568/stream?client_id=20c0a4e42940721a64391ac4814cc8c7")
+        let playerUrl = NSURL(string: episode.audioUrl())
+//        let playerUrl = NSURL(string: "https://api.soundcloud.com/tracks/86569568/stream?client_id=20c0a4e42940721a64391ac4814cc8c7")
         
         let playerItem = AVPlayerItem(URL: playerUrl!)
         player = AVPlayer(playerItem: playerItem)
@@ -167,9 +170,10 @@ class PlayerView: UIView {
     
     func reset() {
         updateCursorPosition(0)
-        secondsPlayed = 0
+        updateSecondsPlayed(0)
         player.seekToTime(CMTimeMakeWithSeconds(0, 5))
         shouldRestart = false
+        isPlaying = false
     }
     
 }

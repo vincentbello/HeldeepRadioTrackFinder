@@ -35,8 +35,7 @@ class EpisodeViewCell: UITableViewCell {
     
     func configureFor(episode: Episode, isNew: Bool = false) {
         
-//        titleLabel.text = episode.formattedTitle()
-        titleLabel.text = episode.title
+        titleLabel.text = episode.formattedTitle()
         subtitleLabel.text = "\(episode.formattedDate()) · \(episode.durationInMinutes())"
         
         numberLabel.text = String(episode.epId)
