@@ -76,8 +76,6 @@ class PlayerView: UIView {
         // Configure audio player
         
         let playerUrl = NSURL(string: episode.audioUrl())
-//        let playerUrl = NSURL(string: "https://api.soundcloud.com/tracks/86569568/stream?client_id=20c0a4e42940721a64391ac4814cc8c7")
-        
         let playerItem = AVPlayerItem(URL: playerUrl!)
         player = AVPlayer(playerItem: playerItem)
         let playerLayer = AVPlayerLayer(player: player)
@@ -109,9 +107,16 @@ class PlayerView: UIView {
     
     // Only cursor position has been set
     func updateFromProgressBar(fraction: CGFloat) {
+        if (isPlaying) {
+            player.pause()
+        }
         let seconds = Int(fraction * CGFloat(episode!.duration / 1000))
         updateSecondsPlayed(seconds)
-        player.seekToTime(CMTimeMakeWithSeconds(Double(seconds), 5))
+        player.seekToTime(CMTimeMakeWithSeconds(Double(seconds), 10)) {_ in
+            if (self.isPlaying) {
+                self.player.play()
+            }
+        }
     }
     
     func updateSecondsPlayed(seconds: Int) {
@@ -133,21 +138,24 @@ class PlayerView: UIView {
         if (translation.x < 0) {
             let minX = timeBarView.frame.origin.x
             progressBarView.center.x = max(progressBarX! + translation.x, minX)
-//            progressBarX = progressBarView.center.x
         } else {
             let maxX = timeBarView.frame.origin.x + timeBarView.frame.width
             progressBarView.center.x = min(progressBarX! + translation.x, maxX)
-//            progressBarX = progressBarView.center.x
         }
         
+        let fraction = (progressBarView.center.x - timeBarView.frame.origin.x) / CGFloat(timeBarView.frame.width)
+        let seconds = Int(fraction * CGFloat(episode!.duration / 1000))
+        updateSecondsPlayed(seconds)
+        
         if (recognizer.state == UIGestureRecognizerState.Ended) {
+            if (shouldRestart) {
+                actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
+                shouldRestart = false
+            }
             progressBarX = progressBarView.center.x
-            let fraction = (progressBarX! - timeBarView.frame.origin.x) / CGFloat(timeBarView.frame.width)
             updateFromProgressBar(fraction)
         }
     }
-    
-    
     
     func play() {
         audioTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
@@ -164,16 +172,13 @@ class PlayerView: UIView {
     }
     
     func restart() {
-        reset()
-        play()
-    }
-    
-    func reset() {
         updateCursorPosition(0)
         updateSecondsPlayed(0)
-        player.seekToTime(CMTimeMakeWithSeconds(0, 5))
         shouldRestart = false
         isPlaying = false
+        player.seekToTime(CMTimeMakeWithSeconds(0, 10)) {_ in 
+            self.play()
+        }
     }
     
 }

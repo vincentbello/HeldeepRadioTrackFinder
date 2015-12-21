@@ -71,7 +71,7 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        playerView.reset()
+        playerView.pause()
     }
 
     override func didReceiveMemoryWarning() {
