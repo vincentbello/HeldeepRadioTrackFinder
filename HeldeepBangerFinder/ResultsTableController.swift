@@ -23,6 +23,10 @@ class ResultsTableController: CustomTableViewController {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        print("results table controller view did load")
+        // Register cell
+        self.tableView.registerClass(CustomTableViewCell.self, forCellReuseIdentifier: GlobalConstants.TableViewCell.Identifier)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +43,7 @@ class ResultsTableController: CustomTableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
+        print("number of rows - results table controller")
         
         return searchedEpisodes.count
     }
@@ -49,7 +54,7 @@ class ResultsTableController: CustomTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let episode = searchedEpisodes[indexPath.row]
+        print("dequeue")
         
         let cell = tableView.dequeueReusableCellWithIdentifier(GlobalConstants.TableViewCell.Identifier) as! CustomTableViewCell
         

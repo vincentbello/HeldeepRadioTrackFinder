@@ -159,3 +159,11 @@ extension CALayer {
     }
     
 }
+
+extension UIView {
+    // adds border to frame (for debugging)
+    func addDebuggingBorder(color: UIColor = UIColor.redColor()) {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = color.CGColor
+    }
+}

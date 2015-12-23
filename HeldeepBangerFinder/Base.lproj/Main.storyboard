@@ -23,7 +23,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="tHM-Zo-5Dx">
                         <barButtonItem key="backBarButtonItem" title=" " id="Fxv-vZ-Nqf"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="bYJ-9J-ia0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="bYJ-9J-ia0">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="searchBegin:" destination="lTK-F8-LEO" id="tN8-ph-7KZ"/>

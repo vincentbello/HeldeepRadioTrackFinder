@@ -93,30 +93,16 @@ class PlayerView: UIView {
         updateSecondsPlayed(seconds)
         
         // Update timeBarView position
+        updateProgressBar(seconds)
+    }
+    
+    func updateProgressBar(seconds: Double) {
         let fraction = CGFloat(seconds) / CGFloat(episode!.duration / 1000)
-        if (fraction < 1) {
-            updateCursorPosition(fraction)
-        }
-    }
-    
-    func updateCursorPosition(fraction: CGFloat) {
-        let timeBarOrigin = timeBarView.frame.origin.x
-        let timeBarWidth = timeBarView.frame.width
-        progressBarView.center.x = timeBarOrigin + (fraction * timeBarWidth)
-        progressBarX = progressBarView.center.x
-    }
-    
-    // Only cursor position has been set
-    func updateFromProgressBar(fraction: CGFloat) {
-        if (isPlaying) {
-            player.pause()
-        }
-        let seconds = Double(fraction * CGFloat(episode!.duration / 1000))
-        updateSecondsPlayed(seconds)
-        player.seekToTime(CMTimeMakeWithSeconds(seconds, 1000)) {_ in
-            if (self.isPlaying) {
-                self.player.play()
-            }
+        if (fraction <= 1) {
+            let timeBarOrigin = timeBarView.frame.origin.x
+            let timeBarWidth = timeBarView.frame.width
+            progressBarView.center.x = timeBarOrigin + (fraction * timeBarWidth)
+            progressBarX = progressBarView.center.x
         }
     }
     
@@ -126,7 +112,7 @@ class PlayerView: UIView {
     }
     
     func didFinishPlaying(notification: NSNotification) {
-        updateCursorPosition(1)
+        updateProgressBar(player.currentTime().seconds)
         audioTimer?.invalidate()
         isPlaying = false
         actionButton.setBackgroundImage(UIImage(named: "restart"), forState: .Normal)
@@ -134,6 +120,10 @@ class PlayerView: UIView {
     }
     
     func didPanProgressBar(recognizer: UIPanGestureRecognizer) {
+        if (player.rate > 0) {
+            audioTimer?.invalidate()
+            player.pause()
+        }
         let translation = recognizer.translationInView(self)
         if (translation.x < 0) {
             let minX = timeBarView.frame.origin.x
@@ -142,19 +132,29 @@ class PlayerView: UIView {
             let maxX = timeBarView.frame.origin.x + timeBarView.frame.width
             progressBarView.center.x = min(progressBarX! + translation.x, maxX)
         }
-        
         let fraction = (progressBarView.center.x - timeBarView.frame.origin.x) / CGFloat(timeBarView.frame.width)
         let seconds = Double(fraction * CGFloat(episode!.duration / 1000))
         updateSecondsPlayed(seconds)
         
-        if (recognizer.state == UIGestureRecognizerState.Ended || recognizer.state == UIGestureRecognizerState.Cancelled) {
-            if (shouldRestart) {
-                actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
-                shouldRestart = false
-            }
-            progressBarX = progressBarView.center.x
-            updateFromProgressBar(fraction)
+        if (recognizer.state == UIGestureRecognizerState.Ended) {
+            goToTimestamp(seconds, shouldPlay: isPlaying)
         }
+    }
+    
+    func goToTimestamp(seconds: Double, shouldPlay: Bool) {
+        if (shouldRestart) {
+            actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
+            shouldRestart = false
+        }
+        updateProgressBar(seconds)
+        updateSecondsPlayed(seconds)
+        
+        player.seekToTime(CMTimeMakeWithSeconds(seconds, 1000)) {_ in
+            if (shouldPlay) {
+                self.play()
+            }
+        }
+
     }
     
     func play() {
@@ -172,7 +172,7 @@ class PlayerView: UIView {
     }
     
     func reset() {
-        updateCursorPosition(0)
+        updateProgressBar(0)
         updateSecondsPlayed(0)
         shouldRestart = false
         isPlaying = false

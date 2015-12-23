@@ -12,6 +12,7 @@ class TracksTableViewController: UITableViewController {
     
     var tracks = [Track]()
     var selectedIndex: Int?
+    var playerView: PlayerView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class TracksTableViewController: UITableViewController {
             // Dynamically compute the height of the row based on its contents
             let track = tracks[indexPath.row]
             let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.boldSystemFontOfSize(15))
-            return titleHeight + 55
+            return titleHeight + (track.timestamp > 0 ? 80 : 50)
         } else {
             return 44
         }
@@ -52,7 +53,7 @@ class TracksTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TrackViewCell", forIndexPath: indexPath) as! TrackViewCell
         
-        cell.configureFor(track, isSelected: selected)
+        cell.configureFor(track, isSelected: selected, playerView: playerView!)
         
         return cell
     }

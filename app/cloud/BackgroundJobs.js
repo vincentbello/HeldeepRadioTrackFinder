@@ -6,9 +6,16 @@ var SoundCloud = {
   ClientId: '20c0a4e42940721a64391ac4814cc8c7',
   TracksLimit: 3
 };
+
 var SpecialTrackTypesRegex = /Heldeep Radio Cooldown|Heldeep Cooldown|Heldeep Radio Classic|Heldeep Classic|Heldeep Radio Halfbeat|Heldeep Halfbeat/;
 
+var TRACKLIST_DATA = require('cloud/tracklistData');
 
+/**
+ * Format episode object from SC data
+ * @param  {Object} ep : episode object
+ * @return {Object}    formatted episode
+ */
 function generateEpisodeObject(ep) {
   var epId = getEpisodeId(ep.title);
   return {
@@ -24,6 +31,11 @@ function generateEpisodeObject(ep) {
   };
 }
 
+/**
+ * Gets episode ID (number) from episode title
+ * @param  {String} title : episode title
+ * @return {Number}       episode ID
+ */
 function getEpisodeId(title) {
   var matches = title.match(/#[0-9]{3}/);
   if (!matches) {
@@ -33,6 +45,12 @@ function getEpisodeId(title) {
   return parseInt(matches[0].substring(1), 10);
 }
 
+/**
+ * Gets array of track objects from episode description
+ * @param  {String} description : episode description
+ * @param  {Number} parentEpId  : episode ID
+ * @return {Array}              array of track objects
+ */
 function getTracks(description, parentEpId) {
   var arr = description.split(/[^0-9][0-9]{1,2}[.)] /),
       tlen,
@@ -66,8 +84,7 @@ function getTracks(description, parentEpId) {
   return tracksArr;
 }
 
-var message = "";
-
+// Parse job to fetch the latest episode. This runs periodically
 Parse.Cloud.job('fetchLatest', function(request, status) {
   var today = new Date(),
       weekday = today.getDay();
@@ -139,4 +156,25 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
   } else {
     status.error('Invalid weekday.');
   }
+});
+
+// Job to fetch timestamps for all episodes, given data array of 1001tracklists URLs
+Parse.Cloud.job('setAllTimestamps', function(request, status) {
+  var promises = [];
+
+  TRACKLIST_DATA.forEach(function(elem) {
+    promises.push(Parse.Cloud.run('setTimestamps', {
+      'epId' : elem.epId,
+      'tracklistUrl' : elem.tracklistUrl
+    }));
+  });
+
+  return Parse.Promise.when(promises)
+    .then(function() {
+
+    status.success('success!');
+
+  }, function(err) {
+    status.error('error: ' + err);
+  });
 });

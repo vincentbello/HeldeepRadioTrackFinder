@@ -34,6 +34,7 @@ class Track : PFObject, PFSubclassing {
     @NSManaged var title: String
     @NSManaged var type: String
     @NSManaged var order: Int
+    @NSManaged var timestamp: Int
     
     
     func typeIcon() -> UIImage? {

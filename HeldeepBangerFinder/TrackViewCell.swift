@@ -20,15 +20,22 @@ class TrackViewCell: UITableViewCell {
     
     @IBOutlet weak var expandedTitleLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var typeLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     
     @IBAction func searchOnSoundCloud(sender: AnyObject) {
-        let encodedSearchTerm = searchTerm!.urlEncode()
+        let encodedSearchTerm = track!.title.urlEncode()
         let searchUrl = "https://soundcloud.com/search?q=\(encodedSearchTerm)"
         UIApplication.tryURL([searchUrl])
     }
     
-    var searchTerm: String?
+    @IBAction func skipToTimestamp(sender: AnyObject) {
+        playerView!.goToTimestamp(Double(track!.timestamp), shouldPlay: true)
+    }
+    
+    var track: Track?
+    var playerView: PlayerView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,19 +48,36 @@ class TrackViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureFor(track: Track, isSelected: Bool) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        skipButton.setAttributedTitle(skipButtonText(), forState: .Normal)
+    }
+    
+    func configureFor(track: Track, isSelected: Bool, playerView: PlayerView) {
+        self.track = track
+        if (self.playerView == nil) {
+            self.playerView = playerView
+        }
+        
         numberLabel.text = String(track.order)
         
         if (isSelected) {
             expandedTitleLabel.text = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             detailView.hidden = true
             expandedDetailView.hidden = false
-            searchTerm = track.title
             if (track.type.characters.count > 0) {
                 typeLabel.attributedText = track.attributedType()
                 typeLabel.hidden = false
+                typeLabelHeightConstraint.constant = 16
             } else {
                 typeLabel.hidden = true
+                typeLabelHeightConstraint.constant = 0
+            }
+            if (track.timestamp > 0) {
+                skipButton.hidden = false
+            } else {
+                skipButton.hidden = true
             }
         } else {
             titleLabel.text = track.title
@@ -68,6 +92,17 @@ class TrackViewCell: UITableViewCell {
         
         layoutMargins = UIEdgeInsetsZero
     }
-
     
+    func skipButtonText() -> NSAttributedString {
+        let attachment = NSTextAttachment()
+        attachment.bounds = CGRectMake(0, -2, 15, 15)
+        attachment.image = UIImage(named: "play")
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let str = NSMutableAttributedString(attributedString: attachmentString)
+        let textStr = NSAttributedString(string: " Skip to track", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        str.appendAttributedString(textStr)
+        return str
+
+    }
+
 }

@@ -11,7 +11,7 @@ import UIKit
 
 import Parse
 
-class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+class EpisodesTableViewController: CustomTableViewController {
     
     // MARK: - Properties
     
@@ -19,7 +19,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     
     // Search-related controller properties
     var searchController: CustomSearchController!
-    var resultsTableController: ResultsTableController!
     
     // Refresh-related properties
     var refreshLoadingView: UIView!
@@ -50,23 +49,14 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         tableView.registerNib(nib,
             forCellReuseIdentifier: "EpisodeViewCell")
         
-        resultsTableController = ResultsTableController()
+//        resultsTableController = ResultsTableController()
         
         // We want to be the delegate for our filtered table so didSelectRowAtIndexPath(_:) is called for both tables.
-        resultsTableController.tableView.delegate = self
+//        resultsTableController.tableView.delegate = self
         
         // Set up searchController
-        searchController = ({
-            let controller = CustomSearchController(searchResultsController: self.resultsTableController)
-            controller.searchResultsUpdater = self
-            
-            self.tableView.tableHeaderView = controller.searchBar
-
-            controller.delegate = self
-            controller.searchBar.delegate = self    // So we can monitor text changes + others
-            
-            return controller
-        })()
+        searchController = CustomSearchController()
+        tableView.tableHeaderView = searchController.searchBar
         
         // Allow access to other views (i.e. detail view) from any cells, even in the results controller
         definesPresentationContext = true
@@ -87,65 +77,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         
         if Reachability.isConnectedToNetwork() {
             // Connected to a network
-            
-//            let dataSourceURL = NSURL(string: GlobalConstants.SoundCloud.FetchTracksURL)
-//            let request = NSURLRequest(URL: dataSourceURL!)
-//            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-//            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { response, data, error in
-//                if data != nil {
-//                    // Data obtained: parse JSON string
-//                    if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)) as? NSArray {
-//                        
-//                        let episodesArray = jsonResult
-//                        var episodesArr = [Episode]()
-//                        var counter : Int = episodesArray.count
-//                        for ep in episodesArray {
-//                            let epDictionary = ep as! NSDictionary
-//                            let episode = Episode(JSONDictionary: epDictionary)
-//                            episode.ep_id = counter
-//                            episodesArr.append(episode)
-//                            counter--
-//                        }
-//                        
-//                        // Add the favorites if this is the first time using the app
-//                        if self.favorites.count == 0 {
-//                            self.favorites = [Bool](count: episodesArr.count, repeatedValue: false)
-//                        }
-//                        
-//                        let loopCount = episodesArr.count - 1
-//                        if (self.favorites.count < episodesArr.count) {
-//                            // New episode(s)
-//                            let epDifference = episodesArr.count - self.favorites.count
-//                            let missingFavorites = [Bool](count: epDifference, repeatedValue: false)
-//                            self.favorites = missingFavorites + self.favorites
-//                        }
-//                        
-//                        for index in 1...loopCount {
-//                            episodesArr[index].favorite = self.favorites[index]
-//                        }
-//                        
-//                        self.episodes = episodesArr
-//                        
-//                        self.tableView.reloadAllSections()
-//                    } else {
-//                        // Could not fetch from the SoundCloud API.
-//                        let message = "Could not fetch data from SoundCloud."
-//                        self.showError(message)
-//                        self.tableView.tableFooterView = nil
-//                    }
-//                    
-//                }
-//                
-//                if error != nil {
-//                    // Likely an invalid URL.
-//                    let message = "\(error!.localizedDescription.capitalizedString)"
-//                    self.showError(message)
-//                }
-//                
-//                self.tableView.userInteractionEnabled = true
-//                
-//            }
-
             let query = PFQuery(className: Episode.parseClassName())
             query.orderByDescending("epId")
             query.findObjectsInBackgroundWithBlock {
@@ -377,24 +308,6 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
         
         let dvc = DetailViewController(episode: selectedEpisode)
         showViewController(dvc, sender: self)
-        
-        
-//        let index = indexPath.section
-//        var selectedEpisode: PFObject
-//        
-//        // check to see which table view cell was selected
-//        if tableView == self.tableView {
-//            selectedEpisode = episodes[index]
-//        } else {
-//            selectedEpisode = resultsTableController.searchedEpisodes[index]
-//        }
-//        
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        
-//        // set up the detail view controller to show
-//        let detailViewController = DetailViewController.forEpisode(selectedEpisode)
-//        self.navigationController?.pushViewController(detailViewController, animated: true)
-    
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -402,39 +315,4 @@ class EpisodesTableViewController: CustomTableViewController, UISearchBarDelegat
     }
     
     //  MARK: - Other functions
-    
-    // MARK: UISearchResultsUpdating
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        if searchController.searchBar.text!.characters.count > 0 {
-            self.filterContentForSearchText(searchController.searchBar.text!)
-            self.resultsTableController.tableView.reloadData()
-        }
-    }
-    
-    func filterContentForSearchText(searchBarText: String) {
-
-//        let searchText = searchBarText.lowercaseString        
-//        self.resultsTableController.matchingTracks = [String]()
-//        
-//        // Filter: if an episode has a track that contains searchText, display it
-//        self.resultsTableController.searchedEpisodes = self.episodes.filter({( episode: Episode) -> Bool in
-//            var match = false
-//            for track in episode.trackArray {
-//                if track.lowercaseString.rangeOfString(searchText) != nil {
-//                    match = true
-//                    self.resultsTableController.matchingTracks.append(track)
-//                    break
-//                }
-//            }
-//            
-//            self.resultsTableController.searchText = searchText
-//            
-//            return match
-//        })
-        
-        
-    }
-    
 }

@@ -8,10 +8,20 @@
 
 import UIKit
 
-class CustomSearchController: UISearchController {
-
-    override init(searchResultsController: UIViewController?) {
-        super.init(searchResultsController: searchResultsController)
+class CustomSearchController: UISearchController, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
+    
+    var defaultSearchView: DefaultSearchView?
+    
+    init() {
+        let resultsController = ResultsTableController()
+        resultsController.tableView.delegate = resultsController
+        
+        super.init(searchResultsController: resultsController)
+        
+        self.searchResultsUpdater = self
+        
+        delegate = self
+        searchBar.delegate = self
         
         // Set basic searchbar properties
         self.searchBar.sizeToFit()
@@ -19,6 +29,16 @@ class CustomSearchController: UISearchController {
         self.searchBar.tintColor = UIColor.whiteColor()
         self.searchBar.placeholder = "Search Heldeep Radio Tracks"
         self.searchBar.textField?.textColor = UIColor.whiteColor()
+        
+        self.dimsBackgroundDuringPresentation = false
+        
+        let frameHeight = view.frame.height - searchBar.frame.height - 20
+        let frameY = searchBar.frame.height + 20
+        let defaultSearchFrame = CGRectMake(0, frameY, self.view.frame.width, frameHeight)
+        
+        defaultSearchView = DefaultSearchView(frame: defaultSearchFrame)
+        self.view.addSubview(defaultSearchView!)
+        defaultSearchView!.hidden = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,5 +59,31 @@ class CustomSearchController: UISearchController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func willPresentSearchController(searchController: UISearchController) {
+        defaultSearchView!.hidden = false
+        print("aksjdvn")
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        defaultSearchView!.hidden = true
+    }
+    
+    // MARK: UISearchResultsUpdating
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        let searchText = searchBar.text!
+        if (searchText.characters.count > 0) {
+            defaultSearchView!.hidden = true
+            
+            self.filterContentForSearchText(searchText)
+//            self.resultsTableController.tableView.reloadData()
+        } else {
+            defaultSearchView!.hidden = false
+        }
+    }
+    
+    func filterContentForSearchText(searchBarText: String) {
+    }
 }
