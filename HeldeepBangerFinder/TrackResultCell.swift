@@ -9,7 +9,8 @@
 import UIKit
 
 class TrackResultCell: UITableViewCell {
-
+    
+    @IBOutlet weak var episodeNumberView: UIView!
     @IBOutlet weak var episodeNumberLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
@@ -26,7 +27,11 @@ class TrackResultCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        episodeNumberLabel.layer.borderColor = UIColor.whiteColor().CGColor
+        episodeNumberView.layer.borderColor = UIColor.whiteColor().CGColor
+    }
+    
+    func configureFor(track: Track) {
+        titleLabel.text = track.title
     }
     
 }

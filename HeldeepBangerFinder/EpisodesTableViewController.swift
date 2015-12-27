@@ -11,7 +11,7 @@ import UIKit
 
 import Parse
 
-class EpisodesTableViewController: CustomTableViewController {
+class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate {
     
     // MARK: - Properties
     
@@ -30,6 +30,8 @@ class EpisodesTableViewController: CustomTableViewController {
     var animationArray = [UIImage]()
     var imageIndex = 0
     var favoritedRow = 0
+    
+    var nowPlayingId: String?
     
     // Cast collection view
     var castCollectionView: UICollectionView?
@@ -65,6 +67,32 @@ class EpisodesTableViewController: CustomTableViewController {
         self.setUpLoadingIndicator()
         
         self.getEpisodes()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("episodes view will appear")
+    }
+    
+    func isNowPlaying(playingId: String) {
+        print("is now playing")
+        nowPlayingId = playingId
+        let nowPlayingButton = UIButton(type: .Custom)
+        nowPlayingButton.frame = CGRectMake(0, 0, 60, 25)
+        let forwardIcon = UIImageView(frame: CGRectMake(40, 3, 20, 20))
+        forwardIcon.image = UIImage(named: "forward")
+        nowPlayingButton.addSubview(forwardIcon)
+        let playingLabel = UILabel(frame: CGRectMake(0, 0, 35, 25))
+        playingLabel.text = "Playing"
+        playingLabel.textColor = UIColor.whiteColor()
+        playingLabel.font = UIFont.systemFontOfSize(12)
+        playingLabel.sizeToFit()
+        playingLabel.frame.origin = CGPointMake(0, 4)
+        nowPlayingButton.addSubview(playingLabel)
+        nowPlayingButton.addTarget(self, action: "goToNowPlaying", forControlEvents: .TouchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nowPlayingButton)
+        print("newly set ID: \(self.nowPlayingId)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -306,8 +334,18 @@ class EpisodesTableViewController: CustomTableViewController {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let dvc = DetailViewController(episode: selectedEpisode)
+        showDetail(selectedEpisode)
+    }
+    
+    func showDetail(episode: Episode) {
+        let dvc = DetailViewController(episode: episode, isPlaying: self.nowPlayingId == episode.objectId)
+        dvc.delegate = self
         showViewController(dvc, sender: self)
+    }
+    
+    func goToNowPlaying() {
+        let episode = episodes.filter({ $0.objectId == self.nowPlayingId! }).first!
+        showDetail(episode)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

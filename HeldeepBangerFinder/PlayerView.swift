@@ -63,7 +63,7 @@ class PlayerView: UIView {
         self.addSubview(view)
     }
     
-    func configureFor(episode: Episode) {
+    func configureFor(episode: Episode, currentlyPlaying: Bool = false) {
         self.episode = episode
         
         let (h, m, s) = secondsToHoursMinutesSeconds(episode.duration / 1000)
@@ -77,9 +77,28 @@ class PlayerView: UIView {
         
         let playerUrl = NSURL(string: episode.audioUrl())
         let playerItem = AVPlayerItem(URL: playerUrl!)
-        player = AVPlayer(playerItem: playerItem)
+        
+        if let currentPlayer = appDelegate().player {
+            player = currentPlayer
+            print("retrieved global player")
+            
+            if (currentlyPlaying) {
+                print("is currently playing")
+                goToTimestamp(player.currentTime().seconds, shouldPlay: true)
+            } else {
+                print("this isn't currently playing")
+                player.pause()
+                player.replaceCurrentItemWithPlayerItem(playerItem)
+            }
+            
+        } else {
+            print("creating new player")
+            player = AVPlayer(playerItem: playerItem)
+        }
+        
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = self.bounds
+        appDelegate().player = player
         
         // Configure gesture recognizer
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "didPanProgressBar:")
@@ -101,8 +120,14 @@ class PlayerView: UIView {
         if (fraction <= 1) {
             let timeBarOrigin = timeBarView.frame.origin.x
             let timeBarWidth = timeBarView.frame.width
-            progressBarView.center.x = timeBarOrigin + (fraction * timeBarWidth)
-            progressBarX = progressBarView.center.x
+            let newX = timeBarOrigin + (fraction * timeBarWidth)
+            
+            UIView.animateWithDuration(0.2) {_ in
+                self.progressBarView.center.x = newX
+                self.progressBarX = newX
+            }
+            
+            
         }
     }
     
@@ -120,6 +145,7 @@ class PlayerView: UIView {
     }
     
     func didPanProgressBar(recognizer: UIPanGestureRecognizer) {
+        print("panning")
         if (player.rate > 0) {
             audioTimer?.invalidate()
             player.pause()
@@ -158,7 +184,10 @@ class PlayerView: UIView {
     }
     
     func play() {
-        audioTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        
+        audioTimer = NSTimer(timeInterval: 1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(audioTimer!, forMode: NSRunLoopCommonModes)
+        
         player.play()
         actionButton.setBackgroundImage(UIImage(named: "pause"), forState: .Normal)
         isPlaying = true

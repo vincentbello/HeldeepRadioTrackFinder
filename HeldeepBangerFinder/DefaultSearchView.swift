@@ -12,6 +12,7 @@ class DefaultSearchView: UIView {
 
     @IBOutlet weak var typeListTableView: UITableView!
     
+    var navigationController: UITableViewController?
     var typeListTableViewController = TypeListTableViewController()
     
     override func drawRect(rect: CGRect) {

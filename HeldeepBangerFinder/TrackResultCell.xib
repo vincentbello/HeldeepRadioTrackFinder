@@ -56,6 +56,7 @@
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="episodeNumberLabel" destination="HS0-kh-FwF" id="sBF-3J-L1l"/>
+                <outlet property="episodeNumberView" destination="rZ5-ak-mwC" id="oco-Ow-Ln6"/>
                 <outlet property="titleLabel" destination="7G3-h6-IjK" id="axp-Fn-niF"/>
             </connections>
             <point key="canvasLocation" x="253" y="251"/>

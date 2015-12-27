@@ -89,11 +89,11 @@ class Episode : PFObject, PFSubclassing {
     
     @NSManaged var displayName: String?
     
-    @NSManaged var id: String
     @NSManaged var epId: Int
     @NSManaged var title: String
     @NSManaged var duration: Int
     @NSManaged var scCreatedAt: String
+    @NSManaged var scId: Int
     @NSManaged var permalinkUrl: String
     @NSManaged var streamUrl: String
     

@@ -9,7 +9,13 @@
 import UIKit
 import Parse
 
+protocol NowPlayingDelegate: class {
+    func isNowPlaying(playingId: String)
+}
+
 class DetailViewController: UIViewController {
+    
+    weak var delegate: NowPlayingDelegate? = nil
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -24,9 +30,11 @@ class DetailViewController: UIViewController {
     
     let tracksTableViewController = TracksTableViewController()
     
+    var isPlaying: Bool = false
+    
     @IBAction func onListenTapped(sender: AnyObject) {
         // Listen: go to SoundCloud app
-        UIApplication.tryURL(["soundcloud://tracks:\(episode.id)", episode.permalinkUrl, "http://www.soundcloud.com"])
+        UIApplication.tryURL(["soundcloud://tracks:\(episode.scId)", episode.permalinkUrl, "http://www.soundcloud.com"])
     }
     
     @IBAction func onDownloadTapped(sender: AnyObject) {
@@ -36,11 +44,15 @@ class DetailViewController: UIViewController {
         UIApplication.tryURL([nativeUrl, browserUrl])
     }
     
-    init(episode: Episode) {
+    init(episode: Episode, isPlaying: Bool = false) {
         self.episode = episode
         super.init(nibName: "DetailViewController", bundle: nil)
         
         navigationItem.title = episode.title
+        
+        if (isPlaying) {
+            self.isPlaying = true
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,7 +66,7 @@ class DetailViewController: UIViewController {
         dateLabel.text = episode.formattedDate()
         durationLabel.text = episode.durationInMinutes()
         
-        playerView.configureFor(episode)
+        playerView.configureFor(episode, currentlyPlaying: self.isPlaying)
         
         trackTableView.delegate = tracksTableViewController
         trackTableView.dataSource = tracksTableViewController
@@ -69,9 +81,12 @@ class DetailViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-
-        playerView.pause()
-        playerView.reset()
+        
+        if (playerView.isPlaying) {
+            delegate!.isNowPlaying(episode.objectId!)
+        }
+//        playerView.pause()
+//        playerView.reset()
     }
 
     override func didReceiveMemoryWarning() {

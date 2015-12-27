@@ -51,7 +51,9 @@ class TrackViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        skipButton.setAttributedTitle(skipButtonText(), forState: .Normal)
+        searchButton.setAttributedTitle(leftIconRightText(UIImage(named: "soundcloud_orange")!, color: GlobalConstants.Colors.SoundCloud, text: "Search on SoundCloud"), forState: .Normal)
+        
+        skipButton.setAttributedTitle(leftIconRightText(UIImage(named: "play")!, color: UIColor.whiteColor(), text: "Skip to track"), forState: .Normal)
     }
     
     func configureFor(track: Track, isSelected: Bool, playerView: PlayerView) {
@@ -72,7 +74,7 @@ class TrackViewCell: UITableViewCell {
                 typeLabelHeightConstraint.constant = 16
             } else {
                 typeLabel.hidden = true
-                typeLabelHeightConstraint.constant = 0
+                typeLabelHeightConstraint.constant = 4
             }
             if (track.timestamp > 0) {
                 skipButton.hidden = false
@@ -91,18 +93,6 @@ class TrackViewCell: UITableViewCell {
         }
         
         layoutMargins = UIEdgeInsetsZero
-    }
-    
-    func skipButtonText() -> NSAttributedString {
-        let attachment = NSTextAttachment()
-        attachment.bounds = CGRectMake(0, -2, 15, 15)
-        attachment.image = UIImage(named: "play")
-        let attachmentString = NSAttributedString(attachment: attachment)
-        let str = NSMutableAttributedString(attributedString: attachmentString)
-        let textStr = NSAttributedString(string: " Skip to track", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        str.appendAttributedString(textStr)
-        return str
-
     }
 
 }

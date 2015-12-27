@@ -34,6 +34,8 @@ struct GlobalConstants {
     struct Colors {
         static let Navigation = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 0.5)
         static let Background = UIColor(red: 43/255, green: 43/255, blue: 43/255, alpha: 1.0)
+        static let Type = UIColor(red: 221/255, green: 221/255, blue: 221/255, alpha: 1.0)
+        static let SoundCloud = UIColor(red: 1.0, green: 97/255, blue: 0, alpha: 1.0)
     }
     
     struct Fonts {

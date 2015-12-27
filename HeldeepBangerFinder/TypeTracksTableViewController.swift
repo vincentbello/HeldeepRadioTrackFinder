@@ -15,10 +15,9 @@ class TypeTracksTableViewController: UITableViewController {
     var type: (String, String)?
     
     init(type: (String, String)) {
-        print("init type tracks table view controller")
         self.type = type
         
-        super.init(nibName: "TypeListTableViewController", bundle: nil)
+        super.init(nibName: "TypeTracksTableViewController", bundle: nil)
 
         let (_, long) = type
         navigationItem.title = long
@@ -28,8 +27,15 @@ class TypeTracksTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("view did appear")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view did load")
         
         let nib = UINib(nibName: "TrackResultCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "TrackResultCell")
@@ -104,11 +110,12 @@ class TypeTracksTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> TrackResultCell {
-        print("rendering track cell")
+
         let cell = tableView.dequeueReusableCellWithIdentifier("TrackResultCell", forIndexPath: indexPath) as! TrackResultCell
         
         let track = tracks[indexPath.row]
-        print("episode ID: \(track.episode.epId)")
+        
+        cell.configureFor(track)
         
         return cell
     }

@@ -50,14 +50,8 @@ class Track : PFObject, PFSubclassing {
         }
     }
     
-    func attributedType() -> NSMutableAttributedString {
-        let attachment = NSTextAttachment()
-        attachment.bounds = CGRectMake(0, -2, 12, 12)
-        attachment.image = self.typeIcon()
-        let attachmentString = NSAttributedString(attachment: attachment)
-        let str = NSMutableAttributedString(attributedString: attachmentString)
-        str.appendAttributedString(NSAttributedString(string: " \(self.type)"))
-        return str
+    func attributedType() -> NSAttributedString {
+        return leftIconRightText(self.typeIcon()!, color: GlobalConstants.Colors.Type, text: " \(self.type)")
     }
     
 }

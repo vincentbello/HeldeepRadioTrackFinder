@@ -39,7 +39,7 @@ class TracksTableViewController: UITableViewController {
             // Dynamically compute the height of the row based on its contents
             let track = tracks[indexPath.row]
             let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.boldSystemFontOfSize(15))
-            return titleHeight + (track.timestamp > 0 ? 80 : 50)
+            return titleHeight + (track.timestamp > 0 ? 85 : 55)
         } else {
             return 44
         }
