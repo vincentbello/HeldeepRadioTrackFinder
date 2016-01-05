@@ -150,7 +150,6 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
       }
     }).then(function(objs) {
       if (objs) {
-        // status.success('Saved new episode & sent notification.');
         var notificationQuery = new Parse.Query(Parse.Installation);
         return Parse.Push.send({
           where: notificationQuery,
