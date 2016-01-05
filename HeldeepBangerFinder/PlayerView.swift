@@ -8,14 +8,30 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
+
+protocol CurrentTrackDelegate: class {
+    func updateCurrentTrack(index: Int?)
+    func updateTrackCells()
+}
 
 class PlayerView: UIView {
     
+    weak var delegate: CurrentTrackDelegate? = nil
+    
+    let artwork: MPMediaItemArtwork = MPMediaItemArtwork(image: UIImage(named: "heldeep_large")!)
+    
     var episode: Episode?
+    var tracks: [Track]?
+    
     var player: AVPlayer = AVPlayer()
+    
+    var didStart: Bool = false
     
     var isPlaying: Bool = false
     var shouldRestart: Bool = false
+    
+    var currentTrackIndex: Int? = -1
     
     var audioTimer: NSTimer?
 //    var secondsPlayed: Int = 0
@@ -28,16 +44,13 @@ class PlayerView: UIView {
     @IBOutlet weak var progressTimeLabel: UILabel!
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var timeBarView: UIView!
+    @IBOutlet weak var elapsedTimeBarView: UIView!
+
     @IBOutlet weak var progressBarView: UIView!
+    @IBOutlet weak var progressBarTickerView: UIView!
     
     @IBAction func onActionButtonTapped(sender: AnyObject) {
-        if (shouldRestart) {
-            restart()
-        } else if (isPlaying) {
-            pause()
-        } else {
-            play()
-        }
+        toggleActions()
     }
     
     override func drawRect(rect: CGRect) {
@@ -83,16 +96,17 @@ class PlayerView: UIView {
             print("retrieved global player")
             
             if (currentlyPlaying) {
-                print("is currently playing")
-                goToTimestamp(player.currentTime().seconds, shouldPlay: true)
+                progressBarView.alpha = 0 // will be animated to 1 when view appears
+                let seconds = player.currentTime().seconds
+                print("did update to saved state")
+                updateSecondsPlayed(seconds)
+                play()
             } else {
-                print("this isn't currently playing")
                 player.pause()
                 player.replaceCurrentItemWithPlayerItem(playerItem)
             }
             
         } else {
-            print("creating new player")
             player = AVPlayer(playerItem: playerItem)
         }
         
@@ -105,14 +119,46 @@ class PlayerView: UIView {
         progressBarView.gestureRecognizers = [panRecognizer]
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishPlaying:", name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        
+        let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()        
+        commandCenter.playCommand.enabled = true
+        commandCenter.playCommand.addTarget(self, action: "play")
+        commandCenter.pauseCommand.enabled = true
+        commandCenter.pauseCommand.addTarget(self, action: "pause")
+    }
+    
+    func configureProgressBar() {
+        let seconds = player.currentTime().seconds
+        updateProgressBar(seconds)
+        UIView.animateWithDuration(0.2) {_ in
+            self.progressBarView.alpha = 1.0
+        }
     }
     
     func updateTimer() {
         let seconds = player.currentTime().seconds
         updateSecondsPlayed(seconds)
+        updateCurrentTrack(seconds)
         
         // Update timeBarView position
-        updateProgressBar(seconds)
+        dispatch_async(dispatch_get_main_queue()) {_ in
+            self.updateProgressBar(seconds)
+        }
+    }
+    
+    func updateCurrentTrack(seconds: Double) {
+        if (tracks != nil) {
+            let index = getTrackIndexFromArray(Int(seconds), tracks: tracks!)
+            if (currentTrackIndex != index) {
+                delegate?.updateCurrentTrack(index)
+                currentTrackIndex = index
+            }
+        }
+    }
+    
+    func resetCurrentTrack() {
+        currentTrackIndex = -1
+        delegate?.updateTrackCells()
     }
     
     func updateProgressBar(seconds: Double) {
@@ -120,24 +166,22 @@ class PlayerView: UIView {
         if (fraction <= 1) {
             let timeBarOrigin = timeBarView.frame.origin.x
             let timeBarWidth = timeBarView.frame.width
-            let newX = timeBarOrigin + (fraction * timeBarWidth)
+            let addedWidth = fraction * timeBarWidth
+            let newX = timeBarOrigin + addedWidth
             
-            UIView.animateWithDuration(0.2) {_ in
-                self.progressBarView.center.x = newX
-                self.progressBarX = newX
-            }
-            
-            
+            self.elapsedTimeBarView.frame.size.width = addedWidth
+            self.progressBarView.center.x = newX
+            self.progressBarX = newX
         }
     }
     
     func updateSecondsPlayed(seconds: Double) {
-        let (h, m, s) = secondsToHoursMinutesSeconds(Int(seconds))
-        progressTimeLabel.text = "\(h > 0 ? "\(h):" : "")\(m > 0 ? String(format: "%02d", m) : "0"):\(String(format: "%02d", s))"
+        progressTimeLabel.text = formatToTimestamp(Int(seconds))
     }
     
     func didFinishPlaying(notification: NSNotification) {
         updateProgressBar(player.currentTime().seconds)
+        resetCurrentTrack()
         audioTimer?.invalidate()
         isPlaying = false
         actionButton.setBackgroundImage(UIImage(named: "restart"), forState: .Normal)
@@ -145,20 +189,23 @@ class PlayerView: UIView {
     }
     
     func didPanProgressBar(recognizer: UIPanGestureRecognizer) {
-        print("panning")
         if (player.rate > 0) {
             audioTimer?.invalidate()
             player.pause()
         }
         let translation = recognizer.translationInView(self)
+        let originX = timeBarView.frame.origin.x
+        var amountMoved: CGFloat
+        
         if (translation.x < 0) {
-            let minX = timeBarView.frame.origin.x
-            progressBarView.center.x = max(progressBarX! + translation.x, minX)
+            amountMoved = max(progressBarX! + translation.x, originX)
         } else {
-            let maxX = timeBarView.frame.origin.x + timeBarView.frame.width
-            progressBarView.center.x = min(progressBarX! + translation.x, maxX)
+            amountMoved = min(progressBarX! + translation.x, originX + timeBarView.frame.width)
         }
-        let fraction = (progressBarView.center.x - timeBarView.frame.origin.x) / CGFloat(timeBarView.frame.width)
+        progressBarView.center.x = amountMoved
+        elapsedTimeBarView.frame.size.width = amountMoved - originX
+        
+        let fraction = (progressBarView.center.x - originX) / CGFloat(timeBarView.frame.width)
         let seconds = Double(fraction * CGFloat(episode!.duration / 1000))
         updateSecondsPlayed(seconds)
         
@@ -180,24 +227,55 @@ class PlayerView: UIView {
                 self.play()
             }
         }
-
     }
     
     func play() {
-        
+        print("playing")
         audioTimer = NSTimer(timeInterval: 1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(audioTimer!, forMode: NSRunLoopCommonModes)
         
         player.play()
-        actionButton.setBackgroundImage(UIImage(named: "pause"), forState: .Normal)
+        updateCurrentTrack(player.currentTime().seconds)
         isPlaying = true
+        
+        if (!didStart) {
+            let trackInfo: Dictionary = [
+                MPMediaItemPropertyTitle: episode!.title,
+                MPMediaItemPropertyArtist: "Oliver Heldens",
+                MPMediaItemPropertyArtwork: artwork,
+                MPNowPlayingInfoPropertyPlaybackRate: 1.0,
+                MPMediaItemPropertyPlaybackDuration: NSNumber(integer: episode!.duration / 1000)
+                
+            ]
+            MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = trackInfo
+            
+            didStart = true
+        }
+        setTrackInfoPlaybackRate(1.0)
+        
+        // UI updates
+        dispatch_async(dispatch_get_main_queue()) {_ in
+            self.actionButton.setBackgroundImage(UIImage(named: "pause"), forState: .Normal)
+            self.progressBarTickerView.backgroundColor = UIColor.whiteColor()
+            self.elapsedTimeBarView.alpha = 0.8
+        }
     }
     
     func pause() {
+        print("pausing")
         audioTimer?.invalidate()
         player.pause()
-        actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
         isPlaying = false
+        resetCurrentTrack()
+        
+        setTrackInfoPlaybackRate(0.0)
+        
+        // UI updates
+        dispatch_async(dispatch_get_main_queue()) {_ in
+            self.actionButton.setBackgroundImage(UIImage(named: "play"), forState: .Normal)
+            self.progressBarTickerView.backgroundColor = UIColor.lightGrayColor()
+            self.elapsedTimeBarView.alpha = 0.5
+        }
     }
     
     func reset() {
@@ -214,4 +292,20 @@ class PlayerView: UIView {
         }
     }
     
+    func toggleActions() {
+        if (shouldRestart) {
+            restart()
+        } else if (isPlaying) {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    func setTrackInfoPlaybackRate(rate: Double) {
+        var trackInfo: Dictionary? = MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo
+        trackInfo![MPNowPlayingInfoPropertyPlaybackRate] = rate
+        trackInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds
+        MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = trackInfo
+    }
 }

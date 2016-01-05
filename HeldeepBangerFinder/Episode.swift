@@ -97,6 +97,8 @@ class Episode : PFObject, PFSubclassing {
     @NSManaged var permalinkUrl: String
     @NSManaged var streamUrl: String
     
+    var selectedTrack: Track?
+    
     // Formats episode title
     func formattedTitle() -> String {
         return self.title.stringByReplacingOccurrencesOfString("Oliver Heldens - ", withString: "")

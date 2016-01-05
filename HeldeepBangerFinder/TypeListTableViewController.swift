@@ -52,11 +52,14 @@ class TypeListTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let type = types[indexPath.row]
+        let type = types[indexPath.row]
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         defaultSearchView!.hidden = true
+        
+        let tvc = TypeTracksTableViewController(type: type)
+        defaultSearchView!.navigationController!.pushViewController(tvc, animated: true)
         
 //        let tvc = TypeTracksTableViewController(type: type)
 //        showViewController(tvc, sender: self)

@@ -54,6 +54,15 @@ class Track : PFObject, PFSubclassing {
         return leftIconRightText(self.typeIcon()!, color: GlobalConstants.Colors.Type, text: " \(self.type)")
     }
     
+    func skipText() -> NSAttributedString {
+        let defaultAttrTitle = leftIconRightText(UIImage(named: "play")!, color: UIColor.whiteColor(), text: "Skip to track ")
+        let mutableStr = NSMutableAttributedString(attributedString: defaultAttrTitle)
+        let formattedTimestamp = formatToTimestamp(timestamp)
+        let timestampAttrString = NSAttributedString(string: formattedTimestamp, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.70, alpha: 1), NSFontAttributeName: UIFont.systemFontOfSize(11)])
+        mutableStr.appendAttributedString(timestampAttrString)
+        return mutableStr
+    }
+    
 }
 
 

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerView" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="8Vi-LF-qcP" id="GAK-Sr-Mr0"/>
                 <outlet property="contentView" destination="Ead-by-B11" id="tAe-Xy-Z5q"/>
+                <outlet property="elapsedTimeBarView" destination="G8f-5x-Vdc" id="89g-sG-GSa"/>
+                <outlet property="progressBarTickerView" destination="Vj3-At-axM" id="itb-78-fBH"/>
                 <outlet property="progressBarView" destination="YPg-tN-q8g" id="IUg-d9-X2z"/>
                 <outlet property="progressTimeLabel" destination="hnF-XB-GeK" id="fhc-SL-mxe"/>
                 <outlet property="timeBarView" destination="zjV-h9-adq" id="CxR-QY-TEn"/>
@@ -34,15 +36,23 @@
                                 <action selector="onActionButtonTapped:" destination="-1" eventType="touchUpInside" id="8xa-Fk-IA1"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-h9-adq">
+                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-h9-adq">
                             <rect key="frame" x="79" y="19" width="474" height="2"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="2" id="PHf-U4-x8K"/>
                             </constraints>
                         </view>
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G8f-5x-Vdc" userLabel="Elapsed Time Bar View">
+                            <rect key="frame" x="79" y="19" width="0.0" height="2"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="CRv-Nf-iOz"/>
+                                <constraint firstAttribute="height" constant="2" id="tIO-2a-93i"/>
+                            </constraints>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnF-XB-GeK">
-                            <rect key="frame" x="40" y="13.5" width="35" height="13.5"/>
+                            <rect key="frame" x="40" y="13" width="35" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="35" id="JCJ-MS-zn4"/>
                             </constraints>
@@ -51,7 +61,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X63-P0-C9x">
-                            <rect key="frame" x="557" y="13.5" width="40" height="13.5"/>
+                            <rect key="frame" x="557" y="13" width="40" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="mey-7G-JpU"/>
                             </constraints>
@@ -62,7 +72,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YPg-tN-q8g" userLabel="Progress Bar View">
                             <rect key="frame" x="74" y="8" width="9" height="23"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vj3-At-axM" userLabel="Bar View">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vj3-At-axM" userLabel="Progress Bar Ticker View">
                                     <rect key="frame" x="3" y="4" width="3" height="15"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -85,6 +95,7 @@
                         <constraint firstItem="zjV-h9-adq" firstAttribute="leading" secondItem="hnF-XB-GeK" secondAttribute="trailing" constant="4" id="8Dv-GN-0e6"/>
                         <constraint firstItem="hnF-XB-GeK" firstAttribute="leading" secondItem="8Vi-LF-qcP" secondAttribute="trailing" constant="8" id="Br7-hN-gmB"/>
                         <constraint firstItem="hnF-XB-GeK" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="JSD-8M-UUa"/>
+                        <constraint firstItem="G8f-5x-Vdc" firstAttribute="leading" secondItem="zjV-h9-adq" secondAttribute="leading" id="QH7-kA-FKm"/>
                         <constraint firstAttribute="trailing" secondItem="X63-P0-C9x" secondAttribute="trailing" constant="3" id="SCt-k4-XGD"/>
                         <constraint firstItem="zjV-h9-adq" firstAttribute="leading" secondItem="8Vi-LF-qcP" secondAttribute="trailing" constant="46" id="WJa-Hb-F4y"/>
                         <constraint firstItem="X63-P0-C9x" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="WRq-tK-wXd"/>
@@ -95,6 +106,7 @@
                         <constraint firstItem="zjV-h9-adq" firstAttribute="leading" secondItem="hnF-XB-GeK" secondAttribute="trailing" constant="4.5" id="el3-sd-qGV"/>
                         <constraint firstItem="hnF-XB-GeK" firstAttribute="leading" secondItem="Ead-by-B11" secondAttribute="leading" constant="45" id="h5j-Cl-uX7"/>
                         <constraint firstAttribute="height" constant="40" id="qFc-Rr-xwB"/>
+                        <constraint firstItem="G8f-5x-Vdc" firstAttribute="top" secondItem="zjV-h9-adq" secondAttribute="top" id="r71-MY-8EO"/>
                         <constraint firstItem="YPg-tN-q8g" firstAttribute="leading" secondItem="hnF-XB-GeK" secondAttribute="trailing" constant="-1.5" id="uSr-gh-F6l"/>
                         <constraint firstItem="zjV-h9-adq" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="wBs-yx-zTR"/>
                         <constraint firstItem="8Vi-LF-qcP" firstAttribute="centerY" secondItem="Ead-by-B11" secondAttribute="centerY" id="xu6-TF-w3n"/>

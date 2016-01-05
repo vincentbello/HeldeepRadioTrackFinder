@@ -32,6 +32,7 @@ class TrackResultCell: UITableViewCell {
     
     func configureFor(track: Track) {
         titleLabel.text = track.title
+        episodeNumberLabel.text = String(track.episode.epId)
     }
     
 }

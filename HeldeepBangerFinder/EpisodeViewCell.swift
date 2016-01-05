@@ -33,7 +33,7 @@ class EpisodeViewCell: UITableViewCell {
         numberContainer.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
-    func configureFor(episode: Episode, isNew: Bool = false) {
+    func configureFor(episode: Episode, isNew: Bool = false, isPlaying: Bool = false) {
         
         titleLabel.text = episode.formattedTitle()
         subtitleLabel.text = "\(episode.formattedDate()) · \(episode.durationInMinutes())"
@@ -41,6 +41,14 @@ class EpisodeViewCell: UITableViewCell {
         numberLabel.text = String(episode.epId)
         
         layoutMargins = UIEdgeInsetsZero
+        
+        if (isPlaying) {
+            accessoryView = UIImageView(image: UIImage(named: "playing")!)
+            accessoryView!.rotate()
+//            accessoryView!.frame = CGRectMake(0, 0, 22, 22)
+        } else {
+            accessoryView = nil
+        }
         
 //        // If a new episode just came out, give it a [NEW] badge
 //        if isNew {

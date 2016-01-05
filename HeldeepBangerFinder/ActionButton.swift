@@ -19,10 +19,18 @@ class ActionButton: UIButton {
     override var highlighted: Bool {
         didSet {
             if (highlighted) {
-                backgroundColor = UIColor(red:0.40, green:0.40, blue:0.40, alpha:1.0)
+                UIView.animateWithDuration(0.2) {_ in
+                    self.layer.backgroundColor = UIColor(white: 0.75, alpha: 1.0).CGColor
+                }
             } else {
-                backgroundColor = UIColor.clearColor()
+                layer.backgroundColor = UIColor.clearColor().CGColor
             }
+        }
+    }
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            print("did set background color")
         }
     }
 }

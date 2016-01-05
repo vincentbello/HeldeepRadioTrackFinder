@@ -12,7 +12,7 @@ class CustomSearchController: UISearchController, UISearchControllerDelegate, UI
     
     var defaultSearchView: DefaultSearchView?
     
-    init() {
+    init(navigationController: UINavigationController) {
         let resultsController = ResultsTableController()
         resultsController.tableView.delegate = resultsController
         
@@ -39,6 +39,7 @@ class CustomSearchController: UISearchController, UISearchControllerDelegate, UI
         defaultSearchView = DefaultSearchView(frame: defaultSearchFrame)
         self.view.addSubview(defaultSearchView!)
         defaultSearchView!.hidden = false
+        defaultSearchView!.navigationController = navigationController
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,12 +62,15 @@ class CustomSearchController: UISearchController, UISearchControllerDelegate, UI
     }
     
     func willPresentSearchController(searchController: UISearchController) {
-        defaultSearchView!.hidden = false
-        print("aksjdvn")
+        dispatch_async(dispatch_get_main_queue()) { _ in
+            self.defaultSearchView!.hidden = false
+        }
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        defaultSearchView!.hidden = true
+    func willDismissSearchController(searchController: UISearchController) {
+        dispatch_async(dispatch_get_main_queue()) { _ in
+            self.defaultSearchView!.hidden = true
+        }
     }
     
     // MARK: UISearchResultsUpdating
@@ -85,5 +89,14 @@ class CustomSearchController: UISearchController, UISearchControllerDelegate, UI
     }
     
     func filterContentForSearchText(searchBarText: String) {
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        print("search bar should begin editing")
+        return true
     }
 }

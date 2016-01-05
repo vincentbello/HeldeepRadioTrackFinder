@@ -24,7 +24,6 @@ class ResultsTableController: CustomTableViewController {
         
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
-        print("results table controller view did load")
         // Register cell
         self.tableView.registerClass(CustomTableViewCell.self, forCellReuseIdentifier: GlobalConstants.TableViewCell.Identifier)
     }

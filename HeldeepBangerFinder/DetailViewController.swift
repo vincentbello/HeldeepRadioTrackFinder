@@ -10,10 +10,10 @@ import UIKit
 import Parse
 
 protocol NowPlayingDelegate: class {
-    func isNowPlaying(playingId: String)
+    func isNowPlaying(playingId: String?)
 }
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, CurrentTrackDelegate {
     
     weak var delegate: NowPlayingDelegate? = nil
 
@@ -31,6 +31,7 @@ class DetailViewController: UIViewController {
     let tracksTableViewController = TracksTableViewController()
     
     var isPlaying: Bool = false
+    var currentTrackIndex: Int?
     
     @IBAction func onListenTapped(sender: AnyObject) {
         // Listen: go to SoundCloud app
@@ -77,16 +78,27 @@ class DetailViewController: UIViewController {
         trackTableView.layoutMargins = UIEdgeInsetsZero
         
         fetchTracks()
+        
+        print("finished view will appear")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Done in viewDidAppear because UI update needs view
+        if (self.isPlaying) {
+            playerView.configureProgressBar()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         if (playerView.isPlaying) {
-            delegate!.isNowPlaying(episode.objectId!)
+            delegate?.isNowPlaying(episode.objectId!)
+        } else {
+            delegate?.isNowPlaying(nil)
         }
-//        playerView.pause()
-//        playerView.reset()
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,10 +118,20 @@ class DetailViewController: UIViewController {
                 
                 if error == nil {
                     // Found tracks
-                    self.tracksTableViewController.tracks = objects! as! [Track]
+                    let tracks = objects! as! [Track]
+                    self.tracksTableViewController.tracks = tracks
+                    self.playerView.tracks = tracks
+                    self.playerView.delegate = self
                     self.tracksTableViewController.playerView = self.playerView
                     self.updateTracksHeader()
                     self.trackTableView.reloadData()
+                    
+                    if (self.episode.selectedTrack != nil) {
+                        let idx = self.tracksTableViewController.tracks.indexOf({ $0.objectId == self.episode.selectedTrack?.objectId })
+                        if (idx != nil) {
+                            self.tracksTableViewController.selectSpecificTrack(idx!)
+                        }
+                    }
                     
                     
                 } else {
@@ -124,5 +146,18 @@ class DetailViewController: UIViewController {
     
     func updateTracksHeader() {
         tracksHeaderLabel.text = "Tracks (\(tracksTableViewController.tracks.count))"
+    }
+    
+    func updateCurrentTrack(index: Int?) {
+//        if (self.tracksTableViewController.currentTrackIndex != index) {
+            // Update current track
+        print("updating current track")
+        self.tracksTableViewController.currentTrackIndex = index
+        trackTableView.reloadData()
+//        }
+    }
+    
+    func updateTrackCells() {
+        trackTableView.reloadData()
     }
 }

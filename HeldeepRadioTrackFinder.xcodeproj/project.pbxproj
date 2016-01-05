@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C258B0B1C307411004DD365 /* NowPlayingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C258B0A1C307411004DD365 /* NowPlayingButton.swift */; };
 		0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */; };
 		0C6EF66F1C24E5B2004F8ECA /* EpisodeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */; };
 		0C6EF6721C24F330004F8ECA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF6701C24F330004F8ECA /* DetailViewController.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C258B0A1C307411004DD365 /* NowPlayingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingButton.swift; sourceTree = "<group>"; };
 		0C6EF6691C2403A2004F8ECA /* Parse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Parse-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewCell.swift; sourceTree = "<group>"; };
 		0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeViewCell.xib; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 		0C6EF67F1C252215004F8ECA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0C258B0A1C307411004DD365 /* NowPlayingButton.swift */,
 				0C6EF6901C26836A004F8ECA /* ActionButton.swift */,
 				0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */,
 				0CB62D9C1C275AF600FA798C /* PlayerView.swift */,
@@ -348,6 +351,7 @@
 				TargetAttributes = {
 					F9B3A99B1B27B31C0010D5AE = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = GL527J2335;
 					};
 					F9B3A9B01B27B31C0010D5AE = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -414,6 +418,7 @@
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
 				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
+				0C258B0B1C307411004DD365 /* NowPlayingButton.swift in Sources */,
 				0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */,
 				F9647A701B29F35E00012D9B /* Extensions.swift in Sources */,
 				0C7D08071C2A518D00E2A7B4 /* TypeListViewCell.swift in Sources */,
@@ -513,6 +518,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "e5d9b995-1031-478a-88e1-c45c45821452";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -550,6 +556,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "e5d9b995-1031-478a-88e1-c45c45821452";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -559,6 +566,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -567,6 +576,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
+				PROVISIONING_PROFILE = "e5d9b995-1031-478a-88e1-c45c45821452";
 				SWIFT_OBJC_BRIDGING_HEADER = "./Parse-Bridging-Header.h";
 			};
 			name = Debug;
@@ -575,6 +585,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -583,6 +595,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vincentrbello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = HeldeepRadioTrackFinder;
+				PROVISIONING_PROFILE = "e5d9b995-1031-478a-88e1-c45c45821452";
 				SWIFT_OBJC_BRIDGING_HEADER = "./Parse-Bridging-Header.h";
 			};
 			name = Release;

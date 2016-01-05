@@ -41,22 +41,14 @@ class TrackViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        searchButton.setAttributedTitle(leftIconRightText(UIImage(named: "soundcloud_orange")!, color: GlobalConstants.Colors.SoundCloud, text: "Search on SoundCloud"), forState: .Normal)
-        
-        skipButton.setAttributedTitle(leftIconRightText(UIImage(named: "play")!, color: UIColor.whiteColor(), text: "Skip to track"), forState: .Normal)
+        searchButton.setAttributedTitle(leftIconRightText(UIImage(named: "soundcloud_orange")!, color: GlobalConstants.Colors.SoundCloud, text: "Search on SoundCloud"), forState: .Normal)        
     }
     
-    func configureFor(track: Track, isSelected: Bool, playerView: PlayerView) {
+    func configureFor(track: Track, isSelected: Bool, isPlaying: Bool, playerView: PlayerView) {
         self.track = track
         if (self.playerView == nil) {
             self.playerView = playerView
@@ -71,28 +63,51 @@ class TrackViewCell: UITableViewCell {
             if (track.type.characters.count > 0) {
                 typeLabel.attributedText = track.attributedType()
                 typeLabel.hidden = false
-                typeLabelHeightConstraint.constant = 16
+                typeLabelHeightConstraint.constant = 25
             } else {
                 typeLabel.hidden = true
                 typeLabelHeightConstraint.constant = 4
             }
             if (track.timestamp > 0) {
                 skipButton.hidden = false
+                skipButton.setAttributedTitle(track.skipText(), forState: .Normal)
             } else {
                 skipButton.hidden = true
             }
         } else {
             titleLabel.text = track.title
-            let icon = track.typeIcon()
+            var icon = track.typeIcon()
+            if (icon == nil && playerView.isPlaying && isPlaying) {
+                icon = UIImage(named: "playing")
+                trackIcon.rotate()
+            }
             trackIcon.image = icon
             titleLabel.frame.size.width = UIScreen.mainScreen().bounds.width - (icon != nil ? 85 : 55)
             
             detailView.hidden = false
             expandedDetailView.hidden = true
             
+            if (playerView.isPlaying && !isPlaying) {
+                titleLabel.animateToColor(UIColor(white: 0.7, alpha: 1), duration: 2)
+            } else {
+                titleLabel.animateToColor(UIColor.whiteColor(), duration: 2)
+            }
+            
         }
         
         layoutMargins = UIEdgeInsetsZero
+    }
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        searchButton.highlighted = false
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        searchButton.selected = false
+        searchButton.highlighted = false
+        
     }
 
 }

@@ -12,11 +12,8 @@ class TracksTableViewController: UITableViewController {
     
     var tracks = [Track]()
     var selectedIndex: Int?
+    var currentTrackIndex: Int? = -1
     var playerView: PlayerView?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -39,7 +36,7 @@ class TracksTableViewController: UITableViewController {
             // Dynamically compute the height of the row based on its contents
             let track = tracks[indexPath.row]
             let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.boldSystemFontOfSize(15))
-            return titleHeight + (track.timestamp > 0 ? 85 : 55)
+            return titleHeight + (track.timestamp > 0 ? 93 : 64)
         } else {
             return 44
         }
@@ -50,10 +47,11 @@ class TracksTableViewController: UITableViewController {
         let track = tracks[indexPath.row]
         // Configure the cell...
         let selected = indexPath.row == selectedIndex
+        let isPlaying = indexPath.row == currentTrackIndex
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TrackViewCell", forIndexPath: indexPath) as! TrackViewCell
         
-        cell.configureFor(track, isSelected: selected, playerView: playerView!)
+        cell.configureFor(track, isSelected: selected, isPlaying: isPlaying, playerView: playerView!)
         
         return cell
     }
@@ -71,7 +69,8 @@ class TracksTableViewController: UITableViewController {
             selectedIndex = indexPath.row
         }
         
-        tableView.reloadRowsAtIndexPaths(rowsToUpdate, withRowAnimation: UITableViewRowAnimation.Fade)
+        print("reloading rows")
+        tableView.reloadRowsAtIndexPaths(rowsToUpdate, withRowAnimation: .Fade)
         
         if (indexPath.row == tracks.count - 1) {
             // Last row
@@ -81,6 +80,25 @@ class TracksTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    
+    func selectSpecificTrack(index: Int) {
+        let idxPath = NSIndexPath(forRow: index, inSection: 0)
+        tableView(tableView, didSelectRowAtIndexPath: idxPath)
+        
+        tableView.scrollToRowAtIndexPath(idxPath, atScrollPosition: .Bottom, animated: true)
+    }
+    
+    func updateCurrentTrack(index: Int) {
+        currentTrackIndex = index
+        
+//        print("index to update: \(index)")
+//        let idxPath = NSIndexPath(forRow: index, inSection: 0)
+//        tableView.reloadRowsAtIndexPaths([idxPath], withRowAnimation: .Fade)
+        dispatch_async(dispatch_get_main_queue()) {_ in
+            self.tableView.reloadData()
+        }
+//        tableView.reloadData()
+    }
     
     /*
     // MARK: - Navigation

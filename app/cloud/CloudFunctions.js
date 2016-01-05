@@ -229,3 +229,22 @@ Parse.Cloud.define('setTimestamps', function(request, response) {
     response.success('Success! ' + objs.length);
   });
 });
+
+Parse.Cloud.define('notifyUsers', function(request, response) {
+  var query = new Parse.Query(Parse.Installation);
+  Parse.Push.send({
+    where: query,
+    data: {
+      alert: 'It\'s that time of the week again – Heldeep #83 is out!',
+      badge: 1
+    }
+  }, {
+    success: function() {
+      response.success('Successfully sent notification.');
+    },
+    error: function() {
+      response.error('Unsuccessfully sent notification.')
+    }
+  });
+});
+

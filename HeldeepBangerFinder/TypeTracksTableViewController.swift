@@ -19,8 +19,12 @@ class TypeTracksTableViewController: UITableViewController {
         
         super.init(nibName: "TypeTracksTableViewController", bundle: nil)
 
-        let (_, long) = type
-        navigationItem.title = long
+        let (short, long) = type
+        
+        let titleLabel = UILabel()
+        titleLabel.attributedText = leftIconRightText(UIImage(named: short)!, color: UIColor.whiteColor(), text: long)
+        titleLabel.sizeToFit()
+        navigationItem.titleView = titleLabel
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,6 +44,8 @@ class TypeTracksTableViewController: UITableViewController {
         let nib = UINib(nibName: "TrackResultCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "TrackResultCell")
         
+        tableView.separatorColor = UIColor(white: 0.33, alpha: 1.0)
+        
         fetchData()
     }
 
@@ -51,6 +57,8 @@ class TypeTracksTableViewController: UITableViewController {
     func fetchData() {
         
         let query = PFQuery.orQueryWithSubqueries(typeQueries())
+        query.includeKey("episode")
+        query.orderByAscending("title")
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
@@ -80,21 +88,19 @@ class TypeTracksTableViewController: UITableViewController {
         case "classic":
             q1.whereKey("type", equalTo: "Heldeep Classic")
             q2.whereKey("type", equalTo: "Heldeep Radio Classic")
-            queries.append(q1)
-            queries.append(q2)
         case "cooldown":
             q1.whereKey("type", equalTo: "Heldeep Cooldown")
             q2.whereKey("type", equalTo: "Heldeep Radio Cooldown")
-            queries.append(q1)
-            queries.append(q2)
         case "halfbeat":
             q1.whereKey("type", equalTo: "Heldeep Halfbeat")
             q2.whereKey("type", equalTo: "Heldeep Radio Halfbeat")
-            queries.append(q1)
-            queries.append(q2)
+            
         default:
             break
         }
+
+        queries.append(q1)
+        queries.append(q2)
         
         return queries
     }
@@ -118,6 +124,19 @@ class TypeTracksTableViewController: UITableViewController {
         cell.configureFor(track)
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let track = tracks[indexPath.row]
+        let episode = track.episode
+        episode.selectedTrack = track
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let dvc = DetailViewController(episode: episode)
+        
+        showViewController(dvc, sender: self)
     }
     
 }

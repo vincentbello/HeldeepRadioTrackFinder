@@ -166,4 +166,23 @@ extension UIView {
         self.layer.borderWidth = 1
         self.layer.borderColor = color.CGColor
     }
+    
+    // Rotate infinitely
+    func rotate() {
+        let rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.toValue = NSNumber(double: M_PI * 2)
+        rotation.duration = 2
+        rotation.cumulative = true
+        rotation.repeatCount = FLT_MAX
+        self.layer.addAnimation(rotation, forKey: "rotationAnimation")
+    }
+}
+
+extension UILabel {
+    // animate to color
+    func animateToColor(color: UIColor, duration: Double = 0.2) {
+        UIView.animateWithDuration(duration) {_ in
+            self.textColor = color
+        }
+    }
 }

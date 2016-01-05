@@ -57,7 +57,7 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
 //        resultsTableController.tableView.delegate = self
         
         // Set up searchController
-        searchController = CustomSearchController()
+        searchController = CustomSearchController(navigationController: self.navigationController!)
         tableView.tableHeaderView = searchController.searchBar
         
         // Allow access to other views (i.e. detail view) from any cells, even in the results controller
@@ -72,27 +72,23 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("episodes view will appear")
+        tableView.reloadData()
     }
     
-    func isNowPlaying(playingId: String) {
-        print("is now playing")
+    func isNowPlaying(playingId: String?) {
         nowPlayingId = playingId
-        let nowPlayingButton = UIButton(type: .Custom)
-        nowPlayingButton.frame = CGRectMake(0, 0, 60, 25)
-        let forwardIcon = UIImageView(frame: CGRectMake(40, 3, 20, 20))
-        forwardIcon.image = UIImage(named: "forward")
-        nowPlayingButton.addSubview(forwardIcon)
-        let playingLabel = UILabel(frame: CGRectMake(0, 0, 35, 25))
-        playingLabel.text = "Playing"
-        playingLabel.textColor = UIColor.whiteColor()
-        playingLabel.font = UIFont.systemFontOfSize(12)
-        playingLabel.sizeToFit()
-        playingLabel.frame.origin = CGPointMake(0, 4)
-        nowPlayingButton.addSubview(playingLabel)
-        nowPlayingButton.addTarget(self, action: "goToNowPlaying", forControlEvents: .TouchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nowPlayingButton)
-        print("newly set ID: \(self.nowPlayingId)")
+        
+        if (playingId != nil) {
+            
+            print("playing id is not nil")
+            
+            let nowPlayingButton = NowPlayingButton(frame: CGRectMake(0, 0, 65, 25))
+            nowPlayingButton.addTarget(self, action: "goToNowPlaying", forControlEvents: .TouchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nowPlayingButton)
+            
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -323,7 +319,7 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         
         let cell = tableView.dequeueReusableCellWithIdentifier("EpisodeViewCell", forIndexPath: indexPath) as! EpisodeViewCell
         
-        cell.configureFor(episode, isNew: index == 0)
+        cell.configureFor(episode, isNew: index == 0, isPlaying: nowPlayingId == episode.objectId)
 
         return cell
     }

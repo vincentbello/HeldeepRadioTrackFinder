@@ -149,9 +149,27 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
         return false;
       }
     }).then(function(objs) {
-      status.success(objs ? 'Saved new episode & tracks.' : 'No new episodes to save.');
+      if (objs) {
+        // status.success('Saved new episode & sent notification.');
+        var notificationQuery = new Parse.Query(Parse.Installation);
+        return Parse.Push.send({
+          where: notificationQuery,
+          data: {
+            alert: 'It\'s that time of the week again – Heldeep #' + epObj.epId + ' is out!',
+            badge: 1
+          }
+        });
+      } else {
+        status.success('No new episodes to save.');
+      }
     }, function(err) {
       status.error(err);
+    }).then(function(sent) {
+      if (sent) {
+        status.success('Successfully saved episodes & tracks and sent notifications.');
+      }
+    }, function(err) {
+      status.error('Could not send notifications: ' + err);
     });
   } else {
     status.error('Invalid weekday.');

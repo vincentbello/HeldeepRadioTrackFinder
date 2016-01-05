@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" rowHeight="119" id="KGk-i7-Jjw" customClass="TrackViewCell" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" rowHeight="130" id="KGk-i7-Jjw" customClass="TrackViewCell" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="118.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPc-RH-kAX">
@@ -33,34 +33,34 @@
                         </constraints>
                     </view>
                     <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="laU-YI-MIr" userLabel="Expanded Details View">
-                        <rect key="frame" x="46" y="7" width="265" height="109"/>
+                        <rect key="frame" x="46" y="7" width="265" height="122"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVF-vL-sFY">
                                 <rect key="frame" x="0.0" y="6" width="265" height="18"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjd-tA-nLb">
-                                <rect key="frame" x="0.0" y="24" width="265" height="16"/>
+                                <rect key="frame" x="0.0" y="29" width="265" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1K4-jw-Q13" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
-                                <rect key="frame" x="56" y="44" width="154" height="28"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1K4-jw-Q13" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
+                                <rect key="frame" x="53" y="49" width="160" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="CYa-ve-awO"/>
+                                    <constraint firstAttribute="height" constant="32" id="CYa-ve-awO"/>
                                     <constraint firstAttribute="width" constant="154" id="tnF-9y-YEi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                <state key="normal" title="Search on SoundCloud">
+                                <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
+                                <state key="normal" title=" Search on SoundCloud">
                                     <color key="titleColor" red="1" green="0.3803921569" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="2"/>
+                                        <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
@@ -73,19 +73,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2y-0s-l8c" customClass="ActionButton" customModule="HeldeepRadioTrackFinder" customModuleProvider="target">
-                                <rect key="frame" x="86" y="72" width="92" height="28"/>
+                                <rect key="frame" x="84" y="81" width="96" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="92" id="Adq-k1-f5i"/>
-                                    <constraint firstAttribute="height" constant="28" id="hka-c6-3Uy"/>
+                                    <constraint firstAttribute="height" constant="32" id="hka-c6-3Uy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                                 <state key="normal" title=" Skip to track">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="2"/>
+                                        <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
@@ -104,9 +104,9 @@
                             <constraint firstItem="dVF-vL-sFY" firstAttribute="top" secondItem="laU-YI-MIr" secondAttribute="top" constant="6" id="7uM-6Q-5eQ"/>
                             <constraint firstItem="c2y-0s-l8c" firstAttribute="centerX" secondItem="laU-YI-MIr" secondAttribute="centerX" id="BCM-Na-kr0"/>
                             <constraint firstAttribute="bottom" secondItem="1K4-jw-Q13" secondAttribute="bottom" constant="5" id="Hyv-Wi-fFe"/>
-                            <constraint firstItem="1K4-jw-Q13" firstAttribute="top" secondItem="dVF-vL-sFY" secondAttribute="bottom" constant="20" id="JmB-RQ-jl5"/>
+                            <constraint firstItem="1K4-jw-Q13" firstAttribute="top" secondItem="dVF-vL-sFY" secondAttribute="bottom" constant="25" id="JmB-RQ-jl5"/>
                             <constraint firstAttribute="trailing" secondItem="qjd-tA-nLb" secondAttribute="trailing" id="Q0t-U9-TPC"/>
-                            <constraint firstItem="qjd-tA-nLb" firstAttribute="top" secondItem="dVF-vL-sFY" secondAttribute="bottom" id="hNU-pT-p1L"/>
+                            <constraint firstItem="qjd-tA-nLb" firstAttribute="top" secondItem="dVF-vL-sFY" secondAttribute="bottom" constant="5" id="hNU-pT-p1L"/>
                             <constraint firstAttribute="bottom" secondItem="c2y-0s-l8c" secondAttribute="bottom" constant="9" id="pl7-fG-cIl"/>
                             <constraint firstItem="c2y-0s-l8c" firstAttribute="top" secondItem="1K4-jw-Q13" secondAttribute="bottom" id="t9F-m5-gTn"/>
                             <constraint firstItem="qjd-tA-nLb" firstAttribute="leading" secondItem="laU-YI-MIr" secondAttribute="leading" id="xEh-A8-Rdz"/>
@@ -125,7 +125,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojH-2m-i0O">
                                 <rect key="frame" x="0.0" y="5" width="242" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NIA-rO-3mC">
@@ -189,7 +189,7 @@
                 <outlet property="typeLabel" destination="qjd-tA-nLb" id="Yom-gk-5rN"/>
                 <outlet property="typeLabelHeightConstraint" destination="JmB-RQ-jl5" id="vXA-EY-b3V"/>
             </connections>
-            <point key="canvasLocation" x="278" y="240.5"/>
+            <point key="canvasLocation" x="278" y="246"/>
         </tableViewCell>
     </objects>
 </document>
