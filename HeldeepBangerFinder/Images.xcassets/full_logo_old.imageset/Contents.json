@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "heldeep_radio.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "full_logo.png"
     },
     {
       "idiom" : "universal",

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class TrackViewCell: UITableViewCell {
 
@@ -23,6 +24,8 @@ class TrackViewCell: UITableViewCell {
     @IBOutlet weak var typeLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
+    
+    let overlay: UIVisualEffectView = UIVisualEffectView()
     
     @IBAction func searchOnSoundCloud(sender: AnyObject) {
         let encodedSearchTerm = track!.title.urlEncode()
@@ -57,10 +60,10 @@ class TrackViewCell: UITableViewCell {
         numberLabel.text = String(track.order)
         
         if (isSelected) {
-            expandedTitleLabel.text = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            expandedTitleLabel.text = track.title
             detailView.hidden = true
             expandedDetailView.hidden = false
-            if (track.type.characters.count > 0) {
+            if (track.hasType()) {
                 typeLabel.attributedText = track.attributedType()
                 typeLabel.hidden = false
                 typeLabelHeightConstraint.constant = 25
@@ -68,7 +71,7 @@ class TrackViewCell: UITableViewCell {
                 typeLabel.hidden = true
                 typeLabelHeightConstraint.constant = 4
             }
-            if (track.timestamp > 0) {
+            if (track.hasTimestamp()) {
                 skipButton.hidden = false
                 skipButton.setAttributedTitle(track.skipText(), forState: .Normal)
             } else {
@@ -96,18 +99,5 @@ class TrackViewCell: UITableViewCell {
         }
         
         layoutMargins = UIEdgeInsetsZero
-    }
-    
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
-        super.setHighlighted(highlighted, animated: animated)
-        searchButton.highlighted = false
-    }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        searchButton.selected = false
-        searchButton.highlighted = false
-        
-    }
-
+    }    
 }

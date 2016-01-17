@@ -31,20 +31,17 @@ class TypeTracksTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("view did appear")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load")
+        
+        navigationItem.title = " "
         
         let nib = UINib(nibName: "TrackResultCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "TrackResultCell")
         
         tableView.separatorColor = UIColor(white: 0.33, alpha: 1.0)
+        
+        setUpLoadingIndicator()
         
         fetchData()
     }
@@ -66,6 +63,7 @@ class TypeTracksTableViewController: UITableViewController {
                 
                 // Found episodes
                 self.tracks = objects! as! [Track]
+                self.tableView.tableFooterView = nil
                 self.tableView.reloadData()
                 
             } else {
@@ -74,7 +72,6 @@ class TypeTracksTableViewController: UITableViewController {
             
             self.tableView.userInteractionEnabled = true
         }
-        
     }
     
     func typeQueries() -> [PFQuery] {
@@ -110,6 +107,10 @@ class TypeTracksTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
@@ -135,8 +136,28 @@ class TypeTracksTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let dvc = DetailViewController(episode: episode)
-        
+
         showViewController(dvc, sender: self)
+    }
+    
+    func setUpLoadingIndicator() {
+        
+        let tblViewFooter = UIView(frame: view.bounds)
+        
+        let loadingLabel = UILabel()
+        loadingLabel.text = "Loading tracks..."
+        loadingLabel.textColor = UIColor.lightTextColor()
+        loadingLabel.font = UIFont.boldSystemFontOfSize(15)
+        loadingLabel.sizeToFit()
+        print("center: \(tableView.frame)")
+        let frameBounds = UIScreen.mainScreen().bounds
+        loadingLabel.center = CGPointMake(frameBounds.width / 2, frameBounds.height / 2 - 50)
+        tblViewFooter.addSubview(loadingLabel)
+        
+        self.tableView.userInteractionEnabled = false
+        self.tableView.tableFooterView = tblViewFooter
+        
+        
     }
     
 }

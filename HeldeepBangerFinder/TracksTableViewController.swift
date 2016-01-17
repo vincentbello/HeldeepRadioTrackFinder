@@ -32,11 +32,18 @@ class TracksTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let selected = indexPath.row == selectedIndex
-        if (selected) {
+        if selected {
             // Dynamically compute the height of the row based on its contents
             let track = tracks[indexPath.row]
-            let titleHeight = track.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).heightWithConstrainedWidth(265, font: UIFont.boldSystemFontOfSize(15))
-            return titleHeight + (track.timestamp > 0 ? 93 : 64)
+            var cellHeight = track.title.heightWithConstrainedWidth(265, font: UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold))
+            if (track.hasType()) {
+                cellHeight += 18
+            }
+            cellHeight += 55
+            if (track.hasTimestamp()) {
+                cellHeight += 35
+            }
+            return cellHeight
         } else {
             return 44
         }
@@ -69,7 +76,6 @@ class TracksTableViewController: UITableViewController {
             selectedIndex = indexPath.row
         }
         
-        print("reloading rows")
         tableView.reloadRowsAtIndexPaths(rowsToUpdate, withRowAnimation: .Fade)
         
         if (indexPath.row == tracks.count - 1) {
@@ -90,14 +96,9 @@ class TracksTableViewController: UITableViewController {
     
     func updateCurrentTrack(index: Int) {
         currentTrackIndex = index
-        
-//        print("index to update: \(index)")
-//        let idxPath = NSIndexPath(forRow: index, inSection: 0)
-//        tableView.reloadRowsAtIndexPaths([idxPath], withRowAnimation: .Fade)
         dispatch_async(dispatch_get_main_queue()) {_ in
             self.tableView.reloadData()
         }
-//        tableView.reloadData()
     }
     
     /*

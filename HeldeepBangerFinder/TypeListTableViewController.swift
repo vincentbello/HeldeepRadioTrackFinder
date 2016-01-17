@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TypeListTableViewController: UITableViewController {
+class TypeListTableViewController: CustomTableViewController {
     
     let types = [
         ("classic", "Heldeep Classic"),
@@ -17,10 +17,6 @@ class TypeListTableViewController: UITableViewController {
     ]
     
     var defaultSearchView: DefaultSearchView?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

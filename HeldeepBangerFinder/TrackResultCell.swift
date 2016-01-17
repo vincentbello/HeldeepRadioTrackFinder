@@ -27,12 +27,20 @@ class TrackResultCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        clipsToBounds = true
+        layoutMargins = UIEdgeInsetsZero
         episodeNumberView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
-    func configureFor(track: Track) {
+    func configureFor(track: Track, canSelect: Bool = true) {
         titleLabel.text = track.title
         episodeNumberLabel.text = String(track.episode.epId)
+        
+        if canSelect {
+            accessoryType = .DisclosureIndicator
+        } else {
+            accessoryType = .None
+        }
     }
     
 }

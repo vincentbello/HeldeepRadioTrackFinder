@@ -230,6 +230,28 @@ Parse.Cloud.define('setTimestamps', function(request, response) {
   });
 });
 
+Parse.Cloud.define('removeEmptyEpisodePointers', function(request, response) {
+  var numTracks = 0;
+  var trackQuery = new Parse.Query(Track);
+  var episodeQuery = new Parse.Query(Episode);
+  trackQuery.doesNotMatchKeyInQuery('episode', 'objectId', episodeQuery);
+  trackQuery.limit(1000);
+  trackQuery.find().then(function(tracks) {
+    if (tracks.length) {
+      numTracks = tracks.length;
+      return Parse.Object.destroyAll(tracks);
+    } else {
+      response.success('No tracks pointing to empty objects.');
+    }
+  }, function(error) {
+    response.error('Could not find tracks pointing to empty objects.');
+  }).then(function() {
+    response.success('All ' + numTracks + ' tracks pointing to empty objects were deleted.');
+  }, function(err) {
+    response.error('Could not delete tracks.');
+  });
+});
+
 Parse.Cloud.define('notifyUsers', function(request, response) {
   var query = new Parse.Query(Parse.Installation);
   Parse.Push.send({

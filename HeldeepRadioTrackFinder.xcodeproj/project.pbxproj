@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C168B901C48CD7C003906B5 /* NotificationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C168B8E1C48CD7C003906B5 /* NotificationPromptViewController.swift */; };
+		0C168B911C48CD7C003906B5 /* NotificationPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C168B8F1C48CD7C003906B5 /* NotificationPromptViewController.xib */; };
+		0C1BC1391C40DC5900E00682 /* NoTracksFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1BC1381C40DC5900E00682 /* NoTracksFoundView.swift */; };
+		0C1BC13B1C40E44400E00682 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1BC13A1C40E44400E00682 /* LoadingView.swift */; };
+		0C2197C81C3F01CA006D9AAC /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2197C71C3F01CA006D9AAC /* SearchResultsViewController.swift */; };
+		0C2197CC1C3F041C006D9AAC /* SearchBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2197CB1C3F041C006D9AAC /* SearchBaseViewController.swift */; };
 		0C258B0B1C307411004DD365 /* NowPlayingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C258B0A1C307411004DD365 /* NowPlayingButton.swift */; };
 		0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */; };
 		0C6EF66F1C24E5B2004F8ECA /* EpisodeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6EF66D1C24E5B2004F8ECA /* EpisodeViewCell.xib */; };
@@ -30,6 +36,8 @@
 		0CB62D9D1C275AF600FA798C /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62D9C1C275AF600FA798C /* PlayerView.swift */; };
 		0CB62DC91C277E5E00FA798C /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB62DC81C277E5E00FA798C /* PlayerView.xib */; };
 		0CB62DCB1C27852000FA798C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62DCA1C27852000FA798C /* Helpers.swift */; };
+		0CB93A7F1C3E2C7A005625A9 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB93A7E1C3E2C7A005625A9 /* SearchTableViewController.swift */; };
+		0CEE2A7D1C4036AF0058E470 /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEE2A7C1C4036AF0058E470 /* TitleLabel.swift */; };
 		F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F95376331B34D19C00A49A0D /* Default-568h@2x.png */; };
 		F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */; };
 		F9647A701B29F35E00012D9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6F1B29F35E00012D9B /* Extensions.swift */; };
@@ -70,6 +78,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C168B8E1C48CD7C003906B5 /* NotificationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationPromptViewController.swift; sourceTree = "<group>"; };
+		0C168B8F1C48CD7C003906B5 /* NotificationPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationPromptViewController.xib; sourceTree = "<group>"; };
+		0C1BC1381C40DC5900E00682 /* NoTracksFoundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoTracksFoundView.swift; sourceTree = "<group>"; };
+		0C1BC13A1C40E44400E00682 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		0C2197C71C3F01CA006D9AAC /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		0C2197CB1C3F041C006D9AAC /* SearchBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBaseViewController.swift; sourceTree = "<group>"; };
 		0C258B0A1C307411004DD365 /* NowPlayingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingButton.swift; sourceTree = "<group>"; };
 		0C6EF6691C2403A2004F8ECA /* Parse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Parse-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C6EF66C1C24E5B2004F8ECA /* EpisodeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewCell.swift; sourceTree = "<group>"; };
@@ -95,6 +109,8 @@
 		0CB62D9C1C275AF600FA798C /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		0CB62DC81C277E5E00FA798C /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = ../PlayerView.xib; sourceTree = "<group>"; };
 		0CB62DCA1C27852000FA798C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0CB93A7E1C3E2C7A005625A9 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		0CEE2A7C1C4036AF0058E470 /* TitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		F95376331B34D19C00A49A0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -160,6 +176,9 @@
 		0C6EF67F1C252215004F8ECA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0C1BC13A1C40E44400E00682 /* LoadingView.swift */,
+				0C1BC1381C40DC5900E00682 /* NoTracksFoundView.swift */,
+				0CEE2A7C1C4036AF0058E470 /* TitleLabel.swift */,
 				0C258B0A1C307411004DD365 /* NowPlayingButton.swift */,
 				0C6EF6901C26836A004F8ECA /* ActionButton.swift */,
 				0C6EF6821C252547004F8ECA /* TracksHeaderView.swift */,
@@ -167,6 +186,17 @@
 				0CB62DC81C277E5E00FA798C /* PlayerView.xib */,
 			);
 			name = Components;
+			sourceTree = "<group>";
+		};
+		0C773F321C3ED489009F3099 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0C2197CB1C3F041C006D9AAC /* SearchBaseViewController.swift */,
+				0CB93A7E1C3E2C7A005625A9 /* SearchTableViewController.swift */,
+				0C2197C71C3F01CA006D9AAC /* SearchResultsViewController.swift */,
+				F9D53D591B307B4B0031B333 /* CustomSearchController.swift */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		BBAA08C12FC859255B945AFC /* Frameworks */ = {
@@ -209,6 +239,10 @@
 		F98217B61B27C0390013E15C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0C773F321C3ED489009F3099 /* Search */,
+				0C168B8E1C48CD7C003906B5 /* NotificationPromptViewController.swift */,
+				0C168B8F1C48CD7C003906B5 /* NotificationPromptViewController.xib */,
+				F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */,
 				0C7D07FF1C2A44E700E2A7B4 /* TypeListTableViewController.swift */,
 				0C7D08091C2A76EC00E2A7B4 /* TypeTracksTableViewController.swift */,
 				0C7D080A1C2A76EC00E2A7B4 /* TypeTracksTableViewController.xib */,
@@ -217,8 +251,6 @@
 				0C6EF6701C24F330004F8ECA /* DetailViewController.swift */,
 				0C6EF6711C24F330004F8ECA /* DetailViewController.xib */,
 				0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */,
-				F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */,
-				F9D53D591B307B4B0031B333 /* CustomSearchController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -383,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C168B911C48CD7C003906B5 /* NotificationPromptViewController.xib in Resources */,
 				F9B3A9A71B27B31C0010D5AE /* Main.storyboard in Resources */,
 				0C6EF6731C24F330004F8ECA /* DetailViewController.xib in Resources */,
 				0CB62DC91C277E5E00FA798C /* PlayerView.xib in Resources */,
@@ -416,9 +449,12 @@
 				0CB62DCB1C27852000FA798C /* Helpers.swift in Sources */,
 				F9B3A9A21B27B31C0010D5AE /* AppDelegate.swift in Sources */,
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
+				0C1BC1391C40DC5900E00682 /* NoTracksFoundView.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
 				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
 				0C258B0B1C307411004DD365 /* NowPlayingButton.swift in Sources */,
+				0C2197C81C3F01CA006D9AAC /* SearchResultsViewController.swift in Sources */,
+				0C168B901C48CD7C003906B5 /* NotificationPromptViewController.swift in Sources */,
 				0C6EF6911C26836A004F8ECA /* ActionButton.swift in Sources */,
 				F9647A701B29F35E00012D9B /* Extensions.swift in Sources */,
 				0C7D08071C2A518D00E2A7B4 /* TypeListViewCell.swift in Sources */,
@@ -428,14 +464,18 @@
 				0C7D080F1C2A780D00E2A7B4 /* TrackResultCell.swift in Sources */,
 				F9647A741B2A233A00012D9B /* CustomTableViewCell.swift in Sources */,
 				F9B3A9C61B27BFBF0010D5AE /* EpisodesTableViewController.swift in Sources */,
+				0C2197CC1C3F041C006D9AAC /* SearchBaseViewController.swift in Sources */,
 				0C6EF6871C253105004F8ECA /* TracksTableViewController.swift in Sources */,
 				F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */,
 				F9D53D5A1B307B4B0031B333 /* CustomSearchController.swift in Sources */,
 				0C6EF6851C252E76004F8ECA /* Track.swift in Sources */,
 				0C6EF6831C252547004F8ECA /* TracksHeaderView.swift in Sources */,
+				0CEE2A7D1C4036AF0058E470 /* TitleLabel.swift in Sources */,
 				0C6EF68A1C25337C004F8ECA /* TrackViewCell.swift in Sources */,
 				0CB62D9D1C275AF600FA798C /* PlayerView.swift in Sources */,
+				0CB93A7F1C3E2C7A005625A9 /* SearchTableViewController.swift in Sources */,
 				0C7D08001C2A44E700E2A7B4 /* TypeListTableViewController.swift in Sources */,
+				0C1BC13B1C40E44400E00682 /* LoadingView.swift in Sources */,
 				0C6EF66E1C24E5B2004F8ECA /* EpisodeViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

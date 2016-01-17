@@ -11,14 +11,11 @@ import UIKit
 
 import Parse
 
-class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate {
+class EpisodesTableViewController: CustomTableViewController {
     
     // MARK: - Properties
     
     var episodes = [Episode]()
-    
-    // Search-related controller properties
-    var searchController: CustomSearchController!
     
     // Refresh-related properties
     var refreshLoadingView: UIView!
@@ -33,54 +30,30 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
     
     var nowPlayingId: String?
     
-    // Cast collection view
-    var castCollectionView: UICollectionView?
-    
-    
-    @IBAction func searchBegin(sender: AnyObject) {
-        self.tableView.contentOffset = CGPointMake(0, 0 - self.tableView.contentInset.top)
-        self.searchController.searchBar.becomeFirstResponder()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Load the NIB file
         let nib = UINib(nibName: "EpisodeViewCell", bundle: nil)
         // Register this NIB, which contains the cell
-        tableView.registerNib(nib,
-            forCellReuseIdentifier: "EpisodeViewCell")
-        
-//        resultsTableController = ResultsTableController()
-        
-        // We want to be the delegate for our filtered table so didSelectRowAtIndexPath(_:) is called for both tables.
-//        resultsTableController.tableView.delegate = self
-        
-        // Set up searchController
-        searchController = CustomSearchController(navigationController: self.navigationController!)
-        tableView.tableHeaderView = searchController.searchBar
-        
-        // Allow access to other views (i.e. detail view) from any cells, even in the results controller
-        definesPresentationContext = true
+        tableView.registerNib(nib, forCellReuseIdentifier: "EpisodeViewCell")
         
         self.setUpRefreshControl()
-        self.setUpLoadingIndicator()
+        
+        self.animateLogo()
         
         self.getEpisodes()
+        
+        // Set up view re-rendering notification
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "renderViewAnimations", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+//        self.promptForNotifications()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        tableView.reloadData()
-    }
-    
-    func isNowPlaying(playingId: String?) {
-        nowPlayingId = playingId
-        
-        if (playingId != nil) {
-            
-            print("playing id is not nil")
+        nowPlayingId = appDelegate().nowPlayingId
+        if (nowPlayingId != nil) {
             
             let nowPlayingButton = NowPlayingButton(frame: CGRectMake(0, 0, 65, 25))
             nowPlayingButton.addTarget(self, action: "goToNowPlaying", forControlEvents: .TouchUpInside)
@@ -89,15 +62,20 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         } else {
             navigationItem.rightBarButtonItem = nil
         }
+        
+        renderViewAnimations()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func renderViewAnimations() {
+        if (nowPlayingId != nil) {
+            tableView.reloadData()
+        }
     }
     
     // Fetches episode data asynchronously from SoundCloud API. Populates episode data and reloads tableView
     func getEpisodes() {
+        
+        showLoadingView()
         
         if Reachability.isConnectedToNetwork() {
             // Connected to a network
@@ -110,6 +88,7 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
                     
                     // Found episodes
                     self.episodes = objects! as! [Episode]
+                    self.removeLoadingView()
                     self.tableView.reloadData()
                     
                 } else {
@@ -122,14 +101,14 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         
         } else {
             // Not connected to the network
-            self.showError("No Internet connection.")
-            self.tableView.userInteractionEnabled = true
+            showError("No Internet connection.")
+            tableView.userInteractionEnabled = true
         }
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
-        if self.refreshControl!.refreshing {
-            self.refreshControl!.endRefreshing()
+        if refreshControl!.refreshing {
+            refreshControl!.endRefreshing()
         }
     }
     
@@ -181,7 +160,7 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         
         self.refreshControl = UIRefreshControl()
         self.refreshLoadingView = UIView(frame: self.refreshControl!.bounds)
-        self.refreshLoadingView.backgroundColor = UIColor.clearColor()
+        self.refreshLoadingView.backgroundColor = UIColor(white: 0.85, alpha: 1)
         
         // Create the graphic image view
         ollie = UIImageView(image: UIImage(named: "ollie.png"))
@@ -274,26 +253,37 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         self.isRefreshHeadRotated = false
     }
     
-    func setUpLoadingIndicator() {
+    func animateLogo() {
         
-        let tblViewFooter = UIView(frame: CGRectZero)
+        let tempView = UIView(frame: tableView.bounds)
+        tempView.backgroundColor = GlobalConstants.Colors.Background
         
-        let loadingLabel = UILabel()
-            loadingLabel.text = "Loading episodes..."
-            loadingLabel.textColor = UIColor.lightTextColor()
-            loadingLabel.font = UIFont.boldSystemFontOfSize(15)
+        tableView.addSubview(tempView)
+        tableView.scrollEnabled = false
         
-        tblViewFooter.addSubview(loadingLabel)
+        let viewFrameCenter = navigationController!.view.center
         
-        loadingLabel.sizeToFit()
+        let logoView = UIImageView(frame: CGRectMake(0, 0, 230, 54))
+        logoView.image = UIImage(named: "full_logo")
+        logoView.center = viewFrameCenter
         
-        let offsetY = (self.navigationController?.navigationBar)!.frame.height + self.searchController.searchBar.frame.height
-        loadingLabel.center = CGPointMake(self.tableView.center.x, self.tableView.center.y - offsetY)
+        navigationController!.view.addSubview(logoView)
         
-        self.tableView.tableFooterView = tblViewFooter
+        let targetCenter = self.navigationController!.navigationBar.center
         
-        self.tableView.userInteractionEnabled = false
-        
+        UIView.animateWithDuration(0.7,
+            delay: 0.2,
+            usingSpringWithDamping: 0.75,
+            initialSpringVelocity: 0.3,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                logoView.frame.size = CGSizeMake(128, 30)
+                logoView.center = CGPointMake(targetCenter.x, targetCenter.y + 35)
+            }, completion: {_ in
+                logoView.removeFromSuperview()
+                tempView.removeFromSuperview()
+                self.navigationItem.titleView!.alpha = 1
+        })
     }
     
 
@@ -307,7 +297,6 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        
         return episodes.count
     }
 
@@ -318,8 +307,8 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
         let episode = episodes[index]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("EpisodeViewCell", forIndexPath: indexPath) as! EpisodeViewCell
-        
-        cell.configureFor(episode, isNew: index == 0, isPlaying: nowPlayingId == episode.objectId)
+        let playing = nowPlayingId == episode.objectId
+        cell.configureFor(episode, isNew: index == 0, isPlaying: playing)
 
         return cell
     }
@@ -334,8 +323,7 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
     }
     
     func showDetail(episode: Episode) {
-        let dvc = DetailViewController(episode: episode, isPlaying: self.nowPlayingId == episode.objectId)
-        dvc.delegate = self
+        let dvc = DetailViewController(episode: episode, isPlaying: nowPlayingId == episode.objectId)
         showViewController(dvc, sender: self)
     }
     
@@ -349,4 +337,15 @@ class EpisodesTableViewController: CustomTableViewController, NowPlayingDelegate
     }
     
     //  MARK: - Other functions
+    func promptForNotifications() {
+        // Check if the user has already registered notifications
+        let app = UIApplication.sharedApplication()
+        print("is registered: \(app.isRegisteredForRemoteNotifications())")
+        print("has current notification settings: \(app.currentUserNotificationSettings() != nil)")
+        let notificationType = app.currentUserNotificationSettings()!.types
+        print("push notification type: \(notificationType)")
+        
+        let notificationPromptVC = NotificationPromptViewController()
+        navigationController?.presentViewController(notificationPromptVC, animated: true, completion: nil)
+    }
 }

@@ -10,48 +10,51 @@ import UIKit
 import Foundation
 
 class CustomTableViewController: UITableViewController {
+    
+    var loadingView: LoadingView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Register cell
-        self.tableView.registerClass(CustomTableViewCell.self, forCellReuseIdentifier: GlobalConstants.TableViewCell.Identifier)
+        tableView.registerClass(CustomTableViewCell.self, forCellReuseIdentifier: GlobalConstants.TableViewCell.Identifier)
         
         // Set UI navigation bar properties
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
-        self.navigationController?.navigationBar.frame.origin.y = -15
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        navigationController?.navigationBar.frame.origin.y = -15
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "left")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "left")
         let imageView = UIImageView(image: UIImage(named: "full_logo.png"))
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        let titleView = UIView(frame: CGRectMake(0, 0, 162, 30))
+        let titleView = UIView(frame: CGRectMake(0, 0, 128, 30))
         imageView.frame = titleView.bounds
         titleView.addSubview(imageView)
         
-        self.navigationItem.titleView = titleView
+        navigationItem.title = " "
+        
+        navigationItem.titleView = titleView
+        navigationItem.titleView!.alpha = 0
         
         // Set section index properties
-        self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
-        self.tableView.sectionIndexTrackingBackgroundColor = UIColor.darkGrayColor()
-        self.tableView.sectionIndexColor = UIColor.groupTableViewBackgroundColor()
+        tableView.separatorColor = UIColor(white: 0.33, alpha: 1.0)
+        tableView.sectionIndexBackgroundColor = UIColor.clearColor()
+        tableView.sectionIndexTrackingBackgroundColor = UIColor.darkGrayColor()
+        tableView.sectionIndexColor = UIColor.groupTableViewBackgroundColor()
         
-        self.tableView.backgroundColor = UIColor.darkGrayColor()
+        tableView.backgroundColor = UIColor.darkGrayColor()
+        
+        loadingView = LoadingView(frame: tableView.bounds)
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func showLoadingView() {
+        tableView.scrollEnabled = false
+        tableView.addSubview(loadingView!)
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections. This will be overwritten
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section. This will be overwritten
-        return 0
+    
+    func removeLoadingView() {
+        tableView.scrollEnabled = true
+        loadingView!.removeFromSuperview()
     }
 }

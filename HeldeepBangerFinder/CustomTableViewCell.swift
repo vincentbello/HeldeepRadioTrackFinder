@@ -42,7 +42,7 @@ class CustomTableViewCell: UITableViewCell {
             self.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 19)
         }
         
-        self.backgroundColor = GlobalConstants.Colors.Background
+        self.backgroundColor = GlobalConstants.Colors.CellBackground
         
         self.textLabel?.font = UIFont.boldSystemFontOfSize(16)
         self.textLabel?.textColor = UIColor.whiteColor()
@@ -72,13 +72,13 @@ class CustomTableViewCell: UITableViewCell {
     func addNewBadge() {
         
         let label = UILabel(frame: CGRectMake(0, 0, 35, 20))
-            label.text = "NEW"
-            label.textColor = UIColor.blackColor()
-            label.backgroundColor = UIColor.whiteColor()
-            label.font = UIFont.boldSystemFontOfSize(12)
-            label.layer.cornerRadius = 3
-            label.clipsToBounds = true
-            label.textAlignment = NSTextAlignment.Center
+        label.text = "NEW"
+        label.textColor = UIColor.blackColor()
+        label.backgroundColor = UIColor.whiteColor()
+        label.font = UIFont.systemFontOfSize(12, weight: UIFontWeightHeavy)
+        label.layer.cornerRadius = 3
+        label.clipsToBounds = true
+        label.textAlignment = NSTextAlignment.Center
 
         self.accessoryView = label
         self.accessoryType = UITableViewCellAccessoryType.None

@@ -26,6 +26,7 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="searchBegin:" destination="lTK-F8-LEO" id="tN8-ph-7KZ"/>
+                                <segue destination="cih-fG-2cg" kind="presentation" animates="NO" id="Ru5-eY-a7r"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -33,6 +34,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kaX-aZ-jg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="288" y="415"/>
+        </scene>
+        <!--Search Table View Controller-->
+        <scene sceneID="cgt-7y-pZs">
+            <objects>
+                <tableViewController id="KTB-Ec-idA" customClass="SearchTableViewController" customModule="HeldeepRadioTrackFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aY4-to-m6f">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <outlet property="dataSource" destination="KTB-Ec-idA" id="cM4-jn-Acc"/>
+                            <outlet property="delegate" destination="KTB-Ec-idA" id="xTj-hy-fzs"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="ASo-8I-f3K">
+                        <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="12U-0a-PL2"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="v0F-Mm-GQy">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="dismissSearchViewController:" destination="KTB-Ec-idA" id="uiQ-Wq-6uK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="CGf-kt-Prn" id="AcY-fk-q4W"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XNe-H8-dak" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="CGf-kt-Prn">
+                    <connections>
+                        <outlet property="delegate" destination="KTB-Ec-idA" id="2gU-8g-N6K"/>
+                        <outlet property="searchContentsController" destination="KTB-Ec-idA" id="Hs2-AV-ewz"/>
+                        <outlet property="searchResultsDataSource" destination="KTB-Ec-idA" id="VXJ-0o-wPG"/>
+                        <outlet property="searchResultsDelegate" destination="KTB-Ec-idA" id="8sS-at-7Wd"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="1100" y="1146"/>
+        </scene>
+        <!--Search Results View Controller-->
+        <scene sceneID="FUZ-d8-Omc">
+            <objects>
+                <tableViewController storyboardIdentifier="SearchResultsViewController" id="T2k-JD-6l0" customClass="SearchResultsViewController" customModule="HeldeepRadioTrackFinder" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wqZ-7k-T5r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765" y="1146"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KtN-Ur-xtO">
@@ -53,23 +102,23 @@
             </objects>
             <point key="canvasLocation" x="-383" y="415"/>
         </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="IVN-Ns-TaR">
+        <!--Navigation Controller-->
+        <scene sceneID="Acu-OK-2y8">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="T09-gh-xQN" customClass="DetailViewController" customModule="HeldeepRadioTrackFinder" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0xB-hp-0uU"/>
-                        <viewControllerLayoutGuide type="bottom" id="fvo-ia-njO"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pqJ-gZ-NaN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q1p-Qz-Opy" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cih-fG-2cg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="23C-2f-Ujm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KTB-Ec-idA" kind="relationship" relationship="rootViewController" id="V3S-8C-U9e"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xD7-i8-Okg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1012" y="415"/>
+            <point key="canvasLocation" x="288" y="1146"/>
         </scene>
     </scenes>
 </document>

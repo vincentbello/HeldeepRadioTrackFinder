@@ -25,7 +25,7 @@ class NowPlayingButton: UIButton {
         super.init(frame: frame)
         
         forwardIcon = UIImageView(frame: CGRectMake(45, 3, 20, 20))
-        forwardIcon!.image = UIImage(named: "forward")
+        forwardIcon!.image = UIImage(named: "right")
         
         playingLabel = UILabel()
         playingLabel!.text = "Now\nPlaying"

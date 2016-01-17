@@ -63,6 +63,14 @@ class Track : PFObject, PFSubclassing {
         return mutableStr
     }
     
+    func hasType() -> Bool {
+        return self.type.characters.count > 0
+    }
+    
+    func hasTimestamp() -> Bool {
+        return self.timestamp > 0
+    }
+    
 }
 
 

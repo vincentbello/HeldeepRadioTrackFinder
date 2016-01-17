@@ -42,21 +42,48 @@ class EpisodeViewCell: UITableViewCell {
         
         layoutMargins = UIEdgeInsetsZero
         
-        if (isPlaying) {
-            accessoryView = UIImageView(image: UIImage(named: "playing")!)
-            accessoryView!.rotate()
-//            accessoryView!.frame = CGRectMake(0, 0, 22, 22)
+        let hasAccessory = isNew || isPlaying
+        // Accessory type
+        self.accessoryType = hasAccessory ? .None : .DisclosureIndicator
+        
+        // Accessory view
+        if hasAccessory {
+            if isPlaying {
+                print("is playing")
+                addPlayingIndicator()
+            } else if isNew {
+                addNewBadge()
+            }
         } else {
             accessoryView = nil
         }
+    }
+    
+    func addNewBadge() {
+        let label = UILabel(frame: CGRectMake(0, 0, 35, 20))
+        label.text = "NEW"
+        label.textColor = GlobalConstants.Colors.CellBackground
+        label.backgroundColor = UIColor.whiteColor()
+        label.font = UIFont.systemFontOfSize(11, weight: UIFontWeightHeavy)
+        label.layer.cornerRadius = 3
+        label.clipsToBounds = true
+        label.textAlignment = .Center
+        label.transform = CGAffineTransformMakeScale(0.4, 0.4)
         
-//        // If a new episode just came out, give it a [NEW] badge
-//        if isNew {
-//            self.addNewBadge()
-//        } else {
-//            self.accessoryView = nil
-//            self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-//        }
+        self.accessoryView = label
+        self.accessoryType = UITableViewCellAccessoryType.None
+
+        UIView.animateWithDuration(0.8, delay: 0,
+            usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2,
+            options: [], animations: {
+            self.accessoryView!.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: nil)
+        
+    }
+    
+    func addPlayingIndicator() {
+        accessoryView = UIImageView(image: UIImage(named: "playing")!)
+        accessoryView!.rotate()
     }
     
     

@@ -8,95 +8,49 @@
 
 import UIKit
 
-class CustomSearchController: UISearchController, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
+class CustomSearchController: UISearchController, UISearchBarDelegate {
     
-    var defaultSearchView: DefaultSearchView?
+    lazy var _searchBar: CustomSearchBar = {[unowned self] in
+        let result = CustomSearchBar(frame: CGRectZero)
+        result.delegate = self
+        return result
+    }()
     
-    init(navigationController: UINavigationController) {
-        let resultsController = ResultsTableController()
-        resultsController.tableView.delegate = resultsController
-        
-        super.init(searchResultsController: resultsController)
-        
-        self.searchResultsUpdater = self
-        
-        delegate = self
-        searchBar.delegate = self
-        
-        // Set basic searchbar properties
-        self.searchBar.sizeToFit()
-        self.searchBar.barStyle = UIBarStyle.Black
-        self.searchBar.tintColor = UIColor.whiteColor()
-        self.searchBar.placeholder = "Search Heldeep Radio Tracks"
-        self.searchBar.textField?.textColor = UIColor.whiteColor()
-        
-        self.dimsBackgroundDuringPresentation = false
-        
-        let frameHeight = view.frame.height - searchBar.frame.height - 20
-        let frameY = searchBar.frame.height + 20
-        let defaultSearchFrame = CGRectMake(0, frameY, self.view.frame.width, frameHeight)
-        
-        defaultSearchView = DefaultSearchView(frame: defaultSearchFrame)
-        self.view.addSubview(defaultSearchView!)
-        defaultSearchView!.hidden = false
-        defaultSearchView!.navigationController = navigationController
+    override var searchBar: UISearchBar {
+        get {
+            return _searchBar
+        }
+    }
+    
+    override init(searchResultsController: UIViewController?) {
+        super.init(searchResultsController: searchResultsController)
+        self.customInit()
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.customInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.customInit()
     }
     
-    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func customInit() {
+        hidesNavigationBarDuringPresentation = false
+        dimsBackgroundDuringPresentation = false
         
-        // Do any additional setup after loading the view.
+        searchBar.searchBarStyle = .Minimal
+        searchBar.textField?.textColor = UIColor.whiteColor()
+        searchBar.placeholder = "Search Heldeep Radio Tracks"
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func willPresentSearchController(searchController: UISearchController) {
-        dispatch_async(dispatch_get_main_queue()) { _ in
-            self.defaultSearchView!.hidden = false
-        }
-    }
-    
-    func willDismissSearchController(searchController: UISearchController) {
-        dispatch_async(dispatch_get_main_queue()) { _ in
-            self.defaultSearchView!.hidden = true
-        }
-    }
-    
-    // MARK: UISearchResultsUpdating
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        let searchText = searchBar.text!
-        if (searchText.characters.count > 0) {
-            defaultSearchView!.hidden = true
-            
-            self.filterContentForSearchText(searchText)
-//            self.resultsTableController.tableView.reloadData()
-        } else {
-            defaultSearchView!.hidden = false
-        }
-    }
-    
-    func filterContentForSearchText(searchBarText: String) {
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-        print("search bar should begin editing")
-        return true
+}
+
+
+class CustomSearchBar: UISearchBar {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setShowsCancelButton(false, animated: false)
     }
 }

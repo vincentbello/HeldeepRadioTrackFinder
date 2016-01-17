@@ -9,13 +9,7 @@
 import UIKit
 import Parse
 
-protocol NowPlayingDelegate: class {
-    func isNowPlaying(playingId: String?)
-}
-
 class DetailViewController: UIViewController, CurrentTrackDelegate {
-    
-    weak var delegate: NowPlayingDelegate? = nil
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -23,7 +17,8 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
     @IBOutlet weak var tracksHeaderLabel: UILabel!
     
     @IBOutlet weak var trackTableView: UITableView!
-
+    @IBOutlet weak var loadingView: UIView!
+    
     @IBOutlet weak var playerView: PlayerView!
     
     let episode: Episode
@@ -49,7 +44,7 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
         self.episode = episode
         super.init(nibName: "DetailViewController", bundle: nil)
         
-        navigationItem.title = episode.title
+        navigationItem.titleView = TitleLabel(labelText: episode.formattedTitle())
         
         if (isPlaying) {
             self.isPlaying = true
@@ -79,7 +74,8 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
         
         fetchTracks()
         
-        print("finished view will appear")
+        // Set up view re-rendering notification
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "renderViewAnimations", name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -94,11 +90,7 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if (playerView.isPlaying) {
-            delegate?.isNowPlaying(episode.objectId!)
-        } else {
-            delegate?.isNowPlaying(nil)
-        }
+        appDelegate().nowPlayingId = playerView.isPlaying ? episode.objectId! : nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,15 +115,20 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
                     self.playerView.tracks = tracks
                     self.playerView.delegate = self
                     self.tracksTableViewController.playerView = self.playerView
-                    self.updateTracksHeader()
-                    self.trackTableView.reloadData()
                     
-                    if (self.episode.selectedTrack != nil) {
-                        let idx = self.tracksTableViewController.tracks.indexOf({ $0.objectId == self.episode.selectedTrack?.objectId })
-                        if (idx != nil) {
-                            self.tracksTableViewController.selectSpecificTrack(idx!)
+                    dispatch_async(dispatch_get_main_queue()) {_ in
+                        self.updateTracksHeader()
+                        self.trackTableView.reloadData()
+                        self.loadingView.removeFromSuperview()
+                        
+                        if (self.episode.selectedTrack != nil) {
+                            let idx = self.tracksTableViewController.tracks.indexOf({ $0.objectId == self.episode.selectedTrack?.objectId })
+                            if (idx != nil) {
+                                self.tracksTableViewController.selectSpecificTrack(idx!)
+                            }
                         }
                     }
+                    
                     
                     
                 } else {
@@ -149,15 +146,18 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
     }
     
     func updateCurrentTrack(index: Int?) {
-//        if (self.tracksTableViewController.currentTrackIndex != index) {
-            // Update current track
-        print("updating current track")
+        // Update current track
         self.tracksTableViewController.currentTrackIndex = index
         trackTableView.reloadData()
-//        }
     }
     
     func updateTrackCells() {
         trackTableView.reloadData()
+    }
+    
+    func renderViewAnimations() {
+        if (playerView.isPlaying) {
+            trackTableView.reloadData()
+        }
     }
 }

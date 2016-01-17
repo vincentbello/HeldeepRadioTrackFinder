@@ -16,24 +16,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tvK-Tu-LKg">
-                        <rect key="frame" x="13" y="8" width="50" height="50"/>
+                        <rect key="frame" x="13" y="10" width="45" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbi-oL-la6">
-                                <rect key="frame" x="18" y="13" width="13.5" height="24"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <rect key="frame" x="17" y="12" width="11" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="Yc7-6X-0AM"/>
-                            <constraint firstAttribute="width" constant="50" id="h0C-GT-ubR"/>
+                            <constraint firstAttribute="height" constant="45" id="Yc7-6X-0AM"/>
+                            <constraint firstAttribute="width" constant="45" id="h0C-GT-ubR"/>
                             <constraint firstItem="cbi-oL-la6" firstAttribute="centerX" secondItem="tvK-Tu-LKg" secondAttribute="centerX" id="yiz-YC-Bvk"/>
                             <constraint firstItem="cbi-oL-la6" firstAttribute="centerY" secondItem="tvK-Tu-LKg" secondAttribute="centerY" id="ymX-Wa-Ing"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="25"/>
+                                <integer key="value" value="23"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                 <integer key="value" value="2"/>
@@ -41,13 +41,13 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bej-3w-cNA">
-                        <rect key="frame" x="71" y="12" width="241" height="21.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                        <rect key="frame" x="66" y="14" width="246" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xjt-DH-hZf">
-                        <rect key="frame" x="76" y="33" width="236" height="16"/>
+                        <rect key="frame" x="69" y="36" width="243" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -55,10 +55,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="leadingMargin" secondItem="tvK-Tu-LKg" secondAttribute="leading" id="6WM-6V-w7Z"/>
-                    <constraint firstItem="Bej-3w-cNA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="7ri-9a-xpf"/>
-                    <constraint firstItem="xjt-DH-hZf" firstAttribute="top" secondItem="Bej-3w-cNA" secondAttribute="bottom" id="BVh-aA-TWB"/>
+                    <constraint firstItem="Bej-3w-cNA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="7ri-9a-xpf"/>
+                    <constraint firstItem="xjt-DH-hZf" firstAttribute="top" secondItem="Bej-3w-cNA" secondAttribute="bottom" constant="1" id="BVh-aA-TWB"/>
+                    <constraint firstItem="tvK-Tu-LKg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Evc-22-S5n"/>
                     <constraint firstItem="tvK-Tu-LKg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="HTN-p7-NC0"/>
-                    <constraint firstItem="xjt-DH-hZf" firstAttribute="leading" secondItem="tvK-Tu-LKg" secondAttribute="trailing" constant="13" id="Z4y-67-afS"/>
+                    <constraint firstItem="xjt-DH-hZf" firstAttribute="leading" secondItem="tvK-Tu-LKg" secondAttribute="trailing" constant="11" id="Z4y-67-afS"/>
                     <constraint firstItem="Bej-3w-cNA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="jOA-aM-UQB"/>
                     <constraint firstItem="tvK-Tu-LKg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="jOF-ab-ten"/>
                     <constraint firstAttribute="trailingMargin" secondItem="xjt-DH-hZf" secondAttribute="trailing" id="q0A-lI-Ebb"/>
@@ -69,6 +70,7 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="6WM-6V-w7Z"/>
+                        <exclude reference="HTN-p7-NC0"/>
                         <exclude reference="jOA-aM-UQB"/>
                         <exclude reference="t7c-eX-jgl"/>
                     </mask>

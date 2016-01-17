@@ -77,11 +77,34 @@ function getTracks(description, parentEpId) {
     } else {
       isSpecial = false;
     }
-    trackObj.title = arr[i];
+    trackObj.title = arr[i].trim();
     tracksArr.push(trackObj);
   }
 
   return tracksArr;
+}
+
+function parseTime(timeStr) {
+  if (!timeStr) {
+    return null;
+  }
+  if (timeStr.indexOf('min') !== -1) {
+    return parseInt(timeStr.replace('min', ''), 10) * 60;
+  } else {
+    var timeArr = timeStr.split(':');
+    timeArr.slice(Math.max(0, timeArr.length - 3));
+    timeArr = timeArr.map(function(n) { return parseInt(n, 10) || 0; });
+    switch (timeArr.length) {
+      case 1:
+        return timeArr[0];
+      case 2:
+        return timeArr[0] * 60 + timeArr[1];
+      case 3:
+        return timeArr[0] * 3600 + timeArr[1] * 60 + timeArr[2];
+      default:
+        return null;
+    }
+  }
 }
 
 // Parse job to fetch the latest episode. This runs periodically
@@ -94,6 +117,11 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
     var data,
       episode,
       epObj,
+      strEpId,
+      results,
+      order,
+      timestamp,
+      timestampObj = {},
       tracksArray = [],
       toSave = [],
       latestEpId;
@@ -154,8 +182,7 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
         return Parse.Push.send({
           where: notificationQuery,
           data: {
-            alert: 'It\'s that time of the week again – Heldeep #' + epObj.epId + ' is out!',
-            badge: 1
+            alert: 'It\'s that time of the week again – Heldeep #' + epObj.epId + ' is out!'
           }
         });
       } else {
@@ -165,15 +192,130 @@ Parse.Cloud.job('fetchLatest', function(request, status) {
       status.error(err);
     }).then(function(sent) {
       if (sent) {
-        status.success('Successfully saved episodes & tracks and sent notifications.');
+        // status.success('Successfully saved episodes & tracks and sent notifications.');
+        strEpId = Array(4 - epObj.epId.toString().length).join('0') + epObj.epId;
+
+        var q = encodeURIComponent('1001 tracklists heldeep ' + strEpId),
+            url = 'http://www.google.com/search?q=' + q,
+            importUrl = 'https://api.import.io/store/connector/_magic?url=' + encodeURIComponent(url) + '&format=JSON&js=false&infiniteScrollPages=0&_apikey=defddb31353f4930993f61643f76321696f3f7ce7836958aedae0a638bed8a2c55c38aeacf17c63fd3016104560c212a1ed5983422d40d5e5737ea37c407d6c3af2ca0a8c366af8584ab15368408e33a';
+
+        return Parse.Cloud.httpRequest({
+          url: importUrl
+        });
       }
     }, function(err) {
       status.error('Could not send notifications: ' + err);
+    }).then(function(httpResponse) {
+      if (httpResponse) {
+        var data = httpResponse.data,
+            result = data.tables[0].results[0],
+            title = result['r_link/_text'],
+            lowercaseTitle = title.toLowerCase(),
+            link = result['r_link'],
+            promise = new Parse.Promise();
+
+        if ((lowercaseTitle.indexOf('heldeep') != -1) && (lowercaseTitle.indexOf(strEpId) != -1)) {
+          promise.resolve(link);
+          return promise;
+        }
+      }
+    }).then(function(tracklistUrl) {
+      if (tracklistUrl) {
+        return Parse.Cloud.httpRequest({
+          url: 'https://api.import.io/store/connector/_magic?url=' + encodeURIComponent(tracklistUrl) + '&format=JSON&js=false&infiniteScrollPages=0&_apikey=defddb31353f4930993f61643f76321696f3f7ce7836958aedae0a638bed8a2c55c38aeacf17c63fd3016104560c212a1ed5983422d40d5e5737ea37c407d6c3af2ca0a8c366af8584ab15368408e33a'
+        });
+      } else {
+        status.success('Couldn\'t find tracklist URL.');
+      }
+    }).then(function(httpResponse) {
+      var promise = new Parse.Promise();
+      // Success
+      data = httpResponse.data;
+      results = data.tables[0].results;
+      if (results) {
+        results.forEach(function(res) {
+          order = parseInt(res['tlfontlarge_number/_source'], 10) || undefined;
+          timestamp = order ? parseTime(res['cuevaluefield_value']) : null;
+          timestampObj[String(order)] = timestamp;
+        });
+
+        promise.resolve(timestampObj);
+
+        return promise;
+      } else {
+        status.success('Couldn\'t find tracklist timestamps.');
+      }
+    }).then(function(obj) {
+      // obj is the object of timestamps
+      // Find episode first
+      var query = new Parse.Query(Episode);
+      query.equalTo('epId', epObj.epId);
+      return query.first();
+    }).then(function(episode) {
+      var query = new Parse.Query(Track);
+      query.equalTo('episode', episode);
+      return query.find();
+    }).then(function(tracks) {
+      var toSave = [],
+          order,
+          timestamp;
+
+      tracks.forEach(function(track) {
+        order = track.get('order');
+        timestamp = timestampObj[String(order)] || null;
+        track.set('timestamp', timestamp);
+
+        if (timestamp) {
+          toSave.push(track);
+        }
+      });
+
+      return Parse.Object.saveAll(toSave);
+    }).then(function(obj) {
+      if (obj) {
+        status.success('It\'s a miracle! Everything worked.');
+      } else {
+        status.error('Couldn\'t save timestamps.');
+      }
     });
   } else {
     status.error('Invalid weekday.');
   }
 });
+
+
+// Parse.Cloud.define('fetchTracklistUrl', function(request, response) {
+//   var message = '',
+//       epId = 84,
+//       strEpId = Array(4 - epId.toString().length).join('0') + epId,
+//       q = encodeURIComponent('1001 tracklists heldeep ' + strEpId),
+//       url = 'http://www.google.com/search?q=' + q,
+//       importUrl = 'https://api.import.io/store/connector/_magic?url=' + encodeURIComponent(url) + '&format=JSON&js=false&infiniteScrollPages=0&_apikey=defddb31353f4930993f61643f76321696f3f7ce7836958aedae0a638bed8a2c55c38aeacf17c63fd3016104560c212a1ed5983422d40d5e5737ea37c407d6c3af2ca0a8c366af8584ab15368408e33a';
+
+//   Parse.Cloud.httpRequest({
+//     url: importUrl
+//   }).then(function(httpResponse) {
+//     var data = httpResponse.data,
+//         result = data.tables[0].results[0],
+//         title = result['r_link/_text'],
+//         lowercaseTitle = title.toLowerCase(),
+//         link = result['r_link'],
+//         promise = new Parse.Promise();
+
+
+//     if ((lowercaseTitle.indexOf('heldeep') != -1) && (lowercaseTitle.indexOf(strEpId) != -1)) {
+//       promise.resolve(link);
+//       return promise;
+//     }
+//   }).then(function(link) {
+//     if (link) {
+//       response.success('Success! Link: ' + link);
+//     } else {
+//       response.error('No link found. ' + message);
+//     }
+//   });
+// });
+
 
 // Job to fetch timestamps for all episodes, given data array of 1001tracklists URLs
 Parse.Cloud.job('setAllTimestamps', function(request, status) {

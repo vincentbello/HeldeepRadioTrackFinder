@@ -8,6 +8,7 @@
 //  Extensions to common types
 
 import UIKit
+import MediaPlayer
 
 extension String {
     
@@ -158,6 +159,19 @@ extension CALayer {
         self.addSublayer(border)
     }
     
+    func blur(color: UIColor = UIColor.whiteColor()) {
+        shadowColor = color.CGColor
+        shadowOffset = CGSizeMake(0.0, 0.0)
+        shadowRadius = 5.0
+        shadowOpacity = 1
+        masksToBounds = false
+        shouldRasterize = true
+    }
+    
+    func unblur() {
+        shadowOpacity = 0
+    }
+    
 }
 
 extension UIView {
@@ -183,6 +197,21 @@ extension UILabel {
     func animateToColor(color: UIColor, duration: Double = 0.2) {
         UIView.animateWithDuration(duration) {_ in
             self.textColor = color
+        }
+    }
+}
+
+extension MPNowPlayingInfoCenter {
+    // Update key value pair
+    func updateInfo(pairs: Dictionary<String, AnyObject>) {
+        var info: Dictionary? = nowPlayingInfo
+        if (info != nil) {
+            for (k, v) in pairs {
+                info![k] = v
+            }
+            nowPlayingInfo = info!
+        } else {
+            nowPlayingInfo = pairs
         }
     }
 }
