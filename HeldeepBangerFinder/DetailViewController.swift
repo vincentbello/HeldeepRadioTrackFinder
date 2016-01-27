@@ -62,7 +62,7 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
         dateLabel.text = episode.formattedDate()
         durationLabel.text = episode.durationInMinutes()
         
-        playerView.configureFor(episode, currentlyPlaying: self.isPlaying)
+        playerView.configureFor(episode)
         
         trackTableView.delegate = tracksTableViewController
         trackTableView.dataSource = tracksTableViewController
@@ -89,7 +89,6 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         appDelegate().nowPlayingId = playerView.isPlaying ? episode.objectId! : nil
     }
 
@@ -102,6 +101,11 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
     func fetchTracks() {
         
         if Reachability.isConnectedToNetwork() {
+            
+            let parseActivityIndicatorManager = PFNetworkActivityIndicatorManager.sharedManager()
+            parseActivityIndicatorManager.enabled = false
+            parseActivityIndicatorManager.incrementActivityCount()
+            
             let query = PFQuery(className: Track.parseClassName())
             query.whereKey("episode", equalTo: self.episode)
             query.orderByAscending("order")
@@ -117,6 +121,8 @@ class DetailViewController: UIViewController, CurrentTrackDelegate {
                     self.tracksTableViewController.playerView = self.playerView
                     
                     dispatch_async(dispatch_get_main_queue()) {_ in
+                        parseActivityIndicatorManager.decrementActivityCount()
+                        
                         self.updateTracksHeader()
                         self.trackTableView.reloadData()
                         self.loadingView.removeFromSuperview()

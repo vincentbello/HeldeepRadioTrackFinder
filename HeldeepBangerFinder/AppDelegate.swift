@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         // Register for remote notifications
-        let userNotificationType = UIUserNotificationType.Badge
-        let settings = UIUserNotificationSettings(forTypes: userNotificationType, categories: nil)
-        application.registerUserNotificationSettings(settings)
+//        let userNotificationType = UIUserNotificationType.Badge
+//        let settings = UIUserNotificationSettings(forTypes: userNotificationType, categories: nil)
+//        application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
         // Override point for customization after application launch.

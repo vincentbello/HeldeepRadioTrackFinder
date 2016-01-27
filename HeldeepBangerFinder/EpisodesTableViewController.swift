@@ -46,8 +46,6 @@ class EpisodesTableViewController: CustomTableViewController {
         
         // Set up view re-rendering notification
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "renderViewAnimations", name: UIApplicationDidBecomeActiveNotification, object: nil)
-        
-//        self.promptForNotifications()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,10 +64,14 @@ class EpisodesTableViewController: CustomTableViewController {
         renderViewAnimations()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.promptForNotifications()
+    }
+    
     func renderViewAnimations() {
-        if (nowPlayingId != nil) {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     // Fetches episode data asynchronously from SoundCloud API. Populates episode data and reloads tableView
@@ -277,7 +279,7 @@ class EpisodesTableViewController: CustomTableViewController {
             initialSpringVelocity: 0.3,
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: {
-                logoView.frame.size = CGSizeMake(128, 30)
+                logoView.frame.size = CGSizeMake(149, 35)
                 logoView.center = CGPointMake(targetCenter.x, targetCenter.y + 35)
             }, completion: {_ in
                 logoView.removeFromSuperview()
@@ -339,13 +341,12 @@ class EpisodesTableViewController: CustomTableViewController {
     //  MARK: - Other functions
     func promptForNotifications() {
         // Check if the user has already registered notifications
-        let app = UIApplication.sharedApplication()
-        print("is registered: \(app.isRegisteredForRemoteNotifications())")
-        print("has current notification settings: \(app.currentUserNotificationSettings() != nil)")
-        let notificationType = app.currentUserNotificationSettings()!.types
-        print("push notification type: \(notificationType)")
+        let installation = PFInstallation.currentInstallation()
+        let didAnswerNotificationPrompt = installation["didAnswerNotificationPrompt"] as? Bool
         
-        let notificationPromptVC = NotificationPromptViewController()
-        navigationController?.presentViewController(notificationPromptVC, animated: true, completion: nil)
+        if (didAnswerNotificationPrompt == nil || !(didAnswerNotificationPrompt!)) {
+            let notificationPromptVC = NotificationPromptViewController()
+            navigationController?.presentViewController(notificationPromptVC, animated: false, completion: nil)
+        }
     }
 }

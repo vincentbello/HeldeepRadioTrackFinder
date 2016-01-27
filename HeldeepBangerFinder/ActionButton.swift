@@ -32,30 +32,19 @@ class ActionButton: UIButton {
     override var highlighted: Bool {
         didSet {
             if (highlighted) {
-                print("highlightyboy")
                 didSelect = false
                 UIView.animateWithDuration(0.2) {
                     self.layer.backgroundColor = UIColor(white: 0.7, alpha: 1.0).CGColor
                 }
             } else {
                 if (!didSelect) {
-                    print("cancelling animation")
                     layer.backgroundColor = UIColor.clearColor().CGColor
                 }
-//                layer.backgroundColor = UIColor(white: 0.7, alpha: 1.0).CGColor
-//                UIView.animateWithDuration(0.3,
-//                    animations: {
-//                        self.layer.backgroundColor = UIColor.clearColor().CGColor
-//                    }, completion: {_ in
-//                        self.layer.backgroundColor = UIColor.clearColor().CGColor
-//                })
-
             }
         }
     }
     
     func didClick() {
-        print("selectyboy")
         didSelect = true
     }
 }

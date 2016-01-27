@@ -51,6 +51,14 @@ class TrackViewCell: UITableViewCell {
         searchButton.setAttributedTitle(leftIconRightText(UIImage(named: "soundcloud_orange")!, color: GlobalConstants.Colors.SoundCloud, text: "Search on SoundCloud"), forState: .Normal)        
     }
     
+    /**
+     Configure cell for a certain track, based on whether it is selected, playing, etc
+     
+     - parameter track:      Track for cell
+     - parameter isSelected: Bool for whether cell is selected
+     - parameter isPlaying:  Bool for whether cell is playing
+     - parameter playerView: affected playerview
+     */
     func configureFor(track: Track, isSelected: Bool, isPlaying: Bool, playerView: PlayerView) {
         self.track = track
         if (self.playerView == nil) {
@@ -80,7 +88,7 @@ class TrackViewCell: UITableViewCell {
         } else {
             titleLabel.text = track.title
             var icon = track.typeIcon()
-            if (icon == nil && playerView.isPlaying && isPlaying) {
+            if (playerView.isPlaying && isPlaying) {
                 icon = UIImage(named: "playing")
                 trackIcon.rotate()
             }

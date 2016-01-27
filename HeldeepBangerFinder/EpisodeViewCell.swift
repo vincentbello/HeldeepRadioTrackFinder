@@ -49,7 +49,6 @@ class EpisodeViewCell: UITableViewCell {
         // Accessory view
         if hasAccessory {
             if isPlaying {
-                print("is playing")
                 addPlayingIndicator()
             } else if isNew {
                 addNewBadge()

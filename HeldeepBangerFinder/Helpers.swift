@@ -13,7 +13,7 @@ func secondsToHoursMinutesSeconds(s: Int) -> (Int, Int, Int) {
 func formatToTimestamp(seconds: Int) -> String {
     let (h, m, s) = secondsToHoursMinutesSeconds(seconds)
     
-    return "\(h > 0 ? "\(h):" : "")\(m > 0 ? String(format: "%02d", m) : "0"):\(String(format: "%02d", s))"
+    return "\(h > 0 ? "\(h):" : "")\(String(format: "%02d", m)):\(String(format: "%02d", s))"
 }
 
 func leftIconRightText(icon: UIImage, color: UIColor, text: String) -> NSAttributedString {

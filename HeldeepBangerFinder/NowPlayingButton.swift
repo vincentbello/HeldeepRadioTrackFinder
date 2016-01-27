@@ -32,7 +32,7 @@ class NowPlayingButton: UIButton {
         playingLabel!.textColor = UIColor.whiteColor()
         playingLabel!.font = UIFont.systemFontOfSize(11)
         playingLabel!.numberOfLines = 2
-        playingLabel!.textAlignment = .Center
+        playingLabel!.textAlignment = .Right
         playingLabel!.sizeToFit()
         playingLabel!.frame.size.width = 45
         

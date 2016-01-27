@@ -27,7 +27,7 @@ class CustomTableViewController: UITableViewController {
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "left")
         let imageView = UIImageView(image: UIImage(named: "full_logo.png"))
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        let titleView = UIView(frame: CGRectMake(0, 0, 128, 30))
+        let titleView = UIView(frame: CGRectMake(0, 0, 149, 35))
         imageView.frame = titleView.bounds
         titleView.addSubview(imageView)
         

@@ -142,21 +142,20 @@ class TypeTracksTableViewController: UITableViewController {
     
     func setUpLoadingIndicator() {
         
-        let tblViewFooter = UIView(frame: view.bounds)
+        let screenBounds = UIScreen.mainScreen().bounds
         
         let loadingLabel = UILabel()
         loadingLabel.text = "Loading tracks..."
         loadingLabel.textColor = UIColor.lightTextColor()
         loadingLabel.font = UIFont.boldSystemFontOfSize(15)
         loadingLabel.sizeToFit()
-        print("center: \(tableView.frame)")
-        let frameBounds = UIScreen.mainScreen().bounds
-        loadingLabel.center = CGPointMake(frameBounds.width / 2, frameBounds.height / 2 - 50)
+        loadingLabel.center = CGPointMake(screenBounds.width / 2, screenBounds.height / 2 - 50)
+        
+        let tblViewFooter = UIView(frame: view.bounds)
         tblViewFooter.addSubview(loadingLabel)
         
         self.tableView.userInteractionEnabled = false
         self.tableView.tableFooterView = tblViewFooter
-        
         
     }
     

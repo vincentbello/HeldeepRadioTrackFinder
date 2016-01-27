@@ -37,11 +37,11 @@
 		0CB62DC91C277E5E00FA798C /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB62DC81C277E5E00FA798C /* PlayerView.xib */; };
 		0CB62DCB1C27852000FA798C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB62DCA1C27852000FA798C /* Helpers.swift */; };
 		0CB93A7F1C3E2C7A005625A9 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB93A7E1C3E2C7A005625A9 /* SearchTableViewController.swift */; };
+		0CC3BFDF1C50C7B3005E7F5C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3BFDE1C50C7B3005E7F5C /* NotificationManager.swift */; };
 		0CEE2A7D1C4036AF0058E470 /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEE2A7C1C4036AF0058E470 /* TitleLabel.swift */; };
 		F95376341B34D19C00A49A0D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F95376331B34D19C00A49A0D /* Default-568h@2x.png */; };
 		F9647A6D1B29DBCC00012D9B /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */; };
 		F9647A701B29F35E00012D9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A6F1B29F35E00012D9B /* Extensions.swift */; };
-		F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A711B29F5E400012D9B /* ResultsTableController.swift */; };
 		F9647A741B2A233A00012D9B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9647A731B2A233A00012D9B /* CustomTableViewCell.swift */; };
 		F969064C1C00481000FB5C73 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F969064A1C00481000FB5C73 /* Bolts.framework */; };
 		F969064D1C00481000FB5C73 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F969064B1C00481000FB5C73 /* Parse.framework */; };
@@ -110,11 +110,11 @@
 		0CB62DC81C277E5E00FA798C /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerView.xib; path = ../PlayerView.xib; sourceTree = "<group>"; };
 		0CB62DCA1C27852000FA798C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0CB93A7E1C3E2C7A005625A9 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		0CC3BFDE1C50C7B3005E7F5C /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		0CEE2A7C1C4036AF0058E470 /* TitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		F95376331B34D19C00A49A0D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F9647A6C1B29DBCC00012D9B /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewController.swift; sourceTree = "<group>"; };
 		F9647A6F1B29F35E00012D9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		F9647A711B29F5E400012D9B /* ResultsTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableController.swift; sourceTree = "<group>"; };
 		F9647A731B2A233A00012D9B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		F969064A1C00481000FB5C73 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		F969064B1C00481000FB5C73 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		F98217B81B27C06B0013E15C /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalConstants.swift; path = ../GlobalConstants.swift; sourceTree = "<group>"; };
 		F98217BB1B27C1530013E15C /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		F9B3A99C1B27B31C0010D5AE /* HeldeepRadioTrackFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeldeepRadioTrackFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9B3A9A11B27B31C0010D5AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F9B3A9A11B27B31C0010D5AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9B3A9A61B27B31C0010D5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F9B3A9A81B27B31C0010D5AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F9B3A9AB1B27B31C0010D5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -221,6 +221,7 @@
 		F9647A6E1B29DBD800012D9B /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				0CC3BFDE1C50C7B3005E7F5C /* NotificationManager.swift */,
 				0C7D080D1C2A780D00E2A7B4 /* TrackResultCell.swift */,
 				0C7D080E1C2A780D00E2A7B4 /* TrackResultCell.xib */,
 				0C7D08051C2A518D00E2A7B4 /* TypeListViewCell.swift */,
@@ -247,7 +248,6 @@
 				0C7D08091C2A76EC00E2A7B4 /* TypeTracksTableViewController.swift */,
 				0C7D080A1C2A76EC00E2A7B4 /* TypeTracksTableViewController.xib */,
 				F9B3A9C51B27BFBF0010D5AE /* EpisodesTableViewController.swift */,
-				F9647A711B29F5E400012D9B /* ResultsTableController.swift */,
 				0C6EF6701C24F330004F8ECA /* DetailViewController.swift */,
 				0C6EF6711C24F330004F8ECA /* DetailViewController.xib */,
 				0C6EF6861C253105004F8ECA /* TracksTableViewController.swift */,
@@ -451,7 +451,6 @@
 				F98217BC1B27C1530013E15C /* Episode.swift in Sources */,
 				0C1BC1391C40DC5900E00682 /* NoTracksFoundView.swift in Sources */,
 				F9D53D5C1B30A9310031B333 /* Reachability.swift in Sources */,
-				F9647A721B29F5E400012D9B /* ResultsTableController.swift in Sources */,
 				0C258B0B1C307411004DD365 /* NowPlayingButton.swift in Sources */,
 				0C2197C81C3F01CA006D9AAC /* SearchResultsViewController.swift in Sources */,
 				0C168B901C48CD7C003906B5 /* NotificationPromptViewController.swift in Sources */,
@@ -462,6 +461,7 @@
 				F98217B91B27C06B0013E15C /* GlobalConstants.swift in Sources */,
 				0C7D080B1C2A76EC00E2A7B4 /* TypeTracksTableViewController.swift in Sources */,
 				0C7D080F1C2A780D00E2A7B4 /* TrackResultCell.swift in Sources */,
+				0CC3BFDF1C50C7B3005E7F5C /* NotificationManager.swift in Sources */,
 				F9647A741B2A233A00012D9B /* CustomTableViewCell.swift in Sources */,
 				F9B3A9C61B27BFBF0010D5AE /* EpisodesTableViewController.swift in Sources */,
 				0C2197CC1C3F041C006D9AAC /* SearchBaseViewController.swift in Sources */,

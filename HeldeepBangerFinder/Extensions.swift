@@ -129,6 +129,10 @@ extension UIApplication {
             }
         }
     }
+    
+    class func toggleActivityIndicator(enabled: Bool) {
+        sharedApplication().networkActivityIndicatorVisible = enabled
+    }
 }
 
 extension CALayer {
@@ -189,6 +193,18 @@ extension UIView {
         rotation.cumulative = true
         rotation.repeatCount = FLT_MAX
         self.layer.addAnimation(rotation, forKey: "rotationAnimation")
+    }
+    
+    // Pulse infinitely
+    func pulse() {
+        let pulseAnimation: CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
+        pulseAnimation.duration = 0.5
+        pulseAnimation.fromValue = 0.7
+        pulseAnimation.toValue = 1.3
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = FLT_MAX
+        self.layer.addAnimation(pulseAnimation, forKey: nil)
     }
 }
 

@@ -7,35 +7,51 @@
 //
 
 import UIKit
+import Parse
 
 class NotificationPromptViewController: UIViewController {
+    
+    
+    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet weak var noButton: UIButton!
 
     @IBAction func didTapYes(sender: AnyObject) {
-        
-        print("will register notifications")
 
         let userNotificationType = UIUserNotificationType.Badge
         let settings = UIUserNotificationSettings(forTypes: userNotificationType, categories: nil)
         
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
+        setDidAnswerNotificationPrompt()
+        
         dismissViewControllerAnimated(true, completion: nil)
         
     }
     
     @IBAction func didTapNo(sender: AnyObject) {
+        setDidAnswerNotificationPrompt()
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
+        yesButton.layer.borderColor = UIColor.whiteColor().CGColor
+        noButton.layer.borderColor = UIColor.whiteColor().CGColor
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setDidAnswerNotificationPrompt() {
+        let installation = PFInstallation.currentInstallation()
+        installation["didAnswerNotificationPrompt"] = true
+        installation.saveInBackground()
     }
     
 
